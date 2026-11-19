@@ -2,303 +2,102 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1a1319">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#151018">
 <title>LAMDA Christmas Quiz · Class of 1988</title>
 <style>
 :root{
-  --bg:#140f14;
-  --panel:rgba(25,18,26,.78);
-  --panel-strong:rgba(25,18,26,.92);
-  --border:rgba(255,255,255,.14);
-  --text:#fff8f8;
-  --muted:#dcc6cf;
-  --accent:#e42046;
-  --accent2:#ff9c84;
-  --gold:#f3d48c;
+  --bg1:#120d13;--bg2:#2c1625;--panel:rgba(22,16,24,.92);--panel-soft:rgba(22,16,24,.78);
+  --border:rgba(255,255,255,.14);--text:#fff8f9;--muted:#d9c5cf;--accent:#e22247;--accent2:#ff9f84;
   font-family:Inter,"Avenir Next",Avenir,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
 }
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:radial-gradient(circle at top,#4c2133 0%,#1a1319 42%,#120c12 100%);color:var(--text)}
-body{min-height:100svh}
-button,input{font:inherit}
-button{cursor:pointer}
-img{max-width:100%;display:block}
-.hidden{display:none!important}
-.app{min-height:100svh}
-.screen{min-height:100svh;padding:0;display:flex;align-items:stretch;justify-content:center}
-.wrap{width:min(100%,980px)}
-.hero-wrap{position:relative;min-height:100svh;overflow:hidden;background:#110d10}
-.hero-photo{
-  position:absolute;inset:0;
-  background-image:url('https://qattanfoundation.org/sites/default/files/outside-ar.jpg');
-  background-size:cover;
-  background-position:center;
-  filter:saturate(1.03) contrast(1.02);
-}
-.hero-photo::after{
-  content:"";position:absolute;inset:0;
-  background:
-    linear-gradient(180deg,rgba(17,11,16,.24) 0%,rgba(17,11,16,.18) 24%,rgba(17,11,16,.42) 62%,rgba(17,11,16,.84) 100%),
-    radial-gradient(circle at 50% 18%,rgba(255,214,120,.16),transparent 32%);
-}
-.snow{position:absolute;inset:0;pointer-events:none;opacity:.48;
-  background-image:
-    radial-gradient(circle at 8% 20%, rgba(255,255,255,.9) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 24% 10%, rgba(255,255,255,.75) 0 1.2px, transparent 1.7px),
-    radial-gradient(circle at 33% 28%, rgba(255,255,255,.95) 0 1px, transparent 1.6px),
-    radial-gradient(circle at 51% 14%, rgba(255,255,255,.8) 0 1.2px, transparent 1.7px),
-    radial-gradient(circle at 68% 23%, rgba(255,255,255,.9) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 86% 16%, rgba(255,255,255,.82) 0 1.1px, transparent 1.7px),
-    radial-gradient(circle at 12% 46%, rgba(255,255,255,.72) 0 1.1px, transparent 1.8px),
-    radial-gradient(circle at 43% 52%, rgba(255,255,255,.92) 0 1px, transparent 1.6px),
-    radial-gradient(circle at 80% 48%, rgba(255,255,255,.82) 0 1.1px, transparent 1.7px);
-}
-.garland{position:absolute;left:0;right:0;top:0;height:122px;pointer-events:none;background:
-  radial-gradient(circle at 5% 40%, #2f7e4d 0 18px, transparent 19px),
-  radial-gradient(circle at 13% 58%, #2d7348 0 20px, transparent 21px),
-  radial-gradient(circle at 20% 36%, #245f39 0 17px, transparent 18px),
-  radial-gradient(circle at 30% 62%, #2f7e4d 0 22px, transparent 23px),
-  radial-gradient(circle at 39% 34%, #2a6942 0 18px, transparent 19px),
-  radial-gradient(circle at 49% 57%, #2b7045 0 21px, transparent 22px),
-  radial-gradient(circle at 59% 32%, #255d39 0 18px, transparent 19px),
-  radial-gradient(circle at 70% 60%, #2f7e4d 0 22px, transparent 23px),
-  radial-gradient(circle at 80% 34%, #2a6942 0 18px, transparent 19px),
-  radial-gradient(circle at 90% 54%, #2f7e4d 0 20px, transparent 21px),
-  linear-gradient(180deg,rgba(20,60,32,.95),rgba(20,60,32,.72));
-  border-bottom:2px solid rgba(255,255,255,.08);
-  box-shadow:0 10px 22px rgba(0,0,0,.25);
-}
-.garland::after{content:"";position:absolute;left:2%;right:2%;top:16px;height:60px;background:
-  radial-gradient(circle at 6% 20%, #d71e45 0 7px, transparent 8px),
-  radial-gradient(circle at 16% 72%, #f2d27a 0 7px, transparent 8px),
-  radial-gradient(circle at 28% 38%, #cf1740 0 7px, transparent 8px),
-  radial-gradient(circle at 38% 72%, #f2d27a 0 7px, transparent 8px),
-  radial-gradient(circle at 50% 26%, #cf1740 0 7px, transparent 8px),
-  radial-gradient(circle at 61% 75%, #f2d27a 0 7px, transparent 8px),
-  radial-gradient(circle at 72% 30%, #cf1740 0 7px, transparent 8px),
-  radial-gradient(circle at 84% 74%, #f2d27a 0 7px, transparent 8px),
-  radial-gradient(circle at 95% 30%, #cf1740 0 7px, transparent 8px);
-}
-.holly{position:absolute;width:118px;height:118px;pointer-events:none;opacity:.96}
-.holly:before,.holly:after{content:"";position:absolute;border-radius:60% 0 60% 0;background:#2f7e4d;width:48px;height:26px;box-shadow:0 0 0 1px rgba(255,255,255,.03) inset}
-.holly .leaf3,.holly .berry1,.holly .berry2,.holly .berry3{position:absolute}
-.holly .leaf3{width:48px;height:26px;border-radius:60% 0 60% 0;background:#2f7e4d;transform:rotate(20deg);left:34px;top:16px}
-.holly:before{left:14px;top:22px;transform:rotate(-34deg)}
-.holly:after{left:48px;top:32px;transform:rotate(38deg)}
-.holly .berry1,.holly .berry2,.holly .berry3{width:12px;height:12px;border-radius:50%;background:#d61c44;box-shadow:0 0 10px rgba(214,28,68,.3)}
-.holly .berry1{left:48px;top:44px}.holly .berry2{left:60px;top:38px}.holly .berry3{left:58px;top:52px}
-.holly.tl{top:106px;left:16px;transform:scale(1.0)}
-.holly.br{bottom:18px;right:18px;transform:scale(1.0) rotate(180deg)}
-.bulb{position:absolute;width:20px;height:28px;border-radius:50% 50% 46% 46%;background:linear-gradient(180deg,#f6d98f,#c69a35);box-shadow:0 0 14px rgba(246,217,143,.35)}
-.bulb::before{content:"";position:absolute;left:5px;right:5px;top:-5px;height:7px;border-radius:3px;background:#86786f}
-.b1{top:88px;left:9%}.b2{top:98px;right:13%;background:linear-gradient(180deg,#ef3656,#a70f31)}.b3{bottom:21%;left:7%;background:linear-gradient(180deg,#7fd8ff,#2f71b9)}
-.hero-content{position:relative;z-index:3;min-height:100svh;display:flex;align-items:flex-end;padding:24px}
-.hero-card{width:min(100%,520px);background:var(--panel);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:26px;padding:24px 22px 22px;box-shadow:0 20px 70px rgba(0,0,0,.44)}
-.label{display:inline-flex;align-items:center;gap:10px;margin-bottom:10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#f3c9d3;font-weight:800}
-.slash{width:10px;height:30px;transform:skew(-18deg);background:var(--accent);display:inline-block}
-h1,h2,p{margin:0}h1{font-size:clamp(32px,7vw,58px);line-height:.98;letter-spacing:-.055em;margin-bottom:14px}
-h2{font-size:clamp(26px,5vw,40px);line-height:1.05;letter-spacing:-.045em;margin-bottom:10px}
-.lead{margin-top:12px;color:var(--muted);font-size:16px;line-height:1.55}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
-.btn{appearance:none;border:none;border-radius:15px;padding:15px 19px;font-weight:800;min-height:54px;transition:transform .12s ease,opacity .12s ease,background .2s ease}
-.btn:hover{transform:translateY(-1px)}
-.btn-primary{background:linear-gradient(110deg,var(--accent),#b00f34);color:white;box-shadow:0 12px 26px rgba(145,8,34,.34)}
-.btn-secondary{background:rgba(255,255,255,.1);color:white;border:1px solid rgba(255,255,255,.16)}
-.note{margin-top:12px;color:#c8b0b8;font-size:12px;line-height:1.5}
-.shell{width:min(100%,760px);margin:0 auto;padding:20px 14px 46px}
-.panel{background:var(--panel-strong);border:1px solid var(--border);border-radius:24px;padding:24px 18px 22px;box-shadow:0 20px 60px rgba(0,0,0,.32)}
-.sitehead{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 4px 18px}
-.brand{display:flex;align-items:center;gap:12px}.brand-words{display:flex;flex-direction:column;gap:2px}.brand-words strong{font-size:19px;letter-spacing:-.045em}.brand-words small{font-size:10px;letter-spacing:.21em;color:#e6c8d1;font-weight:800}
-.eyebrow{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#ff8e9d;font-weight:800;margin-bottom:10px}
-.field{display:grid;gap:8px;margin:18px 0}.field label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#ecd0d7;font-weight:800}.field input{width:100%;min-height:50px;border-radius:14px;padding:14px 15px;background:#19121a;border:1px solid rgba(255,255,255,.15);color:white;outline:none}.field input:focus{border-color:#ff8898;box-shadow:0 0 0 3px rgba(255,136,152,.12)}
-.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.muted{color:var(--muted)}
-.notice{margin-top:16px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid var(--border);color:#eddbe1;font-size:14px;line-height:1.5}
-.progress{height:8px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;margin:14px 0 24px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .2s ease}
-.question{font-size:clamp(24px,4.4vw,34px);line-height:1.23;letter-spacing:-.04em;font-weight:800;margin-bottom:18px}
-.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}.choice{appearance:none;width:100%;text-align:left;border-radius:16px;min-height:70px;padding:15px 16px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:white;font-weight:750;display:flex;align-items:center;gap:12px}.choice:hover{background:rgba(255,255,255,.13)}.choice .letter{width:30px;height:30px;border-radius:50%;background:#982241;display:grid;place-items:center;font-size:12px;font-weight:900;flex:0 0 30px}.choice.correct{background:rgba(47,126,77,.35);border-color:#4adb9c}.choice.incorrect{background:rgba(155,25,63,.36);border-color:#ff6d8d}.choice.selected{border-color:#ff8798;background:rgba(155,25,63,.28)}
-.result{font-size:46px;line-height:1;font-weight:900;letter-spacing:-.04em;margin:8px 0 14px}
-.small{font-size:14px;line-height:1.55;color:var(--muted);margin-top:10px}
-.footer{padding:22px 12px 8px;text-align:center;font-size:11px;color:#bbaab1;letter-spacing:.06em}
-.fade-out{animation:fadeOut .42s ease forwards}.fade-in{animation:fadeIn .42s ease forwards}
-@keyframes fadeOut{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(1.01)}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@media (max-width:700px){
-  .hero-card{margin-top:auto;width:100%;border-radius:24px 24px 0 0;padding:20px 18px 18px}
-  .hero-content{padding:0}
-  .shell{padding:14px 12px 40px}
-  .panel{padding:22px 16px 18px}
-  .choices{grid-template-columns:1fr}
-  .sitehead{padding:8px 2px 14px}
-  .holly.tl{top:88px;left:6px;transform:scale(.88)}
-  .b3{display:none}
-}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0%,#55253a 0%,#211521 42%,#120d13 100%);color:var(--text)}
+body{min-height:100svh}button,input{font:inherit}button{cursor:pointer}img{display:block;max-width:100%}
+.hidden{display:none!important}.screen{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:18px 14px 40px}.wrap{width:min(1180px,100%)}
+.hero{position:relative;overflow:hidden;border-radius:28px;border:1px solid var(--border);background:linear-gradient(180deg,#251520 0%,#171018 100%);box-shadow:0 30px 90px rgba(0,0,0,.48);padding:24px}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 22%,rgba(255,220,158,.17) 0%,transparent 24%),linear-gradient(180deg,transparent 0%,rgba(0,0,0,.12) 38%,rgba(0,0,0,.34) 100%);pointer-events:none}
+.top{position:relative;z-index:2;display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px}.slash{width:10px;height:34px;background:var(--accent);transform:skew(-18deg);display:block}.brandwords{display:flex;flex-direction:column;gap:2px}.brandwords strong{font-size:22px;letter-spacing:-.05em}.brandwords small{font-size:10px;letter-spacing:.22em;font-weight:800;color:#e6c8d1}
+.tag{font-size:12px;color:#f2d2db;letter-spacing:.18em;text-transform:uppercase;font-weight:800}
+.stage{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(310px,.85fr);gap:24px;align-items:center;min-height:680px}
+.scene{position:relative;min-height:620px;border-radius:24px;background:radial-gradient(circle at 50% 28%,rgba(96,51,74,.28),transparent 34%)}
+.curtain{position:absolute;top:-10px;bottom:-16px;width:16%;background:linear-gradient(90deg,#5f1129 0%,#9f193b 18%,#75102e 43%,#4d0d21 100%);filter:drop-shadow(0 16px 16px rgba(0,0,0,.28));opacity:.98}
+.curtain.left{left:-8px;border-radius:0 0 20px 0}.curtain.right{right:-8px;border-radius:0 0 0 20px}
+.garland{position:absolute;left:10%;right:10%;top:8px;height:74px;border-radius:0 0 40px 40px;background:linear-gradient(180deg,#225332 0%,#163f27 100%);box-shadow:0 6px 18px rgba(0,0,0,.24)}
+.garland::before{content:"";position:absolute;inset:12px 20px auto 20px;height:40px;background:
+radial-gradient(circle at 4% 55%,#de284e 0 6px,transparent 7px),
+radial-gradient(circle at 14% 24%,#efcb70 0 6px,transparent 7px),
+radial-gradient(circle at 25% 68%,#de284e 0 6px,transparent 7px),
+radial-gradient(circle at 36% 22%,#efcb70 0 6px,transparent 7px),
+radial-gradient(circle at 47% 70%,#de284e 0 6px,transparent 7px),
+radial-gradient(circle at 58% 24%,#efcb70 0 6px,transparent 7px),
+radial-gradient(circle at 69% 68%,#de284e 0 6px,transparent 7px),
+radial-gradient(circle at 80% 28%,#efcb70 0 6px,transparent 7px),
+radial-gradient(circle at 92% 64%,#de284e 0 6px,transparent 7px)}
+.floor{position:absolute;left:6%;right:6%;bottom:26px;height:140px;background:linear-gradient(180deg,#32202a 0%,#181117 100%);border-radius:18px;box-shadow:inset 0 20px 60px rgba(255,255,255,.03)}
+.laptop{position:absolute;left:9%;right:18%;bottom:78px;z-index:2}
+.laptop .screen{min-height:auto;display:block;padding:0;aspect-ratio:16/10;border-radius:18px 18px 10px 10px;background:#0c0d0f;border:9px solid #353740;box-shadow:0 18px 45px rgba(0,0,0,.45);overflow:hidden;position:relative}
+.laptop .screen img{width:100%;height:100%;object-fit:cover;object-position:center}
+.laptop .screen::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,11,18,.05) 0%,rgba(14,11,18,.18) 100%)}
+.overlay-title{position:absolute;left:18px;top:16px;right:18px;display:flex;justify-content:space-between;gap:16px;align-items:start}
+.overlay-title .tiny{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#ffebef;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.overlay-title .badge{background:rgba(226,34,71,.92);color:white;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:800;letter-spacing:.08em}
+.enter-btn{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);border:none;border-radius:999px;background:linear-gradient(110deg,var(--accent),#b20f33);color:white;padding:14px 24px;font-weight:900;letter-spacing:.05em;box-shadow:0 10px 24px rgba(118,11,37,.46)}
+.laptop .base{width:116%;height:18px;margin-left:-8%;background:linear-gradient(180deg,#969ba5 0%,#717783 100%);border-radius:0 0 30px 30px;box-shadow:0 8px 18px rgba(0,0,0,.34)}
+.phone{position:absolute;right:10%;bottom:118px;width:20%;min-width:118px;z-index:3;transform:rotate(4deg)}
+.phone .frame{border:8px solid #272a30;border-radius:26px;background:#090a0c;box-shadow:0 18px 36px rgba(0,0,0,.42);overflow:hidden;aspect-ratio:9/19.5;position:relative}
+.phone .frame::before{content:"";position:absolute;left:50%;top:8px;transform:translateX(-50%);width:40%;height:10px;background:#23262c;border-radius:999px;z-index:2}
+.phone-screen{position:absolute;inset:0;padding:28px 12px 12px;background:linear-gradient(180deg,rgba(45,25,37,.86),rgba(22,15,24,.96));display:flex;flex-direction:column;gap:9px}
+.phone-screen .micro{font-size:10px;color:#ff96a7;letter-spacing:.14em;text-transform:uppercase;font-weight:800}.phone-screen h4{margin:0;font-size:14px;line-height:1.14;letter-spacing:-.03em}.phone-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:8px 9px;font-size:10px;color:#f1dde4;line-height:1.35}.phone-option{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:7px 8px;font-size:9px;color:#fff}
+.prop{position:absolute;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(8px);box-shadow:0 14px 30px rgba(0,0,0,.24)}
+.clipboard{left:2%;top:128px;width:86px;height:118px;border-radius:12px;transform:rotate(-10deg)}.clipboard::before{content:"";position:absolute;left:22px;right:22px;top:-10px;height:16px;border-radius:8px;background:#b89256}.clipboard::after{content:"CUE\A SHEET";white-space:pre;position:absolute;inset:22px 14px auto 14px;font-size:13px;line-height:1.6;color:#f0dfe5;font-weight:700}
+.tape{left:8%;bottom:46px;width:76px;height:76px;border-radius:50%;background:radial-gradient(circle at center,transparent 0 17px,#161218 18px 23px,#2b2f35 24px 31px,#0b0c10 32px 37px,transparent 38px), linear-gradient(180deg,#404752,#171b20)}
+.maglite{right:3%;top:170px;width:132px;height:20px;border-radius:999px;background:linear-gradient(90deg,#3a3f48 0%,#21252c 52%,#4a515c 78%,#5d6570 100%);transform:rotate(-26deg)}.maglite::after{content:"";position:absolute;right:-14px;top:-5px;width:34px;height:30px;border-radius:50%;background:linear-gradient(180deg,#6d7480,#3b4149);box-shadow:inset -3px -4px 8px rgba(0,0,0,.25)}
+.gaffer{right:18%;top:86px;width:78px;height:78px;border-radius:50%;background:radial-gradient(circle,transparent 0 16px,#121319 17px 24px,#2d3139 25px 38px,transparent 39px)}
+.headset{right:2%;bottom:38px;width:116px;height:88px;border-radius:50%;border:8px solid #2b2f36;border-bottom-color:transparent;border-left-color:#3a4048;background:transparent;transform:rotate(10deg)}.headset::before,.headset::after{content:"";position:absolute;width:28px;height:40px;border-radius:13px;background:#2f333b;bottom:-10px}.headset::before{left:0}.headset::after{right:0}.headset span{position:absolute;right:-18px;bottom:10px;width:42px;height:6px;background:#474d58;border-radius:6px;transform:rotate(-18deg)}
+.copy{position:relative;z-index:2;padding:10px 10px 10px 0}.eyebrow{font-size:12px;letter-spacing:.18em;color:#ff90a2;text-transform:uppercase;font-weight:800;margin-bottom:10px}.copy h1{margin:0 0 14px;font-size:clamp(36px,6.1vw,64px);line-height:.97;letter-spacing:-.058em}.copy p{margin:0;color:var(--muted);font-size:17px;line-height:1.6;max-width:420px}.copy .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.btn{appearance:none;border:none;border-radius:15px;padding:15px 20px;font-weight:800;min-height:54px;transition:transform .12s ease}.btn:hover{transform:translateY(-1px)}.btn-primary{background:linear-gradient(110deg,var(--accent),#b20f33);color:white;box-shadow:0 12px 24px rgba(118,11,37,.34)}.btn-secondary{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:white}
+.footnote{margin-top:14px;font-size:12px;color:#baa8b0;line-height:1.5}
+.panel-screen{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:16px 12px 36px}.panel-wrap{width:min(760px,100%)}.panel-head{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:8px 4px 14px}.mini{font-size:12px;color:#d5c1ca}.panel{background:var(--panel);border:1px solid var(--border);border-radius:24px;padding:26px 18px 20px;box-shadow:0 24px 70px rgba(0,0,0,.36)}.panel h2{margin:0 0 10px;font-size:clamp(28px,4vw,42px);line-height:1.06;letter-spacing:-.04em}.panel p{margin:0;color:var(--muted);line-height:1.6}.field{display:grid;gap:8px;margin:18px 0}.field label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#ecd0d7;font-weight:800}.field input{width:100%;min-height:50px;border-radius:14px;padding:14px 15px;background:#19121a;border:1px solid rgba(255,255,255,.14);color:white;outline:none}.field input:focus{border-color:#ff8898;box-shadow:0 0 0 3px rgba(255,136,152,.12)}.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.notice{margin-top:18px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:14px;color:#eedde3;line-height:1.5}
+.progress{height:8px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden;margin:14px 0 24px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}.question{font-size:clamp(24px,4vw,35px);font-weight:800;line-height:1.22;letter-spacing:-.04em;margin-bottom:18px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}.choice{appearance:none;width:100%;text-align:left;border-radius:16px;min-height:70px;padding:15px 16px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:white;font-weight:750;display:flex;align-items:center;gap:12px}.choice .letter{width:30px;height:30px;border-radius:50%;background:#982241;display:grid;place-items:center;font-size:12px;font-weight:900;flex:0 0 30px}.choice.selected{border-color:#ff8798;background:rgba(155,25,63,.25)}.choice.correct{border-color:#4adb9c;background:rgba(33,101,63,.34)}.choice.incorrect{border-color:#ff6d8d;background:rgba(155,25,63,.36)}.small{font-size:14px;color:var(--muted);line-height:1.55;margin-top:12px}.result{font-size:52px;font-weight:900;letter-spacing:-.05em;line-height:1;margin:12px 0 16px}.footer{text-align:center;font-size:11px;color:#bbaab1;letter-spacing:.06em;padding:16px 4px 0}
+@media (max-width:1020px){.stage{grid-template-columns:1fr;gap:12px;min-height:auto}.scene{min-height:520px}.copy{padding:0 8px 10px}}
+@media (max-width:760px){.hero{padding:14px}.top{margin-bottom:12px}.brandwords strong{font-size:19px}.stage{gap:18px}.scene{min-height:410px}.laptop{left:6%;right:19%;bottom:72px}.phone{width:24%;right:7%;bottom:100px}.choices{grid-template-columns:1fr}.clipboard,.maglite,.gaffer,.headset{display:none}.copy h1{font-size:40px}.copy p{font-size:16px}}
 </style>
 </head>
 <body>
-<div id="app" class="app"></div>
+<div id="app"></div>
 <script>
-const app = document.getElementById('app');
-const questions = [
-  {q:'Where did our story begin?', a:['Tower House','Our house','The MacOwan Theatre','In the church hall'], correct:1},
-  {q:'What does DSM stand for in theatre?', a:['Deputy Stage Manager','Director of Stage Movement','Drama Stage Mentor','Design & Stage Mechanics'], correct:0},
-  {q:'What sort of reunion is this?', a:['Knockout tournament','Everyone plays to the end','Secret ballot','Pub crawl only'], correct:1}
+const questions=[
+ {q:'Where did our story begin?',a:['Tower House','Our house','The MacOwan Theatre','In the church hall'],correct:1},
+ {q:'What does DSM stand for in theatre?',a:['Deputy Stage Manager','Director of Stage Movement','Drama Stage Mentor','Design & Stage Mechanics'],correct:0},
+ {q:'How does this quiz work?',a:['People are eliminated','Everyone stays in to the end','Only the host scores points','Answers are on paper'],correct:1}
 ];
-let state = {screen:'landing', name:'', index:0, score:0, selected:null, answered:false};
-const letters = ['A','B','C','D'];
+const letters=['A','B','C','D'];
+let state={screen:'landing',name:'',index:0,score:0,selected:null,answered:false};
+const app=document.getElementById('app');
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-function render(){
-  if(state.screen==='landing') return renderLanding();
-  if(state.screen==='join') return renderJoin();
-  if(state.screen==='waiting') return renderWaiting();
-  if(state.screen==='quiz') return renderQuiz();
-  if(state.screen==='result') return renderResult();
+function render(){if(state.screen==='landing')landing();else if(state.screen==='join')join();else if(state.screen==='waiting')waiting();else if(state.screen==='quiz')quiz();else result();}
+function header(){return `<div class="brand"><span class="slash"></span><div class="brandwords"><strong>LAMDA Christmas Quiz</strong><small>CLASS OF 1988</small></div></div>`}
+function landing(){app.innerHTML=`<section class="screen"><div class="wrap hero"><div class="top">${header()}<div class="tag">The reunion starts here</div></div><div class="stage"><div class="scene"><div class="curtain left"></div><div class="curtain right"></div><div class="garland"></div><div class="floor"></div><div class="prop clipboard"></div><div class="prop tape"></div><div class="prop maglite"></div><div class="prop gaffer"></div><div class="prop headset"><span></span></div><div class="laptop"><div class="screen"><img src="https://qattanfoundation.org/sites/default/files/outside-ar.jpg" alt="Tower House at 226 Cromwell Road"><div class="overlay-title"><div class="tiny">Tower House · 226 Cromwell Road</div><div class="badge">Class of 1988</div></div><button class="enter-btn" id="heroEnter">ENTER THE QUIZ →</button></div><div class="base"></div></div><div class="phone"><div class="frame"><div class="phone-screen"><div class="micro">Phone view</div><h4>What’s your name?</h4><div class="phone-card">Players join on their phones. Adrian hosts on Zoom.</div><div class="phone-option">One question at a time</div><div class="phone-option">No elimination</div><div class="phone-option">Scores totalled at the end</div></div></div></div></div><div class="copy"><div class="eyebrow">Christmas reunion</div><h1>Back through the door.</h1><p>The actual Tower House photograph stays inside the laptop screen. Click Enter, then go straight to name entry — no weird zoom into the building.</p><div class="actions"><button class="btn btn-primary" id="sideEnter">ENTER THE QUIZ →</button><button class="btn btn-secondary" id="tryBtn">TRY THE REHEARSAL</button></div><div class="footnote">This is the revised front page: same theatrical landing idea, but with the real Tower House photo replacing the invented image.</div></div></div></div></section>`;
+ document.getElementById('heroEnter').onclick=()=>{state.screen='join';render();};
+ document.getElementById('sideEnter').onclick=()=>{state.screen='join';render();};
+ document.getElementById('tryBtn').onclick=()=>{state.screen='join';render();};
 }
-function brand(){return `<div class="brand"><span class="slash"></span><div class="brand-words"><strong>LAMDA Christmas Quiz</strong><small>CLASS OF 1988</small></div></div>`}
-function renderLanding(){
-  app.innerHTML = `
-    <section class="screen">
-      <div class="wrap hero-wrap fade-in">
-        <div class="hero-photo"></div>
-        <div class="snow"></div>
-        <div class="garland"></div>
-        <div class="holly tl"><span class="leaf3"></span><span class="berry1"></span><span class="berry2"></span><span class="berry3"></span></div>
-        <div class="holly br"><span class="leaf3"></span><span class="berry1"></span><span class="berry2"></span><span class="berry3"></span></div>
-        <div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div>
-        <div class="hero-content">
-          <div class="hero-card">
-            <div class="label"><span class="slash"></span><span>Class of 1988</span></div>
-            <h1>Back through<br>the door.</h1>
-            <p class="lead">Tower House is the gateway. Christmas stays in the dressing, not in a fake zoom-through-the-door animation.</p>
-            <div class="actions">
-              <button class="btn btn-primary" id="enterBtn">ENTER THE QUIZ →</button>
-              <button class="btn btn-secondary" id="rehearseBtn">TRY THE REHEARSAL</button>
-            </div>
-            <p class="note">Real Tower House photo with festive overlays. Next screen: name entry. No camera crash through the door.</p>
-          </div>
-        </div>
-      </div>
-    </section>`;
-  document.getElementById('enterBtn').onclick = () => transitionTo('join');
-  document.getElementById('rehearseBtn').onclick = () => transitionTo('join');
+function join(){app.innerHTML=`<section class="panel-screen"><div class="panel-wrap"><div class="panel-head">${header()}<div class="mini">Name entry</div></div><div class="panel"><div class="eyebrow">Welcome back</div><h2>What’s your name?</h2><p>Everyone stays in all the way through. We just tot up the points at the end.</p><div class="field"><label for="name">Your name</label><input id="name" maxlength="40" placeholder="Type your name" value="${esc(state.name)}"></div><div class="row"><button class="btn btn-secondary" id="back">Back</button><button class="btn btn-primary" id="joinNow">JOIN →</button></div><div class="notice">In the live version, everyone does this on their own phone while you host on Zoom.</div></div><div class="footer">PHONE-FIRST FLOW · NO APP INSTALL NEEDED</div></div></section>`;
+ document.getElementById('back').onclick=()=>{state.screen='landing';render();};
+ document.getElementById('joinNow').onclick=()=>{const v=document.getElementById('name').value.trim();if(!v){document.getElementById('name').focus();return;}state.name=v;state.screen='waiting';render();};
 }
-function renderJoin(){
-  app.innerHTML = `
-    <section class="screen fade-in">
-      <div class="shell">
-        <div class="sitehead">${brand()}<span class="muted">Phone-first rehearsal</span></div>
-        <div class="panel">
-          <div class="eyebrow">Welcome back</div>
-          <h2>What’s your name?</h2>
-          <p class="lead">Everyone stays in all the way through. Scores are just totalled up at the end.</p>
-          <div class="field">
-            <label for="playerName">Your name</label>
-            <input id="playerName" maxlength="40" placeholder="Type your name" value="${esc(state.name)}">
-          </div>
-          <div class="row">
-            <button class="btn btn-secondary" id="backBtn">Back</button>
-            <button class="btn btn-primary" id="joinBtn">JOIN →</button>
-          </div>
-          <div class="notice">In the live version, this is where players join from their phones while you host on Zoom.</div>
-        </div>
-        <div class="footer">LAMDA CLASS OF 1988 · PROTOTYPE</div>
-      </div>
-    </section>`;
-  document.getElementById('backBtn').onclick = () => transitionTo('landing');
-  document.getElementById('joinBtn').onclick = () => {
-    const v = document.getElementById('playerName').value.trim();
-    if(!v){ document.getElementById('playerName').focus(); return; }
-    state.name = v; transitionTo('waiting');
-  };
+function waiting(){app.innerHTML=`<section class="panel-screen"><div class="panel-wrap"><div class="panel-head">${header()}<div class="mini">Waiting room</div></div><div class="panel"><div class="eyebrow">You’re in</div><h2>Welcome, ${esc(state.name)}.</h2><p>Leave this open. Adrian starts the quiz when everybody’s arrived.</p><div class="notice">This preview is a one-device rehearsal. The live version will sync all players.</div><div class="row" style="margin-top:20px"><button class="btn btn-secondary" id="edit">Edit name</button><button class="btn btn-primary" id="start">START REHEARSAL →</button></div></div><div class="footer">ALL PLAYERS STAY IN · ONE QUESTION AT A TIME</div></div></section>`;
+ document.getElementById('edit').onclick=()=>{state.screen='join';render();};
+ document.getElementById('start').onclick=()=>{state.index=0;state.score=0;state.selected=null;state.answered=false;state.screen='quiz';render();};
 }
-function renderWaiting(){
-  app.innerHTML = `
-    <section class="screen fade-in">
-      <div class="shell">
-        <div class="sitehead">${brand()}<span class="muted">Waiting room</span></div>
-        <div class="panel">
-          <div class="eyebrow">You’re in</div>
-          <h2>Welcome, ${esc(state.name)}.</h2>
-          <p class="lead">Leave this open. Adrian hosts on Zoom and starts the quiz when everyone has arrived.</p>
-          <div class="notice">This rehearsal preview runs on one device. The full live version will synchronise all phones.</div>
-          <div class="row" style="margin-top:20px">
-            <button class="btn btn-secondary" id="editNameBtn">Edit name</button>
-            <button class="btn btn-primary" id="startRehearsalBtn">START REHEARSAL →</button>
-          </div>
-        </div>
-        <div class="footer">NO ELIMINATION · EVERYBODY PLAYS TO THE END</div>
-      </div>
-    </section>`;
-  document.getElementById('editNameBtn').onclick = ()=>transitionTo('join');
-  document.getElementById('startRehearsalBtn').onclick = ()=>{ state.index=0; state.score=0; state.selected=null; state.answered=false; transitionTo('quiz'); };
+function quiz(){const q=questions[state.index];app.innerHTML=`<section class="panel-screen"><div class="panel-wrap"><div class="panel-head">${header()}<div class="mini">Question ${state.index+1} / ${questions.length}</div></div><div class="panel"><div class="eyebrow">Question ${state.index+1} / ${questions.length}</div><div class="progress"><span style="width:${((state.index+1)/questions.length)*100}%"></span></div><div class="question">${esc(q.q)}</div><div class="choices">${q.a.map((ans,i)=>`<button class="choice ${choiceClass(i,q)}" data-i="${i}" ${state.answered?'disabled':''}><span class="letter">${letters[i]}</span><span>${esc(ans)}</span></button>`).join('')}</div><p class="small">${state.answered?(state.selected===q.correct?'Correct.':'Correct answer: '+esc(q.a[q.correct])):'Choose one answer. In the live version, Adrian reveals and advances each question.'}</p><div class="row" style="margin-top:18px">${state.answered?`<button class="btn btn-primary" id="next">${state.index===questions.length-1?'SEE RESULTS →':'NEXT QUESTION →'}</button>`:''}</div></div><div class="footer">HOST TALKS ON ZOOM · PLAYERS ANSWER HERE</div></div></section>`;
+ document.querySelectorAll('.choice').forEach(b=>b.onclick=()=>pick(Number(b.dataset.i)));
+ const n=document.getElementById('next'); if(n) n.onclick=()=>{if(state.index===questions.length-1){state.screen='result';render();}else{state.index++;state.selected=null;state.answered=false;render();}};
 }
-function renderQuiz(){
-  const q = questions[state.index];
-  app.innerHTML = `
-    <section class="screen fade-in">
-      <div class="shell">
-        <div class="sitehead">${brand()}<span class="muted">Question ${state.index+1} / ${questions.length}</span></div>
-        <div class="panel">
-          <div class="eyebrow">Question ${state.index+1} / ${questions.length}</div>
-          <div class="progress"><span style="width:${((state.index+1)/questions.length)*100}%"></span></div>
-          <div class="question">${esc(q.q)}</div>
-          <div class="choices">
-            ${q.a.map((answer,i)=>`<button class="choice ${buttonClass(i,q)}" data-index="${i}" ${state.answered?'disabled':''}><span class="letter">${letters[i]}</span><span>${esc(answer)}</span></button>`).join('')}
-          </div>
-          <p class="small" id="feedback">${feedbackText(q)}</p>
-          <div class="row" style="margin-top:18px">
-            <button class="btn btn-secondary ${state.answered?'':'hidden'}" id="nextBtn">${state.index===questions.length-1?'SEE RESULTS →':'NEXT QUESTION →'}</button>
-          </div>
-        </div>
-        <div class="footer">HOST SPEAKS ON ZOOM · PLAYERS ANSWER HERE</div>
-      </div>
-    </section>`;
-  document.querySelectorAll('.choice').forEach(btn=>btn.onclick = ()=> pickAnswer(Number(btn.dataset.index)));
-  const nextBtn = document.getElementById('nextBtn');
-  if(nextBtn) nextBtn.onclick = ()=> {
-    if(state.index===questions.length-1){ transitionTo('result'); }
-    else { state.index++; state.selected=null; state.answered=false; render(); }
-  };
-}
-function buttonClass(i,q){
-  if(!state.answered){ return state.selected===i ? 'selected' : ''; }
-  if(i===q.correct) return 'correct';
-  if(i===state.selected && i!==q.correct) return 'incorrect';
-  return '';
-}
-function feedbackText(q){
-  if(!state.answered) return 'Choose one answer. In the live version, the host reveals and advances each question.';
-  return state.selected===q.correct ? 'Correct.' : 'Correct answer: ' + q.a[q.correct];
-}
-function pickAnswer(i){
-  if(state.answered) return;
-  state.selected=i; state.answered=true; if(i===questions[state.index].correct) state.score++; render();
-}
-function renderResult(){
-  app.innerHTML = `
-    <section class="screen fade-in">
-      <div class="shell">
-        <div class="sitehead">${brand()}<span class="muted">Curtain call</span></div>
-        <div class="panel">
-          <div class="eyebrow">Rehearsal complete</div>
-          <h2>Nice one, ${esc(state.name)}.</h2>
-          <div class="result">${state.score} / ${questions.length}</div>
-          <p class="lead">This is the phone-first rehearsal flow: Tower House landing page, name entry, waiting room, one question at a time, then a final score.</p>
-          <div class="row" style="margin-top:20px">
-            <button class="btn btn-secondary" id="homeBtn">HOME</button>
-            <button class="btn btn-primary" id="againBtn">PLAY AGAIN ↻</button>
-          </div>
-        </div>
-        <div class="footer">NEXT STEP: CONNECT THE LIVE MULTIPLAYER VERSION</div>
-      </div>
-    </section>`;
-  document.getElementById('homeBtn').onclick = ()=>transitionTo('landing');
-  document.getElementById('againBtn').onclick = ()=>{ state.index=0; state.score=0; state.selected=null; state.answered=false; transitionTo('quiz'); };
-}
-function transitionTo(next){
-  const current = app.firstElementChild;
-  if(current){ current.classList.add('fade-out'); setTimeout(()=>{ state.screen = next; render(); }, 220); }
-  else { state.screen = next; render(); }
+function choiceClass(i,q){if(!state.answered)return state.selected===i?'selected':'';if(i===q.correct)return 'correct';if(i===state.selected && i!==q.correct)return 'incorrect';return ''}
+function pick(i){if(state.answered)return;state.selected=i;state.answered=true;if(i===questions[state.index].correct)state.score++;render();}
+function result(){app.innerHTML=`<section class="panel-screen"><div class="panel-wrap"><div class="panel-head">${header()}<div class="mini">Curtain call</div></div><div class="panel"><div class="eyebrow">Rehearsal complete</div><h2>Nice one, ${esc(state.name)}.</h2><div class="result">${state.score} / ${questions.length}</div><p>This keeps the flow simple: theatrical landing page, name entry, waiting room, one question at a time, final score.</p><div class="row" style="margin-top:20px"><button class="btn btn-secondary" id="home">HOME</button><button class="btn btn-primary" id="again">PLAY AGAIN ↻</button></div></div><div class="footer">NEXT STEP: LIVE MULTIPLAYER VERSION</div></div></section>`;
+ document.getElementById('home').onclick=()=>{state.screen='landing';render();};document.getElementById('again').onclick=()=>{state.index=0;state.score=0;state.selected=null;state.answered=false;state.screen='quiz';render();};
 }
 render();
 </script>
