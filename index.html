@@ -31,6 +31,40 @@
  .hero.entering .artboard{animation:none}
 }
 
+
+/* 19 November refinement: only the entrance CTA and zoom are changed. */
+/* The original generated pill is embedded in the unaltered artwork; its old
+   restore overlay is suppressed and the rectangular HTML button replaces it. */
+.hero .artboard>img.button-original{display:none!important}
+.hero .artboard>.landing-hit{
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+  gap:.55em;
+  left:30.8%;top:55.9%;width:30.8%;height:7.7%;
+  padding:0 12px;
+  border:2px solid rgba(255,255,255,.82);
+  border-radius:12px;
+  background:linear-gradient(110deg,#e8274d,#b20d35);
+  color:#ffffff;
+  font:800 clamp(13px,1.65vw,22px)/1 Inter,"Avenir Next",Arial,sans-serif;
+  letter-spacing:.025em;
+  white-space:nowrap;
+  text-shadow:none;
+  box-shadow:0 7px 19px rgba(20,3,11,.38);
+  z-index:4;
+}
+.hero .artboard>.landing-hit span{font-size:1.15em;line-height:1}
+.hero .artboard>.landing-hit:hover{background:linear-gradient(110deg,#f13359,#c40d3c)}
+/* No offset transform-origin: move straight along the centre of the canvas. */
+@keyframes straightZoom{from{transform:scale(1)}to{transform:scale(2.6)}}
+@keyframes straightZoomMobile{from{transform:translateX(-44%) scale(1)}to{transform:translateX(-44%) scale(2.6)}}
+.hero.entering .artboard{animation:straightZoom .9s linear forwards;transform-origin:50% 50%}
+@media(max-width:720px){
+  .hero.entering .artboard{animation:straightZoomMobile .9s linear forwards;transform-origin:50% 50%}
+  .mobile-enter{display:none!important}
+  .hero .artboard>.landing-hit{font-size:clamp(16px,3.8vw,22px);border-radius:11px}
+}
 </style>
 </head>
 <body>
@@ -55,7 +89,7 @@ function msg(){return (error?`<div role="alert" class="error">${esc(error)}</div
 function setError(e){error=String(e?.message||e);notice='';render();}
 function clearMessages(){error='';notice='';}
 function openDoor(){if(entering)return;entering=true;const hero=document.querySelector('.hero');hero?.classList.add('entering');const go=()=>{view='gateway';entering=false;render();};setTimeout(go,window.matchMedia('(prefers-reduced-motion: reduce)').matches?40:880);}
-function landing(){app.innerHTML=`<section class="land"><div class="hero"><div class="artboard"><img class="original-art" src="${PHOTO}" alt="Original approved theatrical LAMDA Christmas quiz artwork, with laptop, phone, stage props and red curtains."/><div class="actual-tower-house"><img src="https://qattanfoundation.org/sites/default/files/outside-ar.jpg" alt="Authentic photograph of Tower House, 226 Cromwell Road" loading="eager" decoding="async" onerror="this.parentElement.style.display='none'"/></div><img class="button-original" src="${PHOTO}" alt="" aria-hidden="true"/><button class="landing-hit" aria-label="Enter the quiz" onclick="openDoor()">Enter the quiz</button></div></div><button class="mobile-enter cta" onclick="openDoor()">ENTER THE QUIZ →</button><div class="captionline">Original theatrical artwork; the laptop screen displays a real Tower House photograph (A. M. Qattan Foundation).</div></section>`;}
+function landing(){app.innerHTML=`<section class="land"><div class="hero"><div class="artboard"><img class="original-art" src="${PHOTO}" alt="Original approved theatrical LAMDA Christmas quiz artwork, with laptop, phone, stage props and red curtains."/><div class="actual-tower-house"><img src="https://qattanfoundation.org/sites/default/files/outside-ar.jpg" alt="Authentic photograph of Tower House, 226 Cromwell Road" loading="eager" decoding="async" onerror="this.parentElement.style.display='none'"/></div><img class="button-original" src="${PHOTO}" alt="" aria-hidden="true"/><button class="landing-hit" aria-label="Enter the quiz" onclick="openDoor()">ENTER THE QUIZ <span aria-hidden="true">→</span></button></div></div><button class="mobile-enter cta" onclick="openDoor()">ENTER THE QUIZ →</button><div class="captionline">Original theatrical artwork; the laptop screen displays a real Tower House photograph (A. M. Qattan Foundation).</div></section>`;}
 function gateway(){
  if(room){ view='join';render();return;}
  wrap(`<p class="eyebrow">Welcome back</p><h1>Ready to step inside?</h1><p class="lead">Your Christmas reunion, hosted live over Zoom. Everyone plays every question, and points are added up at the end.</p>${msg()}<div class="field"><label for="roomcode">Have a joining code?</label><input id="roomcode" maxlength="6" autocomplete="off" autocapitalize="characters" placeholder="ABC123"/></div><div class="row"><button class="cta" onclick="joinCode()">JOIN THE REUNION →</button><button class="ghost" onclick="createRoom()">I'M THE HOST</button></div><div class="divider"></div><h3>See how it works</h3><p class="note">Try a three-question preview on this device. No online room needed, and the sample questions are not the real reunion quiz.</p><button class="secondary" onclick="demoStart()">TRY THE DEMO</button>`);
