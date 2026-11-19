@@ -75,49 +75,6 @@
 }
 @media(prefers-reduced-motion:reduce){.hero.entering .artboard{animation:none!important}}
 
-/* Responsive repair: preserve complete approved composition in BOTH orientations. */
-.land{display:flex!important;flex-direction:column;align-items:center;justify-content:center;min-height:100svh;padding:12px 12px 28px!important;gap:12px!important}
-.hero{position:relative!important;display:flex;align-items:center;justify-content:center;width:min(100%,1380px)!important;height:auto!important;max-height:none!important;aspect-ratio:auto;overflow:hidden;border-radius:18px!important;border:1px solid rgba(255,255,255,.16)!important}
-.hero .backdrop{position:absolute;inset:-35px;width:calc(100% + 70px);height:calc(100% + 70px);object-fit:cover;filter:blur(24px) brightness(.3) saturate(.9);pointer-events:none;z-index:0}
-.hero .artboard{position:relative!important;top:auto!important;left:auto!important;width:min(100%,calc((100svh - 120px)*1.3333333))!important;max-width:100%!important;height:auto!important;aspect-ratio:1448/1086!important;transform:none!important;margin:0 auto!important;flex:none;z-index:1}
-.hero .artboard>img.original-art{width:100%;height:100%;max-height:none;object-fit:contain}
-.hero .actual-tower-house{background:#231b25!important}
-.hero .actual-tower-house img{opacity:0;transition:opacity .08s linear}
-.hero .actual-tower-house img.photo-ready{opacity:1}
-.hero .artboard>.landing-hit{left:30.5%;top:55.8%;width:31.4%;height:7.8%;font-size:clamp(10px,1.6vw,20px);border-radius:11px;white-space:nowrap}
-.hero.entering .artboard{animation:straightZoom .9s linear forwards!important;transform-origin:50% 50%!important}
-.hero.entering::after{z-index:5}
-.mobile-enter{display:none!important}
-.captionline{margin:0 auto;max-width:900px;padding:0 8px;font-size:12px;line-height:1.5}
-@media (max-width:720px){
- .land{justify-content:flex-start;padding:16px 0 22px!important;gap:14px!important}
- .hero{width:100%!important;border-radius:0 0 20px 20px!important;border-left:0!important;border-right:0!important}
- .hero .artboard{width:100%!important;max-width:100%!important;height:auto!important;aspect-ratio:1448/1086!important;position:relative!important}
- .hero .artboard>.landing-hit{font-size:clamp(10px,2.45vw,16px)!important;border-radius:7px!important;border-width:1px!important;padding:0 4px!important;gap:3px!important}
- .hero.entering .artboard{animation:straightZoom .9s linear forwards!important}
- .captionline{font-size:11px;padding:0 15px}
-}
-@media (orientation:landscape) and (max-height:650px){
- .land{justify-content:center!important;padding:4px 8px 14px!important;gap:5px!important}
- .hero{width:100%!important;max-width:none!important;height:calc(100svh - 45px)!important;max-height:none!important}
- .hero .artboard{height:100%!important;width:auto!important;max-width:100%!important;aspect-ratio:1448/1086!important}
- .hero .artboard>.landing-hit{font-size:clamp(10px,2.3vh,18px)!important}
- .captionline{font-size:10px}
-}
-@media(prefers-reduced-motion:reduce){.hero.entering .artboard{animation:none!important}}
-
-/* Final priorities: full composition, tappable CTA in portrait, no landscape letterboxing. */
-@media (max-width:720px) and (orientation:portrait){
- .hero .artboard>.landing-hit{display:none!important}
- .mobile-enter{display:flex!important;align-items:center;justify-content:center;width:calc(100% - 36px);max-width:440px;min-height:54px;margin:4px auto 0;border-radius:12px;font-size:16px;line-height:1.15}
-}
-@media (orientation:landscape) and (max-height:650px){
- .hero{height:auto!important;min-height:0!important;max-height:none!important}
- .hero .artboard{width:100%!important;height:auto!important;max-width:100%!important}
- .hero .artboard>.landing-hit{display:flex!important}
- .mobile-enter{display:none!important}
- .land{justify-content:flex-start!important}
-}
 </style>
 </head>
 <body>
@@ -142,7 +99,7 @@ function msg(){return (error?`<div role="alert" class="error">${esc(error)}</div
 function setError(e){error=String(e?.message||e);notice='';render();}
 function clearMessages(){error='';notice='';}
 function openDoor(){if(entering)return;entering=true;const hero=document.querySelector('.hero');hero?.classList.add('entering');const go=()=>{view='gateway';entering=false;render();};setTimeout(go,window.matchMedia('(prefers-reduced-motion: reduce)').matches?40:880);}
-function landing(){app.innerHTML=`<section class="land"><div class="hero"><img class="backdrop" src="${PHOTO}" alt="" aria-hidden="true"/><div class="artboard"><img class="original-art" src="${PHOTO}" alt="Original approved theatrical LAMDA Christmas quiz artwork, with laptop, phone, stage props and red curtains."/><div class="actual-tower-house"><img src="https://qattanfoundation.org/sites/default/files/outside-ar.jpg" alt="Authentic photograph of Tower House, 226 Cromwell Road" loading="eager" fetchpriority="high" decoding="async" onerror="this.style.opacity='0'"/></div><img class="button-original" src="${PHOTO}" alt="" aria-hidden="true"/><button class="landing-hit" aria-label="Enter the quiz" onclick="openDoor()">ENTER THE QUIZ <span aria-hidden="true">→</span></button></div></div><button class="mobile-enter cta" onclick="openDoor()">ENTER THE QUIZ →</button><div class="captionline">Original theatrical artwork; the laptop screen displays a real Tower House photograph (A. M. Qattan Foundation).</div></section>`;}
+function landing(){app.innerHTML=`<section class="land"><div class="hero"><div class="artboard"><img class="original-art" src="${PHOTO}" alt="Original approved theatrical LAMDA Christmas quiz artwork, with laptop, phone, stage props and red curtains."/><div class="actual-tower-house"><img src="https://qattanfoundation.org/sites/default/files/outside-ar.jpg" alt="Authentic photograph of Tower House, 226 Cromwell Road" loading="eager" fetchpriority="high" decoding="async" onerror="this.style.opacity='0'"/></div><img class="button-original" src="${PHOTO}" alt="" aria-hidden="true"/><button class="landing-hit" aria-label="Enter the quiz" onclick="openDoor()">ENTER THE QUIZ <span aria-hidden="true">→</span></button></div></div><button class="mobile-enter cta" onclick="openDoor()">ENTER THE QUIZ →</button></section>`;}
 function gateway(){
  if(room){ view='join';render();return;}
  wrap(`<p class="eyebrow">Welcome back</p><h1>Ready to step inside?</h1><p class="lead">Your Christmas reunion, hosted live over Zoom. Everyone plays every question, and points are added up at the end.</p>${msg()}<div class="field"><label for="roomcode">Have a joining code?</label><input id="roomcode" maxlength="6" autocomplete="off" autocapitalize="characters" placeholder="ABC123"/></div><div class="row"><button class="cta" onclick="joinCode()">JOIN THE REUNION →</button><button class="ghost" onclick="createRoom()">I'M THE HOST</button></div><div class="divider"></div><h3>See how it works</h3><p class="note">Try a three-question preview on this device. No online room needed, and the sample questions are not the real reunion quiz.</p><button class="secondary" onclick="demoStart()">TRY THE DEMO</button>`);
