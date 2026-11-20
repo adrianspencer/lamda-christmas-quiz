@@ -65,18 +65,18 @@ button{cursor:pointer}
 .landing.restored-landing {width:100%;height:100svh;min-height:100svh;overflow:hidden;position:relative;display:block;padding:0;margin:0;background:#160a0c;}
 .restored-landing .stage-composition {position:absolute;left:50%;top:50%;width:max(100vw, calc(100svh * 1670 / 942));height:max(100svh, calc(100vw * 941 / 1672));aspect-ratio:1672/941;transform:translate(-50%,-50%);}
 .restored-landing .stage-photo {display:block;width:100%;height:100%;object-fit:fill;max-height:none;}
-.restored-landing .case-action {position:absolute;left:34.5%;top:78.8%;width:35.2%;height:13.4%;z-index:4;}
+.restored-landing .case-action {position:absolute;left:26%;top:70%;width:52%;height:25%;z-index:4;}
 .restored-landing .case-button {display:block;width:100%;height:100%;padding:0;margin:0;border:0;background:transparent;color:transparent;font-size:0;cursor:pointer;}
 .restored-landing .case-button:focus-visible {outline:3px solid #fff4cd;outline-offset:3px;border-radius:12px;}
 @media (max-width:699px) and (orientation:portrait){
  .restored-landing .stage-composition {width:max(100vw, calc(100svh * 941 / 1671));height:max(100svh, calc(100vw * 1671 / 941));aspect-ratio:941/1671;}
- .restored-landing .case-action {left:15%;top:69.8%;width:70%;height:8.5%;}
+ .restored-landing .case-action {left:8%;top:63%;width:84%;height:20%;}
 }
 
 /* Consistent tactile feedback for all quiz buttons. */
 button { cursor:pointer; touch-action:manipulation; transition:transform 110ms ease,filter 110ms ease,box-shadow 110ms ease; }
 button:not(:disabled):active,button.button-confirmed:not(:disabled) { transform:translateY(4px) scale(.965) !important; filter:brightness(.65) !important; box-shadow:inset 0 3px 10px rgba(0,0,0,.5) !important; }
-.restored-landing .case-button:not(:disabled):active,.restored-landing .case-button.button-confirmed {background:rgba(35,0,0,.28) !important;outline:3px solid rgba(255,220,145,.75);outline-offset:-4px;border-radius:12px;}
+.restored-landing .case-button:not(:disabled):active,.restored-landing .case-button.button-confirmed {background:rgba(75,0,0,.24) !important;outline:3px solid rgba(255,220,145,.8);outline-offset:-4px;border-radius:12px;}
 .cta,.secondary,.option{min-height:48px;}
 button:focus-visible { outline:3px solid #f5c76c; outline-offset:3px; }
 .quiz-rules { margin:20px auto 16px; max-width:390px; display:grid; gap:11px; color:#f4e4ce; text-align:left; font-size:clamp(14px,3.6vw,17px); line-height:1.4; }
@@ -104,6 +104,7 @@ const GAME_CODE = 'LAMDA1988';
 let playerToken = sessionStorage.getItem('lamda_player_token') || '';
 let hostToken = sessionStorage.getItem('lamda_host_token') || '';
 let lobbyPoll = null;
+let hostPinSet=false;
 let state = { view:'landing', player:'', index:0, answers:[], lobby:null, lobbyError:'', busy:false };
 async function lobbyRequest(action, body={}) {
   const res = await fetch('/api/lobby', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,code:GAME_CODE,...body})});
@@ -128,8 +129,22 @@ async function joinLobby(){
 }
 async function openHost(){
   state.view='host';state.lobbyError='';render();
-  try{const data=await lobbyRequest('host',{token:hostToken});hostToken=data.token;sessionStorage.setItem('lamda_host_token',hostToken);state.lobby=data;startLobbyPoll();render();}
+  try{const data=await lobbyRequest('host',{token:hostToken});hostToken=data.token;sessionStorage.setItem('lamda_host_token',hostToken);state.lobby=data;hostPinSet=!!data.pinSet;startLobbyPoll();render();}
   catch(e){state.lobbyError=e.message;render();}
+}
+async function unlockHost(){
+ const pin=document.getElementById('hostPin')?.value||'';
+ try{const data=await lobbyRequest('host',{pin});hostToken=data.token;sessionStorage.setItem('lamda_host_token',hostToken);hostPinSet=!!data.pinSet;state.lobby=data;state.lobbyError='';startLobbyPoll();render();}
+ catch(e){state.lobbyError=e.message;render();}
+}
+async function saveHostPin(){
+ const pin=document.getElementById('hostPin')?.value||'';
+ try{const data=await lobbyRequest('set_pin',{token:hostToken,pin});hostPinSet=true;state.lobby=data;state.lobbyError='';render();}
+ catch(e){state.lobbyError=e.message;render();}
+}
+async function hostStart(){
+ try{state.lobby=await lobbyRequest('start',{token:hostToken});state.lobbyError='';render();}
+ catch(e){state.lobbyError=e.message;render();}
 }
 async function resetLobby(){
   if(!confirm('Clear the lobby and remove all joined players?'))return;
@@ -141,7 +156,7 @@ function renderLobby(){
  app.innerHTML=`<section class="panel-screen"><div class="panel">
  <div class="brand"><h1>LAMDA <span class="sub">Christmas Quiz</span><span class="year">1988</span></h1></div>
  <div class="lobby-heading">YOU'RE IN, ${escapeHtml(state.player)}!</div>
- <p class="copy">Waiting for the quizmaster to start.</p>
+ <p class="copy">${state.lobby?.phase==='started'?'Quiz started — waiting for the first question.':'Waiting for the quizmaster to start.'}</p>
  <div class="lobby-count">${names.length} <span>player${names.length===1?'':'s'} joined</span></div>
  <div class="lobby-names">${names.map(n=>`<span class="lobby-chip">${n}</span>`).join('')}</div>
  ${state.lobbyError?`<p class="lobby-error">${escapeHtml(state.lobbyError)}</p>`:''}
@@ -150,16 +165,19 @@ function renderLobby(){
 }
 function renderHost(){
  const names=(state.lobby?.players||[]).map(p=>escapeHtml(p.name));
+ const authorized=!!hostToken&&!state.lobbyError;
  app.innerHTML=`<section class="panel-screen"><div class="panel">
  <div class="brand"><h1>LAMDA <span class="sub">Christmas Quiz</span><span class="year">1988</span></h1></div>
- <div class="lobby-heading">QUIZMASTER · LOBBY</div>
- <div class="lobby-count">${names.length} <span>player${names.length===1?'':'s'} joined</span></div>
+ <div class="lobby-heading">QUIZMASTER · ${state.lobby?.phase==='started'?'QUIZ STARTED':'LOBBY'}</div>
+ ${!authorized?`<p class="copy">Enter your quizmaster PIN to open the controls.</p><input id="hostPin" type="password" inputmode="numeric" autocomplete="off" placeholder="Quizmaster PIN" maxlength="12"/><button class="cta full" onclick="pressedAction(this,unlockHost)">UNLOCK CONTROLS</button>`:''}
+ ${authorized?`<div class="lobby-count">${names.length} <span>player${names.length===1?'':'s'} joined</span></div>
  <div class="lobby-names">${names.map(n=>`<span class="lobby-chip">${n}</span>`).join('')||'<span class="lobby-note">Waiting for players…</span>'}</div>
+ ${!hostPinSet?`<p class="copy">Choose a private 6–12 digit quizmaster PIN. You'll use it to access these controls from another device.</p><input id="hostPin" type="password" inputmode="numeric" autocomplete="new-password" placeholder="Set quizmaster PIN" maxlength="12"/><button class="cta full" onclick="pressedAction(this,saveHostPin)">SAVE HOST PIN</button>`:
+ state.lobby?.phase==='started'?`<p class="copy">The quiz has started. Players can see that the quizmaster is preparing the first question.</p>`:
+ `<p class="copy">Ask everyone to join, then start when you're ready.</p><button class="cta full" ${names.length?'':'disabled'} onclick="pressedAction(this,hostStart)">START QUIZ</button>`}
+ <button class="secondary full-secondary" onclick="pressedAction(this,resetLobby)">Clear Lobby</button>`:''}
  ${state.lobbyError?`<p class="lobby-error">${escapeHtml(state.lobbyError)}</p>`:''}
- <p class="copy">Ask everyone to open the quiz website and enter their name.</p>
- <button class="cta full" disabled title="Question synchronisation is the next build stage">START QUIZ · COMING NEXT</button>
- <button class="secondary full-secondary" onclick="pressedAction(this,resetLobby)">Clear Lobby</button>
- <p class="lobby-note">The lobby is live. Question synchronisation and scoring are not yet enabled.</p>
+ <p class="lobby-note">Question release and scoring are the next build stage.</p>
  </div></section>`;
 }
 
