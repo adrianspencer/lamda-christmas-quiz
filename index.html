@@ -255,6 +255,32 @@ button:disabled{opacity:.5;cursor:not-allowed}
   z-index: 1 !important;
 }
 
+
+/* Filofax presentation frame: a warm leather-and-antique-brass mount around the question artwork. */
+.panel-screen.game-screen .theatre-art {
+  position: relative !important;
+  isolation: isolate !important;
+  filter: drop-shadow(0 16px 20px rgba(0,0,0,.62)) !important;
+}
+.panel-screen.game-screen .theatre-art::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: -12px !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+  border: 10px solid transparent !important;
+  border-radius: 13px !important;
+  background:
+    linear-gradient(transparent, transparent) padding-box,
+    linear-gradient(145deg, #e2c184 0%, #80552f 16%, #3a211b 34%, #c39a5c 51%, #5b3524 70%, #d9b574 88%, #6c452b 100%) border-box !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(25,13,10,.88),
+    inset 0 0 0 4px rgba(221,184,116,.82),
+    0 0 0 3px #24140f,
+    0 0 0 5px rgba(174,126,69,.78),
+    0 12px 28px rgba(0,0,0,.55) !important;
+}
+
 </style>
 </head>
 <body>
