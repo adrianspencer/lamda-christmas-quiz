@@ -1,7 +1,7 @@
 // Cloudflare Pages Function. Requires D1 binding named DB and schema.sql applied.
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 const digest=async(s)=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))).map(x=>x.toString(16).padStart(2,'0')).join('');
-const validPin=p=>typeof p==='string'&&/^\d{6,12}$/.test(p);
+const validPin=p=>typeof p==='string'&&/^\d{4,12}$/.test(p);
 const validToken=t=>typeof t==='string'&&/^[a-f0-9-]{36}$/.test(t);
 export async function onRequestPost({request,env}) {
  if(!env.DB)return json({error:'Lobby database is not configured yet.'},503);
@@ -21,7 +21,7 @@ export async function onRequestPost({request,env}) {
   if(action==='set_pin'){
    const host=await db.prepare('SELECT token FROM hosts WHERE code=? AND token=?').bind(code,token||'').first();
    if(!host)return json({error:'Quizmaster access required'},403);
-   if(!validPin(body.pin))return json({error:'Use a PIN of 6 to 12 digits.'},400);
+   if(!validPin(body.pin))return json({error:'Use a PIN of 4 to 12 digits.'},400);
    const salt=crypto.randomUUID();const hash=await digest(salt+':'+body.pin);
    await db.prepare('UPDATE hosts SET pin_hash=?,pin_salt=? WHERE code=?').bind(hash,salt,code).run();
    return json({pinSet:true,...await status(db,code)});
