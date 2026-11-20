@@ -1,0 +1,23 @@
+LAMDA CHRISTMAS QUIZ — LIVE LOBBY SETUP
+
+The artwork and original HTML remain in index.html. The lobby needs a shared
+Cloudflare D1 database; simply uploading index.html alone is NOT enough.
+
+1. Upload index.html and functions/api/lobby.js to the same GitHub repository,
+   keeping the functions/api/ directory structure. Keep schema.sql for setup.
+2. In Cloudflare dashboard, create a D1 database (e.g. lamda-quiz).
+3. In the D1 database Console, execute the SQL in schema.sql.
+4. In the Cloudflare Pages project settings, add a D1 binding named DB pointing
+   to that database. Redeploy the Pages project so the binding takes effect.
+5. Open https://lamda-christmas-quiz.pages.dev/?host=1 in the host browser FIRST.
+   The first browser to claim host access becomes the host for this test lobby.
+   Keep this browser's session; do not share the ?host=1 link.
+6. Open the ordinary site on other phones, enter a name and press Join the Quiz.
+   The host sees the joined players refresh every ~2.5 seconds.
+
+This stage implements the LIVE LOBBY ONLY. The Start Quiz control is deliberately
+not active. Question sync, scoring and results are subsequent development steps.
+
+NOTE: This first-claim host setup is intended for private testing, not for an
+unrestricted public launch. A proper host authentication mechanism is needed
+before inviting the full group.
