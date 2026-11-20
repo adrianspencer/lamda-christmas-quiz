@@ -216,6 +216,20 @@ button:disabled{opacity:.5;cursor:not-allowed}
   -webkit-appearance: none !important;
   appearance: none !important;
 }
+
+/* Surgical layout fix: centre the complete question unit in the available viewport. */
+.panel-screen.game-screen {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  min-height: 100svh !important;
+  padding: 18px 12px !important;
+}
+.panel-screen.game-screen > .panel.filofax {
+  margin: 0 auto !important;
+}
+
 </style>
 </head>
 <body>
