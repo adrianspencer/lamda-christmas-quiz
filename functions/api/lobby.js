@@ -33,6 +33,7 @@ export async function onRequestPost({request,env}) {
    const count=await db.prepare('SELECT COUNT(*) AS n FROM players WHERE code=?').bind(code).first();
    if(!count.n)return json({error:'Wait for at least one player.'},400);
    await db.prepare("UPDATE hosts SET phase='started' WHERE code=? AND phase='lobby'").bind(code).run();
+   await db.prepare('INSERT OR IGNORE INTO quiz_game(code) VALUES(?)').bind(code).run();
    return json(await status(db,code));
   }
   if(action==='join'){
@@ -53,6 +54,8 @@ export async function onRequestPost({request,env}) {
   if(action==='reset'){
    const host=await db.prepare('SELECT token FROM hosts WHERE code=? AND token=?').bind(code,token||'').first();
    if(!host)return json({error:'Only the quizmaster can clear the lobby.'},403);
+   await db.prepare('DELETE FROM quiz_answers WHERE code=?').bind(code).run();
+   await db.prepare('DELETE FROM quiz_game WHERE code=?').bind(code).run();
    await db.prepare('DELETE FROM players WHERE code=?').bind(code).run();
    await db.prepare("UPDATE hosts SET phase='lobby' WHERE code=?").bind(code).run();
    return json(await status(db,code));
