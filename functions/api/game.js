@@ -28,7 +28,7 @@ const questions=[
 ['Which theatrical lighting accessory is used to project patterns, such as windows or leaves, onto the stage?','Gobo'],
 ['Why was whistling backstage traditionally forbidden in theatres?','Whistles were used to cue flying crews and scenery changes; accidental signals could be dangerous'],
 ['What is the secondary safety attachment used on a suspended stage lantern?','Safety chain or safety bond'],
-['How many weeks of qualifying professional work were required for full Equity membership under the system in place in 1988?','Not verified — excluded from scoring'],
+['How many weeks of work as a provisional Equity member were required to qualify for full membership under the system operating in 1988?','30 weeks'],
 ['Which Irving Berlin musical did we perform for graduation?','Annie Get Your Gun']];
 export async function onRequestPost({request,env}){
  if(!env.DB)return reply({error:'D1 database binding DB is missing'},503);
@@ -61,7 +61,7 @@ export async function onRequestPost({request,env}){
  if(b.action==='mark'){
   if(!isHost)return reply({error:'Quizmaster only'},403);
   const i=Number(b.index),correct=Number(b.correct);
-  if(!Number.isInteger(i)||i<0||i>=30||![0,1].includes(correct)||i===28)return reply({error:'Invalid marking'},400);
+  if(!Number.isInteger(i)||i<0||i>=30||![0,1].includes(correct))return reply({error:'Invalid marking'},400);
   const target=String(b.playerToken||'');
   await db.prepare('UPDATE quiz_answers SET correct=? WHERE code=? AND player_token=? AND question_index=?').bind(correct,code,target,i).run();
  }
@@ -71,6 +71,6 @@ export async function onRequestPost({request,env}){
  const answer=player?await db.prepare('SELECT answer,correct FROM quiz_answers WHERE code=? AND player_token=? AND question_index=?').bind(code,token,idx).first():null;
  const rows=isHost?await db.prepare('SELECT a.player_token,a.question_index,a.answer,a.correct,p.name FROM quiz_answers a JOIN players p ON p.token=a.player_token WHERE a.code=? ORDER BY a.question_index,p.joined_at').bind(code).all():null;
  const scores=phase==='finished'?await db.prepare('SELECT p.name,COALESCE(SUM(CASE WHEN a.correct=1 THEN 1 ELSE 0 END),0) AS score FROM players p LEFT JOIN quiz_answers a ON a.player_token=p.token AND a.code=p.code WHERE p.code=? GROUP BY p.token ORDER BY score DESC,p.joined_at').bind(code).all():null;
- return reply({phase,index:idx,total:30,revealed:!!game?.revealed,question:phase==='started'?questions[idx][0]:null,correctAnswer:(isHost||game?.revealed||phase==='finished')?questions[idx][1]:null,unscored:idx===28,answer:answer?.answer||null,marked:answer?.correct??null,answers:isHost?(rows?.results||[]):undefined,scores:scores?.results||undefined});
+ return reply({phase,index:idx,total:30,revealed:!!game?.revealed,question:phase==='started'?questions[idx][0]:null,correctAnswer:(isHost||game?.revealed||phase==='finished')?questions[idx][1]:null,unscored:false,answer:answer?.answer||null,marked:answer?.correct??null,answers:isHost?(rows?.results||[]):undefined,scores:scores?.results||undefined});
  }catch(e){return reply({error:'Game service: '+e.message},500)}
 }
