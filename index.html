@@ -443,7 +443,7 @@ function renderGame(){
  if(!game)return renderLobby();
  const isHost=state.view==='host';
  if(game.phase==='finished'){
-  app.innerHTML=`<section class="panel-screen game-screen"><div class="panel filofax"><div class="brand"><h1>LAMDA <span class="sub">Christmas Quiz</span><span class="year">1988</span></h1></div><div class="ribbon">✦ FINAL RESULTS ✦</div><h2 style="text-align:center">The Class of 1988</h2><ol class="result-list">${(game.scores||[]).map((x,i)=>`<li>✦ ${i+1}. ${escapeHtml(x.name)} — ${x.score} points</li>`).join('')}</ol><p class="lobby-note">All 30 questions are eligible for points, including the historical Equity question.</p>${isHost?'<button class="secondary full-secondary" onclick="pressedAction(this,resetLobby)">Reset for a new game</button>':''}</div></section>`;return;
+  app.innerHTML=`<section class="panel-screen game-screen"><div class="panel filofax"><div class="brand"><h1>LAMDA <span class="sub">Christmas Quiz</span><span class="year">1988</span></h1></div><div class="ribbon">✦ FINAL RESULTS ✦</div><h2 style="text-align:center">The Class of 1988</h2><ol class="result-list">${(game.scores||[]).map((x,i)=>`<li>✦ ${i+1}. ${escapeHtml(x.name)} — ${x.score} points</li>`).join('')}</ol>${isHost?'<button class="secondary full-secondary" onclick="pressedAction(this,resetLobby)">Reset for a new game</button>':''}</div></section>`;return;
  }
  if(game.phase!=='started')return isHost?renderHost():renderLobby();
  const i=game.index;
