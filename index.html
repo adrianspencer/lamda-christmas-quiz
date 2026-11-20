@@ -459,6 +459,21 @@ function renderGame(){
  </div>
  ${isHost?`<div class="theatre-controls"><h3>Quizmaster · Submitted answers (${answers.length})</h3>${answers.map(a=>`<div class="mark-row"><span><strong>${escapeHtml(a.name)}</strong>: ${escapeHtml(a.answer)}</span>${!game.unscored?`<span><button class="mark-btn ${a.correct===1?'active':''}" onclick="doGame('mark',{index:${i},playerToken:'${a.player_token}',correct:1})">✓</button><button class="mark-btn ${a.correct===0?'active':''}" onclick="doGame('mark',{index:${i},playerToken:'${a.player_token}',correct:0})">✗</button></span>`:''}</div>`).join('')||'<p>Waiting for answers…</p>'}<div class="row" style="margin-top:18px">${!game.revealed?`<button class="cta full" onclick="doGame('reveal')">REVEAL ANSWER</button>`:i===29?`<button class="cta full" onclick="doGame('finish')">SHOW FINAL RANKINGS</button>`:`<button class="cta full" onclick="doGame('advance')">NEXT QUESTION →</button>`}</div><button type="button" class="secondary full-secondary reset-text-link" onclick="resetLobby()" style="background:transparent!important;color:#201410!important;border:0!important;box-shadow:none!important;text-decoration:underline!important;text-underline-offset:3px!important;font-weight:700!important;cursor:pointer!important">RESET QUIZ &amp; CLEAR PLAYERS</button>${state.lobbyError?`<p class="lobby-error">${escapeHtml(state.lobbyError)}</p>`:''}</div>`:''}
  </div></section>`;
+ fitQuestionText();
+}
+function fitQuestionText(){
+ const el=document.querySelector('.question-copy');
+ if(!el)return;
+ const style=getComputedStyle(el);
+ const base=parseFloat(style.fontSize)||18;
+ const min=12;
+ el.style.fontSize=base+'px';
+ el.style.lineHeight='1.12';
+ let size=base;
+ while(el.scrollHeight>el.clientHeight+1 && size>min){
+  size=Math.max(min,size-0.5);
+  el.style.fontSize=size+'px';
+ }
 }
 async function submitGameAnswer(){
  const v=(document.getElementById('gameAnswer')?.value||answerDraft).trim();
