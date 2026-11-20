@@ -462,18 +462,30 @@ function renderGame(){
  fitQuestionText();
 }
 function fitQuestionText(){
- const el=document.querySelector('.question-copy');
- if(!el)return;
- const style=getComputedStyle(el);
- const base=parseFloat(style.fontSize)||18;
- const min=12;
- el.style.fontSize=base+'px';
- el.style.lineHeight='1.12';
- let size=base;
- while(el.scrollHeight>el.clientHeight+1 && size>min){
-  size=Math.max(min,size-0.5);
-  el.style.fontSize=size+'px';
- }
+ const fit=()=>{
+  const el=document.querySelector('.theatre-art .question-copy');
+  if(!el)return;
+  const base=parseFloat(el.dataset.baseFont)||parseFloat(getComputedStyle(el).fontSize)||18;
+  const min=11;
+  el.style.setProperty('box-sizing','border-box','important');
+  el.style.setProperty('min-height','0','important');
+  el.style.setProperty('overflow','hidden','important');
+  el.style.setProperty('line-height','1.12','important');
+  let low=min,high=base,best=min;
+  el.style.setProperty('font-size',base+'px','important');
+  if(el.scrollHeight<=el.clientHeight+1)best=base;
+  else{
+   for(let n=0;n<14;n++){
+    const mid=(low+high)/2;
+    el.style.setProperty('font-size',mid+'px','important');
+    if(el.scrollHeight<=el.clientHeight+1){best=mid;low=mid;}
+    else high=mid;
+   }
+  }
+  el.style.setProperty('font-size',best+'px','important');
+ };
+ fit();
+ requestAnimationFrame(()=>{fit();requestAnimationFrame(fit);});
 }
 async function submitGameAnswer(){
  const v=(document.getElementById('gameAnswer')?.value||answerDraft).trim();
