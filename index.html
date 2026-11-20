@@ -315,7 +315,7 @@ async function joinLobby(){
   const name=(document.getElementById('nameInput')?.value||'').trim();
   if(!name){state.lobbyError='Please enter your name.';renderGateway();return;}
   state.busy=true;state.player=name;
-  try{const data=await lobbyRequest('join',{name,token:playerToken});playerToken=data.token;sessionStorage.setItem('lamda_player_token',playerToken);state.lobby=data;state.lobbyError='';state.view='lobby';startLobbyPoll();render();}
+  try{const data=await lobbyRequest('join',{name,token:playerToken});playerToken=data.token;sessionStorage.setItem('lamda_player_token',playerToken);sessionStorage.setItem('lamda_player_name',name);state.lobby=data;state.lobbyError='';state.view='lobby';startLobbyPoll();render();}
   catch(e){state.lobbyError=e.message;state.view='gateway';render();}
   finally{state.busy=false;}
 }
@@ -475,9 +475,38 @@ function pressedAction(button, action){
 function escapeHtml(s){return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function enterQuiz(){ state.view='gateway'; state.lobbyError=''; render(); }
 function goBack(){ state.view='landing'; render(); }
-// Host view is available only via the private ?host=1 link.
-if(new URLSearchParams(location.search).get('host')==='1') openHost();
-else render();
+// Restore the existing session after a refresh instead of returning to the landing page.
+async function restoreSession(){
+ const params=new URLSearchParams(location.search);
+ if(params.get('host')==='1'){
+  await openHost();
+  if(hostToken && (state.lobby?.phase==='started'||state.lobby?.phase==='finished')) await refreshGame();
+  return;
+ }
+ if(!playerToken){render();return;}
+ state.player=sessionStorage.getItem('lamda_player_name')||'';
+ try{
+  const data=await lobbyRequest('status',{token:playerToken});
+  state.lobby=data;
+  state.lobbyError='';
+  if(data.phase==='started'||data.phase==='finished'){
+   state.view='quiz';
+   await refreshGame();
+  }else{
+   state.view='lobby';
+   render();
+  }
+  startLobbyPoll();
+ }catch(e){
+  // The token may belong to a lobby that has since been cleared.
+  sessionStorage.removeItem('lamda_player_token');
+  sessionStorage.removeItem('lamda_player_name');
+  playerToken='';
+  state.view='landing';
+  render();
+ }
+}
+restoreSession();
 </script>
 </body>
 </html>
