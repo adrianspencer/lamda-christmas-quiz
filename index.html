@@ -156,6 +156,49 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .theatre-controls button{min-height:42px}
 @media(min-width:750px){.panel-screen.game-screen{background:#160c0b radial-gradient(ellipse at center,#49221a,#120808)!important}}
 @media(max-width:420px){.panel-screen.game-screen{padding:0!important}.theatre-art .question-copy{font-size:clamp(12px,3.45vw,18px)}.theatre-art .question-count{font-size:clamp(10px,2.4vw,14px)}}
+
+/* 20 Nov: clean question parchment, full dynamic counter, subtle winter surround.
+   Everything is CSS on top of the original artwork: gameplay and assets unchanged. */
+.theatre-art::before{
+ content:"";position:absolute;z-index:1;pointer-events:none;
+ left:19.5%;top:28%;width:61%;height:19%;
+ background:radial-gradient(ellipse at 50% 45%,#f8d8a6 0%,#f5d1a0 65%,#edc18b 100%);
+ border-radius:17% 14% 16% 18% / 15% 17% 19% 13%;
+ box-shadow:0 0 15px 14px #f2ce9b;
+}
+.theatre-art .question-copy{z-index:2;top:29%;height:18%;}
+.theatre-art .question-count{
+ z-index:3;left:50.7%;top:15.7%;width:29.5%;height:8%;
+ background:linear-gradient(165deg,#f8d8aa,#edba85)!important;
+ color:#2b1710!important;font:700 clamp(12px,1.75vw,19px)/1.16 'Courier New',monospace!important;
+ border:1px solid #aa754c;border-radius:4px;clip-path:none!important;
+ padding:5px 6px;white-space:normal;overflow:visible;
+}
+.theatre-art .answer-field,.theatre-art .answer-button,.theatre-art .game-state{z-index:3}
+@media(min-width:750px){
+ .panel-screen.game-screen{
+ background-color:#2b1019!important;
+ background-image:radial-gradient(circle at 20% 22%,#f8e7d9 0 1px,transparent 2px),radial-gradient(circle at 73% 65%,#e9c9c3 0 1.5px,transparent 2.5px),radial-gradient(circle at 46% 78%,#f3e5dc 0 1px,transparent 2px),linear-gradient(120deg,#210c14,#571924 55%,#250c15)!important;
+ background-size:120px 145px,174px 189px,93px 127px,100% 100%!important;
+ }
+}
+
+/* Final counter fix: mask the incomplete words printed in the artwork.
+   Both lines are live HTML, so the number updates from question 01 to 30. */
+.theatre-art .question-count {
+ box-sizing:border-box!important;
+ left:49.3%!important;top:15.15%!important;width:33%!important;height:9.2%!important;
+ display:flex!important;flex-direction:column!important;
+ align-items:center!important;justify-content:center!important;gap:0!important;
+ padding:2px 5px!important;
+ background:#d99186!important;border:0!important;
+ border-radius:3px!important;box-shadow:1px 3px 5px #593a305c!important;
+ color:#21140f!important;transform:rotate(-1deg)!important;
+ font:700 clamp(11px,2.05vw,22px)/1.1 'Courier New',monospace!important;
+ white-space:nowrap!important;overflow:hidden!important;
+}
+.theatre-art .question-count span {display:block!important;white-space:nowrap!important;line-height:1.14!important;}
+@media(max-width:420px){.theatre-art .question-count{font-size:clamp(10px,2.9vw,14px)!important}}
 </style>
 </head>
 <body>
@@ -329,7 +372,7 @@ function renderGame(){
  if(answerDraftQuestion!==i){answerDraft='';answerDraftQuestion=i;}
  app.innerHTML=`<section class="panel-screen game-screen"><div class="panel filofax">
  <div class="theatre-art" aria-label="LAMDA Christmas Quiz question">
- <div class="question-count">Question ${String(i+1).padStart(2,'0')} of 30</div>
+ <div class="question-count"><span>Question ${String(i+1).padStart(2,'0')}</span><span>of 30</span></div>
  <div class="question-copy">${escapeHtml(game.question||'')}</div>
  ${!isHost&&!myAnswer&&!game.revealed?`<textarea id="gameAnswer" class="answer-field" maxlength="400" aria-label="Type your answer" placeholder="Type your answer here" oninput="answerDraft=this.value">${escapeHtml(answerDraft)}</textarea><button class="answer-button" aria-label="Submit Answer" onclick="submitGameAnswer()">SUBMIT ANSWER</button>`:''}
  <div class="game-state">${game.unscored?'Historical question — not scored<br>':''}${!isHost&&myAnswer?`✓ Answer submitted: ${escapeHtml(myAnswer)}`:''}${!isHost&&!myAnswer&&game.revealed?'Answer window closed.':''}${game.revealed?`<strong>ANSWER:</strong> ${escapeHtml(game.correctAnswer)}`:''}${!isHost&&!myAnswer&&!game.revealed?'':''}</div>
