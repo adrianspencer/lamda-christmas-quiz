@@ -279,6 +279,62 @@ button:disabled{opacity:.5;cursor:not-allowed}
     0 12px 28px rgba(0,0,0,.55) !important;
 }
 
+
+/* Surgical final-results screen repair only: restore a readable parchment results panel. */
+.panel-screen.results-screen {
+  box-sizing: border-box;
+  padding: 28px 16px;
+}
+.panel-screen.results-screen > .panel.filofax {
+  box-sizing: border-box !important;
+  width: min(700px, calc(100vw - 32px)) !important;
+  max-width: 700px !important;
+  margin: 0 auto !important;
+  padding: clamp(24px, 4vw, 38px) !important;
+  color: #39251d !important;
+  background:
+    radial-gradient(ellipse at 18% 10%, rgba(255,255,255,.55), transparent 38%),
+    radial-gradient(ellipse at 85% 88%, rgba(168,112,54,.12), transparent 42%),
+    repeating-linear-gradient(0deg, #f5e6c8 0px, #f5e6c8 34px, #e9d8b9 35px, #f5e6c8 36px) !important;
+  border: 12px solid #48251e !important;
+  border-left: 22px solid #4c281e !important;
+  border-radius: 14px !important;
+  box-shadow: inset 0 0 0 3px #b88b55, inset 0 0 24px rgba(120,75,42,.18),
+    0 18px 48px rgba(0,0,0,.65) !important;
+  overflow: visible !important;
+}
+.panel-screen.results-screen .brand,
+.panel-screen.results-screen .brand h1,
+.panel-screen.results-screen .brand .sub,
+.panel-screen.results-screen .brand .year,
+.panel-screen.results-screen h2,
+.panel-screen.results-screen .result-list,
+.panel-screen.results-screen .result-list li {
+  color: #39251d !important;
+}
+.panel-screen.results-screen .result-list {
+  margin: 18px 0 22px !important;
+}
+.panel-screen.results-screen .result-list li {
+  padding: 11px 4px !important;
+  border-bottom: 1px solid rgba(75,45,29,.24) !important;
+  font-size: clamp(15px, 2vw, 18px);
+  line-height: 1.35;
+}
+.panel-screen.results-screen .secondary {
+  color: #fff7ef !important;
+  background: #84251f !important;
+  border: 2px solid #c9a56a !important;
+  border-radius: 8px !important;
+}
+@media (max-width: 480px) {
+  .panel-screen.results-screen > .panel.filofax {
+    padding: 22px 17px !important;
+    border-width: 9px !important;
+    border-left-width: 16px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -443,7 +499,7 @@ function renderGame(){
  if(!game)return renderLobby();
  const isHost=state.view==='host';
  if(game.phase==='finished'){
-  app.innerHTML=`<section class="panel-screen game-screen"><div class="panel filofax"><div class="brand"><h1>LAMDA <span class="sub">Christmas Quiz</span><span class="year">1988</span></h1></div><div class="ribbon">✦ FINAL RESULTS ✦</div><h2 style="text-align:center">The Class of 1988</h2><ol class="result-list">${(game.scores||[]).map((x,i)=>`<li>✦ ${i+1}. ${escapeHtml(x.name)} — ${x.score} points</li>`).join('')}</ol>${isHost?'<button class="secondary full-secondary" onclick="pressedAction(this,resetLobby)">Reset for a new game</button>':''}</div></section>`;return;
+  app.innerHTML=`<section class="panel-screen game-screen results-screen"><div class="panel filofax"><div class="brand"><h1>LAMDA <span class="sub">Christmas Quiz</span><span class="year">1988</span></h1></div><div class="ribbon">✦ FINAL RESULTS ✦</div><h2 style="text-align:center">The Class of 1988</h2><ol class="result-list">${(game.scores||[]).map((x,i)=>`<li>✦ ${i+1}. ${escapeHtml(x.name)} — ${x.score} points</li>`).join('')}</ol>${isHost?'<button class="secondary full-secondary" onclick="pressedAction(this,resetLobby)">Reset for a new game</button>':''}</div></section>`;return;
  }
  if(game.phase!=='started')return isHost?renderHost():renderLobby();
  const i=game.index;
