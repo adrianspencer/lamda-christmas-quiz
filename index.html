@@ -118,6 +118,29 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .restored-landing .case-action:has(.button-confirmed){filter:brightness(.65);transform:translateY(4px) scale(.98);transition:transform .12s,filter .12s;}
 .restored-landing .case-button.button-confirmed{background:rgba(10,0,0,.24) !important;outline:3px solid #f2c67d !important;}
 @media(max-width:550px){.panel.filofax{padding:22px 19px 25px 35px;margin:12px auto;border-left-width:13px}.panel.filofax:before{left:-8px;width:15px}.panel.filofax:after{right:-8px;font-size:8px}}
+
+/* Quiz-question Filofax refinement. Scoped to game pages only; landing untouched. */
+.panel-screen:has(.filofax) .panel.filofax{
+  max-width:760px; position:relative; isolation:isolate;
+  background:repeating-linear-gradient(to bottom,#f5e6c8 0px,#f5e6c8 35px,#d9c7aa 36px,#f5e6c8 37px);
+  border:14px solid #48251e; border-left:34px solid #4c281e;
+  border-radius:18px 24px 24px 18px;
+  box-shadow:inset 0 0 0 3px #8b5a3d,inset 0 0 28px #bb966d,0 22px 65px rgba(0,0,0,.65);
+  padding:32px 35px 38px 55px;
+}
+.panel-screen:has(.filofax) .panel.filofax:before{
+  content:'';position:absolute;left:-24px;top:70px;bottom:42px;width:54px;z-index:2;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,transparent 0px,transparent 71px,#251c17 72px,#a7a49a 77px,#f2eee0 83px,#88877e 90px,#30251d 95px,transparent 101px,transparent 117px);
+  border:0;box-shadow:none;
+}
+.panel-screen:has(.filofax) .panel.filofax:after{content:'LAMDA ’88';position:absolute;right:-15px;top:130px;writing-mode:vertical-rl;transform:translateX(100%);background:#a64b39;color:#fff2d9;padding:15px 8px;border-radius:0 7px 7px 0;font:700 12px Georgia,serif;letter-spacing:.09em;pointer-events:none}
+.panel-screen:has(.filofax) .filofax .brand h1{font-family:Georgia,'Times New Roman',serif!important;font-size:clamp(23px,4vw,38px)!important;color:#40231d!important;text-shadow:none!important}
+.panel-screen:has(.filofax) .filofax .question{background:transparent!important;border:0!important;box-shadow:none!important;padding:20px 4px!important}
+.panel-screen:has(.filofax) .filofax .question h2{font-family:'Courier New',Courier,monospace!important;font-size:clamp(23px,4vw,33px)!important;font-weight:700!important;line-height:1.35!important;color:#2b1d18!important}
+.panel-screen:has(.filofax) .filofax textarea{min-height:78px!important;background:#fffaf0!important;border:2px solid #382b25!important;border-radius:5px!important;font-family:'Courier New',monospace!important}
+.panel-screen:has(.filofax) .filofax .cta{background:linear-gradient(#ba231b,#8e1712)!important;border:2px solid #50120d!important;border-radius:9px!important;color:#fff5e5!important;font-family:Georgia,serif!important;font-size:clamp(17px,3vw,23px)!important;box-shadow:0 5px 0 #4a140f,0 8px 14px #5b342866!important}
+.panel-screen:has(.filofax) .filofax .cta:active{transform:translateY(5px)!important;box-shadow:0 0 0 #4a140f!important}
+@media(max-width:550px){.panel-screen:has(.filofax) .panel.filofax{border-left-width:25px;padding:22px 19px 25px 32px}.panel-screen:has(.filofax) .panel.filofax:before{left:-21px;width:41px}.panel-screen:has(.filofax) .panel.filofax:after{display:none}}
 </style>
 </head>
 <body>
