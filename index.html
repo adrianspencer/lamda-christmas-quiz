@@ -465,7 +465,7 @@ function getRudolphCue(index){
 }
 function scheduleRudolphCue(index){
  const cue=getRudolphCue(index);
- if(state.view!=='quiz'||!cue||game?.phase!=='started'||game?.revealed)return;
+ if(state.view==='host'||!cue||game?.phase!=='started'||game?.revealed)return;
  if(rudolphScheduledQuestion===index)return;
  clearRudolphTimers();
  rudolphScheduledQuestion=index;
@@ -503,7 +503,7 @@ function scheduleRudolphCue(index){
 }
 function renderRudolphOverlay(index){
  const cue=getRudolphCue(index);
- if(state.view!=='quiz'||!cue||game?.revealed)return '';
+ if(state.view==='host'||!cue||game?.revealed)return '';
  const phase=rudolphVisualState.index===index?rudolphVisualState.phase:'waiting';
  const classes=phase==='show'?' show':phase==='hide'?' show hide':'';
  return `<div class="rudolph-overlay rudolph-${cue.side}${classes}" aria-hidden="true"><img class="rudolph-figure" src="${RUDOLPH_IMAGE}" alt=""/></div>`;
