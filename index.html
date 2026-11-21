@@ -454,9 +454,17 @@ const RUDOLPH_PLAN = {0:'left',2:'right',5:'left',6:'right',8:'left',11:'right',
 let rudolphTimers=[];
 let rudolphPlayedQuestions=new Set();
 let rudolphRunToken=0;
+let rudolphScheduledQuestion=null;
+let rudolphVisualState={index:null,side:null,phase:'hidden'};
 try{JSON.parse(sessionStorage.getItem('lamda_rudolph_played')||'[]').forEach(n=>rudolphPlayedQuestions.add(Number(n)));}catch(_e){}
 function persistRudolphPlayed(){sessionStorage.setItem('lamda_rudolph_played',JSON.stringify([...rudolphPlayedQuestions]));}
-function resetRudolphPlayed(){rudolphPlayedQuestions.clear();sessionStorage.removeItem('lamda_rudolph_played');clearRudolphTimers();}
+function resetRudolphPlayed(){
+ rudolphPlayedQuestions.clear();
+ sessionStorage.removeItem('lamda_rudolph_played');
+ clearRudolphTimers();
+ rudolphScheduledQuestion=null;
+ rudolphVisualState={index:null,side:null,phase:'hidden'};
+}
 function clearRudolphTimers(){rudolphTimers.forEach(clearTimeout);rudolphTimers=[];rudolphRunToken++;}
 function getRudolphCue(index){
  if(!Object.prototype.hasOwnProperty.call(RUDOLPH_PLAN,index))return null;
@@ -465,28 +473,32 @@ function getRudolphCue(index){
  return {side,delay:3600+(seed%4200),hold:2200+(seed%700)};
 }
 function scheduleRudolphCue(index){
- clearRudolphTimers();
  const cue=getRudolphCue(index);
- const overlay=document.querySelector('.theatre-art .rudolph-overlay');
- if(!cue||!overlay||game?.phase!=='started'||game?.revealed)return;
- if(rudolphPlayedQuestions.has(index))return;
- overlay.classList.remove('show','hide');
- overlay.classList.add(cue.side==='left'?'rudolph-left':'rudolph-right');
+ if(!cue||game?.phase!=='started'||game?.revealed)return;
+ if(rudolphScheduledQuestion===index)return;
+ clearRudolphTimers();
+ rudolphScheduledQuestion=index;
+ rudolphVisualState={index,side:cue.side,phase:'waiting'};
+ if(rudolphPlayedQuestions.has(index)){rudolphVisualState.phase='done';return;}
  const token=++rudolphRunToken;
  rudolphTimers.push(setTimeout(()=>{
    if(token!==rudolphRunToken)return;
    const liveOverlay=document.querySelector('.theatre-art .rudolph-overlay');
-   if(!liveOverlay||state.view!=='quiz'||!game||game.index!==index||game.revealed)return;
+   if(!liveOverlay||!game||game.index!==index||game.revealed)return;
    rudolphPlayedQuestions.add(index);persistRudolphPlayed();
+   rudolphVisualState={index,side:cue.side,phase:'show'};
    liveOverlay.classList.add('show');
    rudolphTimers.push(setTimeout(()=>{
      if(token!==rudolphRunToken)return;
      const outOverlay=document.querySelector('.theatre-art .rudolph-overlay');
      if(!outOverlay)return;
+     rudolphVisualState={index,side:cue.side,phase:'hide'};
      outOverlay.classList.add('hide');
      rudolphTimers.push(setTimeout(()=>{
        if(token!==rudolphRunToken)return;
-       outOverlay.classList.remove('show','hide');
+       const finishedOverlay=document.querySelector('.theatre-art .rudolph-overlay');
+       if(finishedOverlay)finishedOverlay.classList.remove('show','hide');
+       rudolphVisualState={index,side:cue.side,phase:'done'};
      },420));
    },cue.hold));
  },cue.delay));
@@ -494,7 +506,9 @@ function scheduleRudolphCue(index){
 function renderRudolphOverlay(index){
  const cue=getRudolphCue(index);
  if(!cue||game?.revealed)return '';
- return `<div class="rudolph-overlay rudolph-${cue.side}" aria-hidden="true"><img class="rudolph-figure" src="${RUDOLPH_IMAGE}" alt=""/></div>`;
+ const phase=rudolphVisualState.index===index?rudolphVisualState.phase:'waiting';
+ const classes=phase==='show'?' show':phase==='hide'?' show hide':'';
+ return `<div class="rudolph-overlay rudolph-${cue.side}${classes}" aria-hidden="true"><img class="rudolph-figure" src="${RUDOLPH_IMAGE}" alt=""/></div>`;
 }
 
 async function lobbyRequest(action, body={}) {
@@ -623,13 +637,17 @@ async function gameRequest(action,extra={}){
 async function refreshGame(){
  if(gameBusy)return;
  try{
+  const previousGame=game;
   const previousIndex=game?.index;
+  const previousSnapshot=previousGame ? JSON.stringify(previousGame) : '';
   const resultsList=document.querySelector('.results-live-list');
   const previousResultsScroll=resultsList ? resultsList.scrollTop : 0;
   game=await gameRequest('status');state.lobbyError='';
   if(previousIndex!==undefined && previousIndex!==game.index){answerDraft='';answerDraftQuestion=-1;}
   if(state.view!=='host' && document.activeElement?.id==='gameAnswer' && game.phase==='started' && !game.answer && !game.revealed) return;
-  render();
+  // Do not rebuild an unchanged question every polling interval. Rebuilding
+  // used to restart Rudolph's timer before it could reach its appearance time.
+  if(previousSnapshot !== JSON.stringify(game)) render();
   if(game.phase==='finished' && previousResultsScroll>0){
    const updatedResultsList=document.querySelector('.results-live-list');
    if(updatedResultsList) updatedResultsList.scrollTop=previousResultsScroll;
