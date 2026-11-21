@@ -433,34 +433,23 @@ let rudolphPlayedQuestions=new Set();
 let rudolphRunToken=0;
 let rudolphScheduledQuestion=null;
 let rudolphVisualState={index:null,side:null,phase:'hidden'};
-try{
- // Versioned storage rejects older plans that may omit Question 1.
- const savedPlan=JSON.parse(sessionStorage.getItem('lamda_rudolph_plan_v2')||'null');
- const savedKeys=savedPlan && Object.keys(savedPlan);
- const validPlan=!!savedPlan &&
-   savedKeys.length===12 &&
-   Object.prototype.hasOwnProperty.call(savedPlan,'0') &&
-   savedKeys.every(q=>Number.isInteger(Number(q)) && Number(q)>=0 && Number(q)<25 && (savedPlan[q]==='left'||savedPlan[q]==='right'));
- if(validPlan) RUDOLPH_PLAN=savedPlan;
-}catch(_e){}
-function makeRudolphPlan(){
- const chosen=[0];
- const remaining=Array.from({length:24},(_,i)=>i+1);
- for(let i=remaining.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[remaining[i],remaining[j]]=[remaining[j],remaining[i]];}
- chosen.push(...remaining.slice(0,11));
- RUDOLPH_PLAN={};
- chosen.forEach((q,i)=>RUDOLPH_PLAN[q]=Math.random()<.5?'left':'right');
- sessionStorage.setItem('lamda_rudolph_plan_v2',JSON.stringify(RUDOLPH_PLAN));
+function acceptSharedRudolphPlan(plan){
+ if(!plan || Object.keys(plan).length!==12 || !Object.prototype.hasOwnProperty.call(plan,'0'))return;
+ const changed=JSON.stringify(RUDOLPH_PLAN)!==JSON.stringify(plan);
+ RUDOLPH_PLAN=plan;
+ if(changed){
+  rudolphPlayedQuestions.clear();
+  clearRudolphTimers();
+  rudolphScheduledQuestion=null;
+  rudolphVisualState={index:null,side:null,phase:'hidden'};
+ }
 }
-if(Object.keys(RUDOLPH_PLAN).length!==12 || !Object.prototype.hasOwnProperty.call(RUDOLPH_PLAN,'0')) makeRudolphPlan();
 function persistRudolphPlayed(){}
 function resetRudolphPlayed(){
  rudolphPlayedQuestions.clear();
- sessionStorage.removeItem('lamda_rudolph_plan_v2');
  clearRudolphTimers();
  rudolphScheduledQuestion=null;
  rudolphVisualState={index:null,side:null,phase:'hidden'};
- makeRudolphPlan();
 }
 function clearRudolphTimers(){rudolphTimers.forEach(clearTimeout);rudolphTimers=[];rudolphRunToken++;}
 function getRudolphCue(index){
@@ -646,7 +635,7 @@ async function refreshGame(){
   const previousSnapshot=previousGame ? JSON.stringify(previousGame) : '';
   const resultsList=document.querySelector('.results-live-list');
   const previousResultsScroll=resultsList ? resultsList.scrollTop : 0;
-  game=await gameRequest('status');state.lobbyError='';
+  game=await gameRequest('status');if(game?.rudolphPlan)acceptSharedRudolphPlan(game.rudolphPlan);state.lobbyError='';
   if(previousIndex!==undefined && previousIndex!==game.index){answerDraft='';answerDraftQuestion=-1;}
   if(state.view!=='host' && document.activeElement?.id==='gameAnswer' && game.phase==='started' && !game.answer && !game.revealed) return;
   // Do not rebuild an unchanged question every polling interval. Rebuilding
