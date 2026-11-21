@@ -1,7 +1,9 @@
 const reply=(x,s=200)=>new Response(JSON.stringify(x),{status:s,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 const questions=[
+['Name five other drama schools besides LAMDA.','RADA, Guildhall, Central, Bristol Old Vic, Mountview, East 15, ALRA, Drama Centre'],
 ['Which two London Underground lines serve Earl’s Court station?','District and Piccadilly'],
 ['Which Andrew Lloyd Webber musical was running at the Apollo Victoria Theatre during our LAMDA years?','Starlight Express'],
+['What did the initials NCDT stand for?','National Council for Drama Training'],
 ['What was the name of the Earl’s Court Road café where we used to have full English breakfasts?','Benjy’s'],
 ['In theatre terminology, does upstage mean towards or away from the audience?','Away from the audience'],
 ['Which theatre did we visit to see 42nd Street?','Theatre Royal Drury Lane'],
@@ -12,6 +14,7 @@ const questions=[
 ['Which Offenbach operetta did we see at the Royal Opera House?','Orpheus in the Underworld'],
 ['What was the name of the pub where we sometimes held production meetings?','The Hansom Cab'],
 ['What does the German theatrical term Sitzprobe literally mean?','Sitting rehearsal'],
+['Which of these songs reached No. 1 in the UK in 1988? A. Jack & Diane — John Cougar; B. Never Gonna Give You Up — Rick Astley; C. The Only Way Is Up — Yazz','C — The Only Way Is Up'],
 ['Which specialist theatrical flying company visited LAMDA?','Kirby’s Flying Circus'],
 ['What is the theatrical term for a working lamp or light fitting incorporated into the scenery?','Practical'],
 ['Which Alan Bennett play did we take on tour during our first term?','Habeas Corpus'],
@@ -19,6 +22,8 @@ const questions=[
 ['At which West End theatre did we see Noises Off?','Savoy Theatre'],
 ['Which French artistic term describes a painting technique that tricks the eye into seeing three-dimensional objects?','Trompe-l’œil'],
 ['At which London television studios did we receive practical TV production training?','Battersea TV Studios'],
+['What is the name of the annotated script used by the stage manager to call a performance?','Prompt copy'],
+['Which film topped the UK box office in 1988? A. Who Framed Roger Rabbit; B. Fatal Attraction; C. A Fish Called Wanda','B — Fatal Attraction'],
 ['Which church near Tower House did we use for movement classes?','St Philip’s Church'],
 ['Which theatrical lighting accessory is used to project patterns, such as windows or leaves, onto the stage?','Gobo'],
 ['Why was whistling backstage traditionally forbidden in theatres?','Whistles were used to cue flying crews and scenery changes; accidental signals could be dangerous'],
@@ -41,7 +46,7 @@ export async function onRequestPost({request,env}){
   if(b.action==='reveal')await db.prepare('UPDATE quiz_game SET revealed=1 WHERE code=?').bind(code).run();
   if(b.action==='advance'){
    if(!row.revealed)return reply({error:'Reveal the answer before advancing'},400);
-   await db.prepare('UPDATE quiz_game SET question_index=?,revealed=0 WHERE code=?').bind(Math.min(row.question_index+1,24),code).run();
+   await db.prepare('UPDATE quiz_game SET question_index=?,revealed=0 WHERE code=?').bind(Math.min(row.question_index+1,29),code).run();
   }
   if(b.action==='finish')await db.prepare("UPDATE hosts SET phase='finished' WHERE code=?").bind(code).run();
  }
@@ -56,7 +61,7 @@ export async function onRequestPost({request,env}){
  if(b.action==='mark'){
   if(!isHost)return reply({error:'Quizmaster only'},403);
   const i=Number(b.index),correct=Number(b.correct);
-  if(!Number.isInteger(i)||i<0||i>=25||![0,1].includes(correct))return reply({error:'Invalid marking'},400);
+  if(!Number.isInteger(i)||i<0||i>=30||![0,1].includes(correct))return reply({error:'Invalid marking'},400);
   const target=String(b.playerToken||'');
   await db.prepare('UPDATE quiz_answers SET correct=? WHERE code=? AND player_token=? AND question_index=?').bind(correct,code,target,i).run();
  }
@@ -66,6 +71,8 @@ export async function onRequestPost({request,env}){
  const answer=player?await db.prepare('SELECT answer,correct FROM quiz_answers WHERE code=? AND player_token=? AND question_index=?').bind(code,token,idx).first():null;
  const rows=isHost?await db.prepare('SELECT a.player_token,a.question_index,a.answer,a.correct,p.name FROM quiz_answers a JOIN players p ON p.token=a.player_token WHERE a.code=? ORDER BY a.question_index,p.joined_at').bind(code).all():null;
  const scores=phase==='finished'?await db.prepare('SELECT p.name,COALESCE(SUM(CASE WHEN a.correct=1 THEN 1 ELSE 0 END),0) AS score FROM players p LEFT JOIN quiz_answers a ON a.player_token=p.token AND a.code=p.code WHERE p.code=? GROUP BY p.token ORDER BY score DESC,p.joined_at').bind(code).all():null;
- return reply({phase,index:idx,total:25,revealed:!!game?.revealed,question:phase==='started'?questions[idx][0]:null,correctAnswer:(isHost||game?.revealed||phase==='finished')?questions[idx][1]:null,unscored:false,answer:answer?.answer||null,marked:answer?.correct??null,answers:isHost?(rows?.results||[]):undefined,scores:scores?.results||undefined});
+ const planRow=await db.prepare('SELECT plan FROM quiz_rudolph WHERE code=?').bind(code).first().catch(()=>null);
+ let rudolphPlan=null;try{rudolphPlan=planRow?JSON.parse(planRow.plan):null;}catch{}
+ return reply({phase,index:idx,total:30,revealed:!!game?.revealed,question:phase==='started'?questions[idx][0]:null,correctAnswer:(isHost||game?.revealed||phase==='finished')?questions[idx][1]:null,unscored:false,answer:answer?.answer||null,marked:answer?.correct??null,answers:isHost?(rows?.results||[]):undefined,scores:scores?.results||undefined,rudolphPlan});
  }catch(e){return reply({error:'Game service: '+e.message},500)}
 }

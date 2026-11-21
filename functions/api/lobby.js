@@ -3,6 +3,15 @@ const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:
 const digest=async(s)=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))).map(x=>x.toString(16).padStart(2,'0')).join('');
 const validPin=p=>typeof p==='string'&&/^\d{4,12}$/.test(p);
 const validToken=t=>typeof t==='string'&&/^[a-f0-9-]{36}$/.test(t);
+function makeRudolphPlan(){
+ const chosen=[0];
+ const remaining=Array.from({length:24},(_,i)=>i+1);
+ for(let i=remaining.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[remaining[i],remaining[j]]=[remaining[j],remaining[i]];}
+ chosen.push(...remaining.slice(0,11));
+ const plan={};
+ chosen.forEach(q=>plan[q]=Math.random()<.5?'left':'right');
+ return JSON.stringify(plan);
+}
 export async function onRequestPost({request,env}) {
  if(!env.DB)return json({error:'Lobby database is not configured yet.'},503);
  let body;try{body=await request.json()}catch{return json({error:'Invalid request'},400)}
@@ -34,6 +43,12 @@ export async function onRequestPost({request,env}) {
    if(!count.n)return json({error:'Wait for at least one player.'},400);
    await db.prepare("UPDATE hosts SET phase='started' WHERE code=? AND phase='lobby'").bind(code).run();
    await db.prepare('INSERT OR IGNORE INTO quiz_game(code) VALUES(?)').bind(code).run();
+   // One server-side plan per game. All player browsers receive this exact plan.
+   await db.prepare('CREATE TABLE IF NOT EXISTS quiz_rudolph (code TEXT PRIMARY KEY, plan TEXT NOT NULL)').run();
+   const existingPlan=await db.prepare('SELECT plan FROM quiz_rudolph WHERE code=?').bind(code).first();
+   if(!existingPlan){
+    await db.prepare('INSERT INTO quiz_rudolph(code,plan) VALUES(?,?)').bind(code,makeRudolphPlan()).run();
+   }
    return json(await status(db,code));
   }
   if(action==='join'){
@@ -57,6 +72,8 @@ export async function onRequestPost({request,env}) {
    await db.prepare('DELETE FROM quiz_answers WHERE code=?').bind(code).run();
    await db.prepare('DELETE FROM quiz_game WHERE code=?').bind(code).run();
    await db.prepare('DELETE FROM players WHERE code=?').bind(code).run();
+   await db.prepare('CREATE TABLE IF NOT EXISTS quiz_rudolph (code TEXT PRIMARY KEY, plan TEXT NOT NULL)').run();
+   await db.prepare('DELETE FROM quiz_rudolph WHERE code=?').bind(code).run();
    await db.prepare("UPDATE hosts SET phase='lobby' WHERE code=?").bind(code).run();
    return json(await status(db,code));
   }
