@@ -77,16 +77,21 @@ button{cursor:pointer}
 button { cursor:pointer; touch-action:manipulation; transition:transform 110ms ease,filter 110ms ease,box-shadow 110ms ease; }
 button:not(:disabled):active,button.button-confirmed:not(:disabled) { transform:translateY(4px) scale(.965) !important; filter:brightness(.65) !important; box-shadow:inset 0 3px 10px rgba(0,0,0,.5) !important; }
 /* Landing artwork is pre-rendered. Its invisible click target must have NO visual press effect. */
-.restored-landing .case-button:not(:disabled):active,.restored-landing .case-button.button-confirmed {background:rgba(12,0,0,.32) !important;border-radius:13px !important;outline:none !important;box-shadow:inset 0 3px 9px rgba(0,0,0,.4) !important;filter:none !important;transform:translateY(2px) !important;}
+.restored-landing .case-button,
+.restored-landing .case-button:not(:disabled):active,
+.restored-landing .case-button.button-confirmed {
+  background:rgba(12,0,0,.32) !important;
+  border-radius:13px !important;
+  outline:none !important;
+  box-shadow:inset 0 3px 9px rgba(0,0,0,.4) !important;
+  filter:none !important;
+  transform:none !important;
+  transition:none !important;
+}
 .restored-landing .case-action {pointer-events:auto;}
 /* Entry hit-area correction: align the invisible button and its pressed overlay with the printed desktop button. */
 @media (min-width:700px) {
   .restored-landing .case-action {left:43.3%;top:77.2%;width:33.7%;height:10.4%;}
-  .restored-landing .case-button:not(:disabled):active,
-  .restored-landing .case-button.button-confirmed {
-    transform:none !important;
-    border-radius:13px !important;
-  }
 }
 
 .cta,.secondary,.option{min-height:48px;}
