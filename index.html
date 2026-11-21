@@ -65,7 +65,7 @@ button{cursor:pointer}
 .landing.restored-landing {width:100%;height:100svh;min-height:100svh;overflow:hidden;position:relative;display:block;padding:0;margin:0;background:#160a0c;}
 .restored-landing .stage-composition {position:absolute;left:50%;top:50%;width:max(100vw, calc(100svh * 1670 / 942));height:max(100svh, calc(100vw * 941 / 1672));aspect-ratio:1672/941;transform:translate(-50%,-50%);}
 .restored-landing .stage-photo {display:block;width:100%;height:100%;object-fit:fill;max-height:none;}
-.restored-landing .case-action {position:absolute;left:37.3%;top:75.8%;width:30%;height:9.8%;z-index:4;}
+.restored-landing .case-action {position:absolute;left:43.2%;top:85.8%;width:34%;height:10.8%;z-index:4;}
 .restored-landing .case-button {display:block;width:100%;height:100%;padding:0;margin:0;border:0;background:transparent;color:transparent;font-size:0;cursor:pointer;}
 .restored-landing .case-button:focus-visible {outline:3px solid #fff4cd;outline-offset:3px;border-radius:12px;}
 @media (max-width:699px) and (orientation:portrait){
@@ -77,7 +77,7 @@ button{cursor:pointer}
 button { cursor:pointer; touch-action:manipulation; transition:transform 110ms ease,filter 110ms ease,box-shadow 110ms ease; }
 button:not(:disabled):active,button.button-confirmed:not(:disabled) { transform:translateY(4px) scale(.965) !important; filter:brightness(.65) !important; box-shadow:inset 0 3px 10px rgba(0,0,0,.5) !important; }
 /* Landing artwork is pre-rendered. Its invisible click target must have NO visual press effect. */
-.restored-landing .case-button:not(:disabled):active,.restored-landing .case-button.button-confirmed {background:rgba(12,0,0,.32) !important;border-radius:13px !important;outline:none !important;box-shadow:inset 0 3px 9px rgba(0,0,0,.4) !important;filter:none !important;transform:translateY(2px) !important;}
+.restored-landing .case-button:not(:disabled):active,.restored-landing .case-button.button-confirmed {background:rgba(12,0,0,.32) !important;border-radius:13px !important;outline:none !important;box-shadow:inset 0 3px 9px rgba(0,0,0,.4) !important;filter:none !important;transform:none !important;}
 .restored-landing .case-action {pointer-events:auto;}
 .cta,.secondary,.option{min-height:48px;}
 button:focus-visible { outline:3px solid #f5c76c; outline-offset:3px; }
@@ -593,32 +593,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
   }
 }
 
-
-/* FINAL RESULTS OVERLAY ONLY — no other quiz screen is affected. */
-html:has(.results-art-screen),body:has(.results-art-screen){height:100%;min-height:0;overflow:hidden!important;overscroll-behavior:none!important}
-.results-art-screen{position:fixed!important;inset:0!important;z-index:999!important;width:100%!important;height:100dvh!important;min-height:0!important;box-sizing:border-box!important;margin:0!important;padding:16px!important;display:grid!important;place-items:center!important;overflow:hidden!important;overscroll-behavior:none!important;background:transparent!important;overflow-anchor:none!important}
-.results-art-screen::before{position:fixed!important;inset:-30px!important;z-index:-1!important;background-size:cover!important;background-position:center!important;filter:blur(17px) brightness(.68)!important;transform:scale(1.04)!important}
-.results-art-stage{position:relative!important;isolation:isolate!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;width:min(690px,92vw)!important;height:min(690px,calc(100dvh - 32px))!important;box-sizing:border-box!important;padding:clamp(24px,4.2vh,42px) clamp(24px,4.2vw,42px) 22px!important;border:5px double #b98535!important;border-radius:34px!important;background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.88),transparent 38%),repeating-linear-gradient(0deg,rgba(126,79,31,.025) 0 1px,transparent 1px 4px),linear-gradient(135deg,#fff1cf 0%,#f2d9a7 48%,#ffedc7 100%)!important;box-shadow:inset 0 0 0 5px rgba(255,255,255,.52),inset 0 0 0 9px rgba(169,113,44,.18),0 18px 55px rgba(0,0,0,.58),0 0 0 2px #432016!important;overflow:hidden!important;overflow-anchor:none!important}
-.results-art-stage::before{content:"";position:absolute;z-index:-1;left:8%;right:8%;top:0;height:15%;border-radius:0 0 48% 48%/0 0 30% 30%;background:linear-gradient(180deg,#650b18 0%,#9e1725 62%,#4d0b13 100%);border-bottom:5px solid #c9943d;box-shadow:0 5px 10px rgba(68,26,12,.25)}
-.results-art-stage::after{content:"🎀";position:absolute;top:2px;left:50%;transform:translateX(-50%);font-size:48px;line-height:1;filter:drop-shadow(0 2px 2px #6b3414);pointer-events:none}
-.results-heading{position:relative;flex:none;text-align:center;padding:clamp(38px,7vh,66px) 0 14px;color:#6d111b}
-.results-holly{color:#a36a20;font-size:clamp(18px,3vh,28px);line-height:1;letter-spacing:.45em}
-.results-heading h1{margin:6px 0 3px;font-family:Georgia,'Times New Roman',serif;font-size:clamp(32px,5.3vh,48px);line-height:1.02;font-weight:800;text-shadow:0 1px #fff8df}
-.results-heading p{margin:8px 0 0;font-family:Georgia,'Times New Roman',serif;font-size:clamp(15px,2.2vh,21px);font-weight:700;color:#6d321c}
-.results-live-list{position:relative!important;left:auto!important;top:auto!important;width:100%!important;height:auto!important;min-height:0!important;flex:1 1 auto!important;display:flex!important;flex-direction:column!important;gap:8px!important;box-sizing:border-box!important;margin:8px 0 0!important;padding:0 2px!important;list-style:none!important;overflow-y:auto!important;overflow-x:hidden!important;background:none!important;border:0!important;overscroll-behavior:none!important;scroll-behavior:auto!important;-webkit-overflow-scrolling:touch!important;scrollbar-width:thin;scrollbar-color:#b98942 transparent;overflow-anchor:none!important}
-.results-live-list li{display:grid!important;grid-template-columns:10% minmax(0,1fr) auto!important;align-items:center!important;gap:10px!important;flex:0 0 auto!important;min-height:48px!important;height:auto!important;box-sizing:border-box!important;padding:8px 16px!important;margin:0!important;color:#4a2115!important;background:rgba(255,247,224,.97)!important;border:1px solid #d7b77d!important;border-radius:13px!important;box-shadow:0 2px 5px rgba(75,39,16,.12)!important;font-family:Georgia,'Times New Roman',serif!important;font-size:clamp(15px,2.1vh,19px)!important;line-height:1.15!important;text-shadow:none!important}
-.results-live-list li.results-winner{min-height:58px!important;color:#fff0c9!important;background:linear-gradient(100deg,#650d18,#a51e2a 55%,#650d18)!important;border:2px solid #d5a34e!important;border-radius:15px!important;box-shadow:0 3px 10px rgba(75,26,12,.28),inset 0 1px rgba(255,255,255,.3)!important}
-.results-place{text-align:center!important;color:inherit!important;font-weight:800!important}
-.results-winner .results-place{color:#ffd96a!important;font-size:1.45em!important}
-.results-player{min-width:0!important;overflow-wrap:anywhere!important;font-weight:800!important}
-.results-points{white-space:nowrap!important;font-size:.94em!important;font-weight:800!important}
-.results-divider{flex:none;text-align:center;color:#a8752a;font-size:30px;line-height:1;padding:7px 0 9px}
-.results-reset-hit{position:relative!important;left:auto!important;top:auto!important;display:flex!important;flex:none!important;align-items:center!important;justify-content:center!important;width:82%!important;min-height:68px!important;height:auto!important;align-self:center!important;box-sizing:border-box!important;padding:12px 18px!important;margin:0 0 2px!important;color:#fff1d0!important;background:linear-gradient(180deg,#a51d2b 0%,#790d1a 55%,#570913 100%)!important;border:3px solid #e2b657!important;border-radius:32px!important;box-shadow:inset 0 1px rgba(255,255,255,.35),0 4px 0 #3e1712,0 7px 14px rgba(57,20,12,.25)!important;font-family:Georgia,'Times New Roman',serif!important;font-size:clamp(17px,2.4vh,22px)!important;font-weight:800!important;cursor:pointer!important}
-.results-reset-hit:active{transform:translateY(2px)}
-@media(max-height:650px){.results-art-screen{padding:8px!important}.results-art-stage{width:min(560px,94vw)!important;height:calc(100dvh - 16px)!important;padding:14px 22px 12px!important;border-radius:24px!important}.results-heading{padding-top:24px;padding-bottom:7px}.results-heading h1{font-size:clamp(26px,5vh,36px)}.results-heading p{margin-top:3px}.results-live-list{gap:5px!important;margin-top:4px!important}.results-live-list li{min-height:38px!important;padding:5px 12px!important}.results-live-list li.results-winner{min-height:44px!important}.results-divider{padding:2px 0 4px;font-size:22px}.results-reset-hit{min-height:50px!important;font-size:17px!important}}
-@media(max-width:520px){.results-art-stage{width:94vw!important;height:min(94vw,calc(100dvh - 20px))!important;padding:22px 16px 14px!important;border-radius:24px!important}.results-heading{padding-top:42px}.results-heading h1{font-size:clamp(27px,7vw,38px)}.results-live-list li{min-height:42px!important;padding:6px 9px!important;gap:6px!important;font-size:14px!important}.results-live-list li.results-winner{min-height:48px!important}.results-reset-hit{width:92%!important;min-height:54px!important;font-size:16px!important}}
-/* End of final-results-only override. */
-
 </style>
 </head>
 <body>
@@ -789,7 +763,7 @@ function renderGame(){
  if(!game)return renderLobby();
  const isHost=state.view==='host';
  if(game.phase==='finished'){
- app.innerHTML=`<section class="results-art-screen"><div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results"><header class="results-heading"><div class="results-holly" aria-hidden="true">✦ ❧ ✦</div><h1>Final Results</h1><p>LAMDA Christmas Quiz</p></header><ol class="results-live-list">${(game.scores||[]).map((x,i)=>`<li class="${i===0?'results-winner':''}"><span class="results-place">${i===0?'♛':i+1}</span><span class="results-player">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`).join('')}</ol><div class="results-divider" aria-hidden="true">❄</div>${isHost?'<button class="results-reset-hit" onclick="pressedAction(this,resetLobby)">✦ &nbsp; Reset for a new game &nbsp; ✦</button>':''}</div></section>`;return;
+  app.innerHTML=`<section class="results-art-screen"><div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results"><ol class="results-live-list">${(game.scores||[]).map((x,i)=>`<li class="${i===0?'results-winner':''}"><span class="results-place">${i===0?'♛':i+1}</span><span class="results-player">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`).join('')}</ol>${isHost?'<button class="results-reset-hit" onclick="pressedAction(this,resetLobby)">Reset for a new game</button>':''}</div></section>`;return;
  }
  if(game.phase!=='started')return isHost?renderHost():renderLobby();
  const i=game.index;
