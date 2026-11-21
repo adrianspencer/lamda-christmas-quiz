@@ -465,8 +465,6 @@ let rudolphVisualState={index:null,side:null,phase:'hidden'};
 try{
  const savedPlan=JSON.parse(sessionStorage.getItem('lamda_rudolph_plan')||'null');
  if(savedPlan && Object.keys(savedPlan).length===12) RUDOLPH_PLAN=savedPlan;
- const savedPlayed=JSON.parse(sessionStorage.getItem('lamda_rudolph_played')||'[]');
- savedPlayed.forEach(n=>rudolphPlayedQuestions.add(Number(n)));
 }catch(_e){}
 function makeRudolphPlan(){
  const chosen=[0];
@@ -478,10 +476,9 @@ function makeRudolphPlan(){
  sessionStorage.setItem('lamda_rudolph_plan',JSON.stringify(RUDOLPH_PLAN));
 }
 if(Object.keys(RUDOLPH_PLAN).length!==12) makeRudolphPlan();
-function persistRudolphPlayed(){sessionStorage.setItem('lamda_rudolph_played',JSON.stringify([...rudolphPlayedQuestions]));}
+function persistRudolphPlayed(){}
 function resetRudolphPlayed(){
  rudolphPlayedQuestions.clear();
- sessionStorage.removeItem('lamda_rudolph_played');
  sessionStorage.removeItem('lamda_rudolph_plan');
  clearRudolphTimers();
  rudolphScheduledQuestion=null;
@@ -493,7 +490,7 @@ function getRudolphCue(index){
  if(!Object.prototype.hasOwnProperty.call(RUDOLPH_PLAN,index))return null;
  const side=RUDOLPH_PLAN[index];
  const seed=(index*9301+49297)%233280;
- return {side,delay:3300+(seed%1800),hold:1450+(seed%250)};
+ return {side,delay:1800+(seed%500),hold:1050+(seed%200)};
 }
 function scheduleRudolphCue(index){
  const cue=getRudolphCue(index);
