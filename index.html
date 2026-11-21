@@ -76,7 +76,13 @@ button{cursor:pointer}
 /* Consistent tactile feedback for all quiz buttons. */
 button { cursor:pointer; touch-action:manipulation; transition:transform 110ms ease,filter 110ms ease,box-shadow 110ms ease; }
 button:not(:disabled):active,button.button-confirmed:not(:disabled) { transform:translateY(4px) scale(.965) !important; filter:brightness(.65) !important; box-shadow:inset 0 3px 10px rgba(0,0,0,.5) !important; }
-/* Landing button uses the same global pressed-state animation as the Join the Quiz button. */
+/* Entry button: retain the tactile push movement, but remove the misplaced rectangular overlay effects. */
+.restored-landing .case-button:not(:disabled):active,
+.restored-landing .case-button.button-confirmed:not(:disabled) {
+  transform:translateY(4px) scale(.965) !important;
+  filter:none !important;
+  box-shadow:none !important;
+}
 .restored-landing .case-action {pointer-events:auto;}
 /* Entry hit-area correction: align the invisible button and its pressed overlay with the printed desktop button. */
 @media (min-width:700px) {
