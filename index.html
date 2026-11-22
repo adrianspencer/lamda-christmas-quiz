@@ -608,53 +608,56 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 
 
-/* QUESTION SCREEN SIZE MATCH — matches the final-results stage scale.
-   Scoped to player question screens; quizmaster controls and results are unchanged. */
-@media (min-width:0px) {
-  .panel-screen.game-screen:not(:has(.theatre-controls)) {
-    min-height:100svh !important;
-    min-height:100dvh !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    box-sizing:border-box !important;
-    padding:12px !important;
-    overflow-x:hidden !important;
-  }
-  .panel-screen.game-screen:not(:has(.theatre-controls)) > .panel.filofax {
-    width:min(77.57svh, calc(100vw - 24px)) !important;
-    max-width:none !important;
-    min-width:0 !important;
-    margin:0 auto !important;
-    padding:0 !important;
-    flex:0 1 auto !important;
-  }
-  .panel-screen.game-screen:not(:has(.theatre-controls)) .theatre-art {
-    display:block !important;
-    width:100% !important;
-    height:auto !important;
-    aspect-ratio:1199 / 1312 !important;
-    box-sizing:border-box !important;
-    border:1px solid #100a08 !important;
-    border-radius:5px !important;
-    overflow:visible !important;
-    filter:drop-shadow(0 9px 18px rgba(0,0,0,.4)) !important;
-  }
-  .panel-screen.game-screen:not(:has(.theatre-controls)) .theatre-art::after {
-    content:none !important;
-    display:none !important;
-  }
+/* BESPOKE CONTESTANT RESULTS — separate finish from the host's resettable board.
+   Cover the host-only ticket/pen artwork and use that space for the contestant leaderboard. */
+.results-art-stage.player-results-stage::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  left:20.2%;
+  top:69.2%;
+  width:59.6%;
+  height:27.2%;
+  box-sizing:border-box;
+  border-top:1px solid rgba(125,73,35,.35);
+  border-bottom:1px solid rgba(125,73,35,.25);
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(255,248,220,.58),transparent 70%),
+    repeating-linear-gradient(0deg,rgba(151,104,56,.035) 0,rgba(151,104,56,.035) 1px,transparent 1px,transparent 7px),
+    linear-gradient(180deg,#f3d5a2 0%,#f8e3bb 24%,#f4d9aa 100%);
+  pointer-events:none;
 }
-@media (max-width:699px) {
-  .panel-screen.game-screen:not(:has(.theatre-controls)) {
-    padding:
-      max(10px,env(safe-area-inset-top))
-      10px
-      max(10px,env(safe-area-inset-bottom)) !important;
-  }
-  .panel-screen.game-screen:not(:has(.theatre-controls)) > .panel.filofax {
-    width:min(77.57svh, calc(100vw - 20px)) !important;
-  }
+.results-art-stage.player-results-stage .results-live-list{
+  z-index:2;
+  top:40.9%;
+  height:47.2%;
+  overflow-y:auto;
+  padding-bottom:1%;
+}
+.results-art-stage.player-results-stage .results-live-list li{
+  min-height:16.5%;
+  height:16.5%;
+  font-size:3.35em;
+}
+.results-art-stage.player-results-stage .results-live-list li:first-child{
+  min-height:19.5%;
+  height:19.5%;
+}
+.results-art-stage.player-results-stage .player-results-footer{
+  position:absolute;
+  z-index:2;
+  left:27%;
+  top:91.1%;
+  width:46%;
+  text-align:center;
+  color:#70412b;
+  font:italic 700 2.25em/1.1 Georgia,'Times New Roman',serif;
+  letter-spacing:.045em;
+  pointer-events:none;
+}
+@media(max-width:600px){
+  .results-art-stage.player-results-stage .results-live-list li{font-size:3.15em}
+  .results-art-stage.player-results-stage .player-results-footer{font-size:2.05em}
 }
 
 </style>
@@ -909,7 +912,7 @@ function renderGame(){
  if(!game)return renderLobby();
  const isHost=state.view==='host';
  if(game.phase==='finished'){
-  app.innerHTML=`<section class="results-art-screen"><div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results"><ol class="results-live-list" tabindex="0" aria-label="Final scores">${(game.scores||[]).map((x,i)=>`<li class="${i===0?'results-winner':''}"><span class="results-place">${i+1}.</span><span class="results-player">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`).join('')}</ol>${isHost?'<button class="results-reset-hit" onclick="pressedAction(this,resetLobby)" aria-label="Reset for a new game"></button>':''}</div></section>`;return;
+  app.innerHTML=`<section class="results-art-screen"><div class="results-art-stage ${isHost?'':'player-results-stage'}" role="region" aria-label="LAMDA Christmas Quiz final results"><ol class="results-live-list" tabindex="0" aria-label="Final scores">${(game.scores||[]).map((x,i)=>`<li class="${i===0?'results-winner':''}"><span class="results-place">${i+1}.</span><span class="results-player">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`).join('')}</ol>${!isHost?'<div class="player-results-footer">Thank you for playing</div>':''}${isHost?'<button class="results-reset-hit" onclick="pressedAction(this,resetLobby)" aria-label="Reset for a new game"></button>':''}</div></section>`;return;
  }
  if(game.phase!=='started')return isHost?renderHost():renderLobby();
  const i=game.index;
