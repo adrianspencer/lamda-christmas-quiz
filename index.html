@@ -606,6 +606,57 @@ button:disabled{opacity:.5;cursor:not-allowed}
   }
 }
 
+
+
+/* QUESTION SCREEN SIZE MATCH — matches the final-results stage scale.
+   Scoped to player question screens; quizmaster controls and results are unchanged. */
+@media (min-width:0px) {
+  .panel-screen.game-screen:not(:has(.theatre-controls)) {
+    min-height:100svh !important;
+    min-height:100dvh !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    box-sizing:border-box !important;
+    padding:12px !important;
+    overflow-x:hidden !important;
+  }
+  .panel-screen.game-screen:not(:has(.theatre-controls)) > .panel.filofax {
+    width:min(77.57svh, calc(100vw - 24px)) !important;
+    max-width:none !important;
+    min-width:0 !important;
+    margin:0 auto !important;
+    padding:0 !important;
+    flex:0 1 auto !important;
+  }
+  .panel-screen.game-screen:not(:has(.theatre-controls)) .theatre-art {
+    display:block !important;
+    width:100% !important;
+    height:auto !important;
+    aspect-ratio:1199 / 1312 !important;
+    box-sizing:border-box !important;
+    border:1px solid #100a08 !important;
+    border-radius:5px !important;
+    overflow:visible !important;
+    filter:drop-shadow(0 9px 18px rgba(0,0,0,.4)) !important;
+  }
+  .panel-screen.game-screen:not(:has(.theatre-controls)) .theatre-art::after {
+    content:none !important;
+    display:none !important;
+  }
+}
+@media (max-width:699px) {
+  .panel-screen.game-screen:not(:has(.theatre-controls)) {
+    padding:
+      max(10px,env(safe-area-inset-top))
+      10px
+      max(10px,env(safe-area-inset-bottom)) !important;
+  }
+  .panel-screen.game-screen:not(:has(.theatre-controls)) > .panel.filofax {
+    width:min(77.57svh, calc(100vw - 20px)) !important;
+  }
+}
+
 </style>
 </head>
 <body>
