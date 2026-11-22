@@ -826,6 +826,246 @@ button:disabled{opacity:.5;cursor:not-allowed}
   }
 }
 
+
+/* FINAL PLAYER RESULTS LAYOUT — image aspect ratio is preserved; no background cover cropping. */
+.player-results-screen{
+  position:relative !important;
+  width:100% !important;
+  height:100vh !important;
+  height:100svh !important;
+  height:100dvh !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:
+    radial-gradient(ellipse at 50% 45%,#38140f 0%,#210b0b 56%,#100609 100%) !important;
+}
+.player-results-board{
+  position:relative;
+  flex:none;
+  overflow:visible;
+}
+.player-results-board-desktop{
+  display:block;
+  width:min(100vw,175vh);
+  width:min(100vw,175dvh);
+  aspect-ratio:1659 / 948;
+  max-height:100dvh;
+}
+.player-results-board-mobile{display:none}
+.player-results-art{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:fill;
+}
+.player-results-list{
+  position:absolute !important;
+  box-sizing:border-box !important;
+  left:35.08% !important;
+  top:42.72% !important;
+  width:28.69% !important;
+  height:26.16% !important;
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) !important;
+  grid-template-rows:none !important;
+  grid-auto-flow:row !important;
+  grid-auto-rows:20% !important;
+  gap:0 !important;
+  align-content:start !important;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(104,55,24,.55) transparent;
+  list-style:none !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+.player-results-list li{
+  box-sizing:border-box !important;
+  display:grid !important;
+  grid-template-columns:9% minmax(0,1fr) auto !important;
+  align-items:center !important;
+  min-height:0 !important;
+  height:auto !important;
+  max-height:none !important;
+  margin:0 !important;
+  padding:0 3% !important;
+  overflow:hidden !important;
+  background:none !important;
+  border:0 !important;
+  box-shadow:none !important;
+  color:#4b2414 !important;
+  font:700 clamp(10px,1.05vw,19px)/1 Georgia,'Times New Roman',serif !important;
+  white-space:nowrap !important;
+}
+.player-results-list li:first-child{
+  color:#fff0cb !important;
+  font-weight:800 !important;
+}
+.player-results-list .results-player{
+  min-width:0 !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+}
+.player-results-list .results-points{
+  white-space:nowrap !important;
+  text-align:right !important;
+  font-size:.9em !important;
+}
+@media(max-width:700px) and (orientation:portrait){
+  .player-results-screen{
+    background:radial-gradient(ellipse at 50% 45%,#38140f 0%,#210b0b 58%,#100609 100%) !important;
+  }
+  .player-results-board-desktop{display:none !important}
+  .player-results-board-mobile{
+    display:block !important;
+    width:min(100vw,72dvh);
+    aspect-ratio:900 / 905;
+    max-height:100dvh;
+  }
+  .player-results-list-mobile{
+    left:10.4% !important;
+    top:34.0% !important;
+    width:82.3% !important;
+    height:33.7% !important;
+    grid-auto-rows:10% !important;
+  }
+  .player-results-list-mobile li{
+    font-size:clamp(9px,2.45vw,14px) !important;
+    padding:0 2.5% !important;
+  }
+}
+@media(max-width:700px) and (orientation:landscape){
+  .player-results-board-desktop{
+    display:block !important;
+    width:min(100vw,175dvh);
+    max-height:100dvh;
+  }
+  .player-results-board-mobile{display:none !important}
+  .player-results-list-desktop li{
+    font-size:clamp(9px,1.9vw,14px) !important;
+  }
+}
+
+
+/* FINAL CONTESTANT RESULTS — one undistorted Filofax, clean stage background, single live leaderboard. */
+.player-results-screen{
+  position:relative !important;
+  width:100% !important;
+  height:100vh !important;
+  height:100svh !important;
+  height:100dvh !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:#16070a url("assets/571f7acb7d9b.webp") center center / cover no-repeat !important;
+}
+.player-results-board{
+  position:relative !important;
+  flex:none !important;
+  width:min(86dvh,48vw) !important;
+  aspect-ratio:900 / 905 !important;
+  max-height:94dvh !important;
+  overflow:visible !important;
+}
+.player-results-art{
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+.player-results-list{
+  position:absolute !important;
+  box-sizing:border-box !important;
+  left:10.4% !important;
+  top:44.2% !important;
+  width:82.3% !important;
+  height:32.1% !important;
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) !important;
+  grid-template-rows:none !important;
+  grid-auto-flow:row !important;
+  grid-auto-rows:10% !important;
+  gap:0 !important;
+  align-content:start !important;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  overscroll-behavior:contain !important;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(104,55,24,.45) transparent;
+  list-style:none !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+.player-results-list li{
+  box-sizing:border-box !important;
+  display:grid !important;
+  grid-template-columns:9% minmax(0,1fr) auto !important;
+  align-items:center !important;
+  min-height:0 !important;
+  height:auto !important;
+  max-height:none !important;
+  margin:0 !important;
+  padding:0 2.5% !important;
+  overflow:hidden !important;
+  background:none !important;
+  border:0 !important;
+  box-shadow:none !important;
+  color:#4b2414 !important;
+  font:700 clamp(10px,1.35vw,17px)/1 Georgia,'Times New Roman',serif !important;
+  white-space:nowrap !important;
+}
+.player-results-list li:first-child{
+  color:#fff0cb !important;
+  font-weight:800 !important;
+}
+.player-results-list .results-player{
+  min-width:0 !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+}
+.player-results-list .results-points{
+  white-space:nowrap !important;
+  text-align:right !important;
+  font-size:.9em !important;
+}
+@media(max-width:700px) and (orientation:portrait){
+  .player-results-screen{
+    background-position:center center !important;
+    background-size:cover !important;
+  }
+  .player-results-board{
+    width:min(100vw,58dvh) !important;
+    max-height:94dvh !important;
+  }
+  .player-results-list li{
+    font-size:clamp(9px,2.6vw,13px) !important;
+  }
+}
+@media(max-width:700px) and (orientation:landscape){
+  .player-results-board{
+    width:min(86dvh,72vw) !important;
+  }
+  .player-results-list li{
+    font-size:clamp(9px,1.8vw,13px) !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1081,7 +1321,12 @@ function renderGame(){
   const resultsList=(game.scores||[]).map((x,i)=>`<li class="${i===0?'results-winner':''}"><span class="results-place">${i+1}.</span><span class="results-player">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`).join('');
   app.innerHTML=isHost
    ? `<section class="results-art-screen"><div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results"><ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol><button class="results-reset-hit" onclick="pressedAction(this,resetLobby)" aria-label="Reset for a new game"></button></div></section>`
-   : `<section class="player-results-screen" role="region" aria-label="Your final quiz results"><ol class="player-results-list" tabindex="0" aria-label="Final scores">${resultsList}</ol></section>`;
+   : `<section class="player-results-screen" role="region" aria-label="Your final quiz results">
+       <div class="player-results-board">
+         <img class="player-results-art" src="assets/player-results-portrait.webp" alt="">
+         <ol class="player-results-list" tabindex="0" aria-label="Final scores">${resultsList}</ol>
+       </div>
+     </section>`;
   return;
  }
  if(game.phase!=='started')return isHost?renderHost():renderLobby();
