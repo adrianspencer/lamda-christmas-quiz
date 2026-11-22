@@ -71,6 +71,8 @@ export async function onRequestPost({request,env}){
  const answer=player?await db.prepare('SELECT answer,correct FROM quiz_answers WHERE code=? AND player_token=? AND question_index=?').bind(code,token,idx).first():null;
  const rows=isHost?await db.prepare('SELECT a.player_token,a.question_index,a.answer,a.correct,p.name FROM quiz_answers a JOIN players p ON p.token=a.player_token WHERE a.code=? ORDER BY a.question_index,p.joined_at').bind(code).all():null;
  const scores=phase==='finished'?await db.prepare('SELECT p.name,COALESCE(SUM(CASE WHEN a.correct=1 THEN 1 ELSE 0 END),0) AS score FROM players p LEFT JOIN quiz_answers a ON a.player_token=p.token AND a.code=p.code WHERE p.code=? GROUP BY p.token ORDER BY score DESC,p.joined_at').bind(code).all():null;
- return reply({phase,index:idx,total:30,revealed:!!game?.revealed,question:phase==='started'?questions[idx][0]:null,correctAnswer:(isHost||game?.revealed||phase==='finished')?questions[idx][1]:null,unscored:false,answer:answer?.answer||null,marked:answer?.correct??null,answers:isHost?(rows?.results||[]):undefined,scores:scores?.results||undefined});
+ const planRow=await db.prepare('SELECT plan FROM quiz_rudolph WHERE code=?').bind(code).first().catch(()=>null);
+ let rudolphPlan=null;try{rudolphPlan=planRow?JSON.parse(planRow.plan):null;}catch{}
+ return reply({phase,index:idx,total:30,revealed:!!game?.revealed,question:phase==='started'?questions[idx][0]:null,correctAnswer:(isHost||game?.revealed||phase==='finished')?questions[idx][1]:null,unscored:false,answer:answer?.answer||null,marked:answer?.correct??null,answers:isHost?(rows?.results||[]):undefined,scores:scores?.results||undefined,rudolphPlan});
  }catch(e){return reply({error:'Game service: '+e.message},500)}
 }
