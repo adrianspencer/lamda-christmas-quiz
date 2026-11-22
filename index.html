@@ -485,6 +485,55 @@ button:disabled{opacity:.5;cursor:not-allowed}
   }
 }
 
+
+
+/* FINAL MOBILE JOIN-SCREEN OVERRIDES
+   Keep the portrait phone layout after the later desktop join-card styling.
+   Desktop and landscape layouts are not affected. */
+@media (max-width:699px) and (orientation:portrait){
+  .festive-join-screen{
+    min-height:100svh !important;height:auto !important;overflow:visible !important;
+    display:flex !important;flex-direction:column !important;align-items:stretch !important;
+    justify-content:flex-start !important;padding:0 0 max(18px,env(safe-area-inset-bottom)) !important;
+    background-image:none !important;background-color:#100b12 !important;
+  }
+  .festive-join-screen::before{
+    content:"" !important;display:block !important;flex:none !important;width:100% !important;
+    height:100vw !important;max-height:560px !important;
+    background-image:url("var(--join-screen-backdrop)") !important;background-repeat:no-repeat !important;
+    background-size:auto 100% !important;background-position:right center !important;
+  }
+  .festive-join-card{
+    position:relative !important;left:auto !important;top:auto !important;bottom:auto !important;
+    width:calc(100% - 28px) !important;height:auto !important;min-height:0 !important;
+    margin:-8px auto 0 !important;padding:22px 20px 24px !important;
+    border-width:4px !important;border-radius:17px !important;background:#071a31 !important;
+    box-shadow:0 12px 34px rgba(0,0,0,.55) !important;
+  }
+  .festive-join-card h1{
+    font:700 clamp(27px,7.5vw,36px)/1.05 Georgia,'Times New Roman',serif !important;
+    color:#f7d68d !important;letter-spacing:.015em !important;
+  }
+  .festive-join-rule{margin:14px 0 17px !important;}
+  .festive-join-card label{
+    display:block !important;text-align:center !important;margin:0 0 9px !important;
+    font:700 21px/1.2 Georgia,'Times New Roman',serif !important;
+  }
+  .festive-name-input{
+    width:100% !important;min-height:58px !important;padding:12px 15px !important;
+    font:600 19px/1.2 Arial,sans-serif !important;
+  }
+  .festive-join-button{
+    width:100% !important;min-height:58px !important;margin-top:18px !important;
+    font:700 23px/1 Georgia,'Times New Roman',serif !important;
+  }
+}
+@media (max-width:380px) and (orientation:portrait){
+  .festive-join-card{padding:19px 16px 21px !important;}
+  .festive-join-card h1{font-size:27px !important;}
+  .festive-join-button{font-size:21px !important;}
+}
+
 </style>
 </head>
 <body>
