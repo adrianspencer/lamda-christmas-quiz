@@ -144,7 +144,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .panel-screen.game-screen{background:#180c0a!important;min-height:100svh;padding:12px 8px 30px!important;display:block!important}
 .panel-screen.game-screen .panel.filofax{max-width:700px!important;width:100%!important;margin:0 auto!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important;overflow:visible!important}
 .panel-screen.game-screen .panel.filofax:before,.panel-screen.game-screen .panel.filofax:after{display:none!important}
-.theatre-art{position:relative;width:100%;aspect-ratio:1199/1312;background:url(assets/e5a00224093e.webp) center/100% 100% no-repeat;isolation:isolate}
+.theatre-art{position:relative;width:100%;aspect-ratio:1199/1312;isolation:isolate}
 .theatre-art .question-count{position:absolute;top:15.9%;left:52%;width:27%;height:7.3%;display:flex;align-items:center;justify-content:center;text-align:center;transform:rotate(-1deg);background:#d98b80;color:#201410;font:700 clamp(10px,2.2vw,22px) 'Courier New',monospace;box-shadow:1px 3px 4px #4e261c50;clip-path:polygon(1% 6%,99% 0,98% 96%,0 100%)}
 .theatre-art .question-copy{position:absolute;top:29%;left:25%;width:52%;height:18%;display:flex;align-items:center;justify-content:center;text-align:center;color:#241b15;font:700 clamp(13px,3.5vw,29px)/1.2 'Courier New',monospace;overflow-wrap:anywhere;overflow-y:auto}
 .theatre-art .answer-field{position:absolute;top:49.7%;left:24%;width:51%;height:12%;background:transparent!important;border:0!important;box-shadow:none!important;resize:none;color:#25180f!important;font:clamp(14px,3vw,26px)/1.3 'Courier New',monospace!important;padding:7% 1% 0!important;outline-offset:3px}
@@ -664,6 +664,12 @@ button:disabled{opacity:.5;cursor:not-allowed}
   background-repeat:no-repeat!important;
   background-attachment:scroll!important;
 }
+.theatre-art > .filofax-image{
+ position:absolute;inset:0;width:100%;height:100%;z-index:0;
+ border-radius:inherit;pointer-events:none;
+}
+.theatre-art.artwork-pending > :not(.filofax-image),
+.theatre-art.artwork-pending::before{visibility:hidden!important}
 </style>
 </head>
 <body>
@@ -935,6 +941,20 @@ async function prepareQuestionArtwork(){
  }
  if(questionArtworkReady && game?.phase==='started')render();
 }
+function mountFilofax(panel, alreadyVisible){
+ const photo=questionArtwork[0];
+ photo.alt='';
+ photo.className='filofax-image';
+ panel.prepend(photo);
+ if(alreadyVisible){
+  panel.classList.remove('artwork-pending');
+  return;
+ }
+ // Give the mounted photograph a rendering opportunity before showing the controls.
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{
+  if(panel.isConnected)panel.classList.remove('artwork-pending');
+ }));
+}
 function renderGame(){
  if(!game)return renderLobby();
  const isHost=state.view==='host';
@@ -960,8 +980,9 @@ function renderGame(){
  const myAnswer=game.answer;
  if(answerDraftQuestion!==i){answerDraft='';answerDraftQuestion=i;}
  const rudolphOverlay=renderRudolphOverlay(i);
+ const filofaxVisible=!!app.querySelector('.theatre-art:not(.artwork-pending) > .filofax-image');
  app.innerHTML=`<section class="panel-screen game-screen"><div class="panel filofax">
- <div class="theatre-art" aria-label="LAMDA Christmas Quiz question">
+ <div class="theatre-art artwork-pending" aria-label="LAMDA Christmas Quiz question">
  <div class="question-count"><span>Question ${String(i+1).padStart(2,'0')}</span><span>of 25</span></div>
  <div class="question-copy">${escapeHtml(game.question||'')}</div>
  ${rudolphOverlay}
@@ -970,6 +991,7 @@ function renderGame(){
  </div>
  ${isHost?`<div class="theatre-controls"><h3>Quizmaster · Submitted answers (${answers.length})</h3>${answers.map(a=>`<div class="mark-row"><span><strong>${escapeHtml(a.name)}</strong>: ${escapeHtml(a.answer)}</span><span><button class="mark-btn ${a.correct===1?'active':''}" aria-label="Mark ${escapeHtml(a.name)} correct" title="Award one point" onclick="doGame('mark',{index:${i},playerToken:'${a.player_token}',correct:${a.correct===1?0:1}})">✓</button></span></div>`).join('')||'<p>Waiting for answers…</p>'}<div class="row" style="margin-top:18px">${!game.revealed?`<button class="cta full" onclick="doGame('reveal')">REVEAL ANSWER</button>`:i===24?`<button class="cta full" onclick="doGame('finish')">SHOW FINAL RANKINGS</button>`:`<button class="cta full" onclick="doGame('advance')">NEXT QUESTION →</button>`}</div><button type="button" class="secondary full-secondary reset-text-link" onclick="resetLobby()" style="background:transparent!important;color:#201410!important;border:0!important;box-shadow:none!important;text-decoration:underline!important;text-underline-offset:3px!important;font-weight:700!important;cursor:pointer!important">RESET QUIZ &amp; CLEAR PLAYERS</button>${state.lobbyError?`<p class="lobby-error">${escapeHtml(state.lobbyError)}</p>`:''}</div>`:''}
  </div></section>`;
+ mountFilofax(app.querySelector('.theatre-art'),filofaxVisible);
  fitQuestionText();
  scheduleRudolphCue(i);
 }
