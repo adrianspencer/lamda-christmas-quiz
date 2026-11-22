@@ -657,25 +657,12 @@ button:disabled{opacity:.5;cursor:not-allowed}
 /* Contestant final results deliberately reuse the host results composition. */
 
 
-/* Guest gameplay stage only: no repeated spotlight on wide screens. */
-@media (min-width:750px){
-  .panel-screen.game-screen{
-    background-image:url("assets/guest-christmas-stage.webp")!important;
-    background-position:center center!important;
-    background-size:cover!important;
-  }
-}
-/* Portrait phones: fit the entire theatre-stage photograph to the viewport
-   rather than cropping its sides and showing only its dark centre. */
-@media (max-width:749px){
-  .panel-screen.game-screen{
-    background-image:url("assets/guest-christmas-stage.webp")!important;
-    background-position:center center!important;
-    background-size:100% 100%!important;
-    background-repeat:no-repeat!important;
-    background-attachment:scroll!important;
-    background-color:#180c0a!important;
-  }
+.panel-screen.game-screen{
+  background-image:url("assets/guest-christmas-stage.webp")!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  background-attachment:scroll!important;
 }
 </style>
 </head>
@@ -925,6 +912,29 @@ async function doGame(action,extra={}){
  catch(e){state.lobbyError=e.message;render();}
  finally{gameBusy=false;}
 }
+const questionArtwork = ['assets/e5a00224093e.webp', 'assets/guest-christmas-stage.webp'].map(src => {
+ const image = new Image();
+ image.src = src;
+ return image;
+});
+let questionArtworkReady = false;
+let questionArtworkLoading = false;
+
+async function prepareQuestionArtwork(){
+ if(questionArtworkLoading)return;
+ questionArtworkLoading=true;
+ try{
+  await Promise.all(questionArtwork.map(image=>image.decode()));
+  questionArtworkReady=true;
+ }catch{
+  if(game?.phase==='started'){
+   app.innerHTML='<section class="panel-screen"><div class="panel"><p>Question artwork could not load.</p><button class="cta" onclick="location.reload()">Retry</button></div></section>';
+  }
+ }finally{
+  questionArtworkLoading=false;
+ }
+ if(questionArtworkReady && game?.phase==='started')render();
+}
 function renderGame(){
  if(!game)return renderLobby();
  const isHost=state.view==='host';
@@ -940,6 +950,11 @@ function renderGame(){
   return;
  }
  if(game.phase!=='started')return isHost?renderHost():renderLobby();
+ if(!questionArtworkReady){
+  if(!questionArtworkLoading)app.innerHTML='<section class="panel-screen" role="status" aria-label="Loading question artwork"></section>';
+  prepareQuestionArtwork();
+  return;
+ }
  const i=game.index;
  const answers=isHost?(game.answers||[]).filter(a=>a.question_index===i):[];
  const myAnswer=game.answer;
