@@ -660,35 +660,70 @@ button:disabled{opacity:.5;cursor:not-allowed}
   white-space:nowrap;
   font-size:.9em;
 }
+
+/* PLAYER RESULTS PORTRAIT — mobile-only final-results layout */
 @media(max-width:700px) and (orientation:portrait){
   .player-results-screen{
+    width:100%;
+    height:100svh;
+    height:100dvh;
     min-height:100svh;
     min-height:100dvh;
-    background:#16070a url("assets/player-results-portrait.webp") center center / 100% 100% no-repeat;
+    overflow:hidden;
+    background-color:#16070a;
+    background-image:url("assets/player-results-portrait.webp");
+    background-position:center center;
+    background-size:min(100vw, 72dvh) auto;
+    background-repeat:no-repeat;
   }
   .player-results-list{
     left:17%;
-    top:46.1%;
-    width:54.6%;
-    height:20.4%;
-    grid-template-rows:repeat(5,minmax(0,1fr));
-    gap:1.3%;
+    top:46.8%;
+    width:54.7%;
+    height:17.2%;
+    display:grid;
+    grid-template-columns:1fr;
+    grid-template-rows:repeat(10,minmax(0,1fr));
+    grid-auto-rows:10%;
+    gap:0;
+    overflow-y:auto;
+    padding:0;
+    margin:0;
   }
   .player-results-list li{
-    font-size:clamp(10px,2.4vw,16px);
-    grid-template-columns:10% minmax(0,1fr) auto;
-    gap:1.5%;
-    padding:0 3%;
+    min-height:0;
+    height:auto;
+    display:grid;
+    grid-template-columns:9% minmax(0,1fr) auto;
+    align-items:center;
+    gap:1%;
+    padding:0 2.5%;
+    font-size:clamp(9px,2.45vw,14px);
+    line-height:1;
+    white-space:nowrap;
+  }
+  .player-results-list li:first-child{
+    color:#fff0cb;
+    font-weight:800;
+  }
+  .player-results-list .results-player{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .player-results-list .results-points{
+    white-space:nowrap;
+    font-size:.88em;
   }
 }
 @media(max-width:390px) and (orientation:portrait){
   .player-results-list{
     left:17%;
-    width:54.6%;
-    top:46.1%;
-    height:20.4%;
+    width:54.7%;
+    top:46.8%;
+    height:17.2%;
   }
-  .player-results-list li{font-size:clamp(9px,2.6vw,13px)}
+  .player-results-list li{font-size:clamp(8px,2.5vw,11px)}
 }
 @media(max-width:700px) and (orientation:landscape){
   .player-results-screen{
@@ -696,6 +731,98 @@ button:disabled{opacity:.5;cursor:not-allowed}
   }
   .player-results-list{
     left:35.1%;top:40.4%;width:28.6%;height:29.2%;
+  }
+}
+
+
+/* FINAL RESULTS — stable multi-player leaderboard (up to 20 entries).
+   Desktop shows five rows at a time; mobile shows ten. Remaining entries scroll
+   inside the parchment instead of shrinking, overlapping, or escaping the artwork. */
+.player-results-list{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) !important;
+  grid-template-rows:none !important;
+  grid-auto-flow:row !important;
+  grid-auto-rows:20% !important;
+  align-content:start !important;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(104,55,24,.55) transparent;
+  box-sizing:border-box;
+}
+.player-results-list li{
+  box-sizing:border-box;
+  min-height:0 !important;
+  height:auto !important;
+  max-height:none !important;
+  margin:0 !important;
+  overflow:hidden;
+  display:grid !important;
+  grid-template-columns:9% minmax(0,1fr) auto !important;
+  align-items:center !important;
+  line-height:1 !important;
+  white-space:nowrap !important;
+}
+.player-results-list .results-player{
+  min-width:0 !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+}
+.player-results-list .results-points{
+  white-space:nowrap !important;
+  text-align:right;
+}
+@media(max-width:700px) and (orientation:portrait){
+  .player-results-screen{
+    width:100%;
+    height:100svh;
+    height:100dvh;
+    min-height:100svh;
+    min-height:100dvh;
+    background-position:center center !important;
+    background-size:min(100vw,72dvh) auto !important;
+    background-repeat:no-repeat !important;
+    overflow:hidden;
+  }
+  .player-results-list{
+    left:17% !important;
+    top:46.8% !important;
+    width:54.7% !important;
+    height:17.2% !important;
+    grid-template-rows:none !important;
+    grid-auto-rows:10% !important;
+    gap:0 !important;
+    padding:0 !important;
+    margin:0 !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch;
+  }
+  .player-results-list li{
+    flex:none;
+    min-height:0 !important;
+    height:auto !important;
+    padding:0 2.5% !important;
+    gap:1% !important;
+    font-size:clamp(9px,2.45vw,14px) !important;
+  }
+}
+@media(max-width:390px) and (orientation:portrait){
+  .player-results-list{
+    left:17% !important;
+    width:54.7% !important;
+    top:46.8% !important;
+    height:17.2% !important;
+  }
+  .player-results-list li{
+    font-size:clamp(8px,2.5vw,11px) !important;
+  }
+}
+@media(max-width:700px) and (orientation:landscape){
+  .player-results-list{
+    grid-auto-rows:20% !important;
   }
 }
 
