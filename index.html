@@ -763,6 +763,118 @@ button:disabled{opacity:.5;cursor:not-allowed}
   .player-results-list li{font-size:clamp(9px,1.8vw,13px) !important}
 }
 
+
+/* Contestant final-results artwork: use the prepared artwork with the complete LAMDA ticket.
+   Keep the host composition and every non-results screen untouched. */
+.player-results-screen{
+  position:relative !important;
+  display:grid !important;
+  place-items:center !important;
+  width:100% !important;
+  height:100vh !important;
+  height:100svh !important;
+  min-height:100dvh !important;
+  overflow:hidden !important;
+  background:#16070a !important;
+}
+.player-results-board{
+  position:relative !important;
+  width:min(100vw,100svh) !important;
+  aspect-ratio:900 / 905 !important;
+  height:auto !important;
+  max-height:100svh !important;
+  overflow:hidden !important;
+}
+.player-results-picture{
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+}
+.player-results-art{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  object-fit:fill !important;
+}
+.player-results-live-list{
+  position:absolute !important;
+  left:17.0% !important;
+  top:43.35% !important;
+  width:55.4% !important;
+  height:32.9% !important;
+  box-sizing:border-box !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+  justify-content:flex-start !important;
+  gap:0 !important;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  overscroll-behavior:contain !important;
+  -webkit-overflow-scrolling:touch !important;
+  scrollbar-width:none !important;
+  list-style:none !important;
+  padding:0 !important;
+  margin:0 !important;
+  z-index:2 !important;
+}
+.player-results-live-list::-webkit-scrollbar{display:none !important}
+.player-results-live-list li{
+  all:unset !important;
+  box-sizing:border-box !important;
+  display:grid !important;
+  grid-template-columns:9% minmax(0,1fr) 25% !important;
+  align-items:center !important;
+  column-gap:1.5% !important;
+  flex:0 0 10% !important;
+  min-height:10% !important;
+  width:100% !important;
+  margin:0 !important;
+  padding:0 2.5% !important;
+  overflow:hidden !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:#4b2414 !important;
+  font:700 clamp(8px,2.05vw,14px)/1 Georgia,"Times New Roman",serif !important;
+  white-space:nowrap !important;
+  list-style:none !important;
+}
+.player-results-live-list li:first-child{
+  border:1px solid #6d351c !important;
+  border-radius:5px !important;
+  background:linear-gradient(180deg,#a70e24 0%,#760817 100%) !important;
+  box-shadow:inset 0 1px 0 rgba(255,190,140,.28) !important;
+  color:#fff0cb !important;
+}
+.player-results-live-list .results-place,
+.player-results-live-list .results-player,
+.player-results-live-list .results-points{
+  min-width:0 !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+@media (min-width:700px){
+  .player-results-board{
+    width:min(100vw,175svh) !important;
+    aspect-ratio:1659 / 948 !important;
+    max-height:100svh !important;
+  }
+  .player-results-live-list{
+    left:33.7% !important;
+    top:40.9% !important;
+    width:30.5% !important;
+    height:32.0% !important;
+  }
+  .player-results-live-list li{
+    font-size:clamp(12px,1.05vw,17px) !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1016,7 +1128,17 @@ function renderGame(){
  const isHost=state.view==='host';
  if(game.phase==='finished'){
   const resultsList=(game.scores||[]).map((x,i)=>`<li class="${i===0?'results-winner':''}"><span class="results-place">${i+1}.</span><span class="results-player">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`).join('');
-  app.innerHTML=`<section class="results-art-screen"><div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results"><ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol>${isHost?'<button class="results-reset-hit" onclick="pressedAction(this,resetLobby)" aria-label="Reset for a new game"></button>':''}</div></section>`;
+  app.innerHTML=isHost
+   ? `<section class="results-art-screen"><div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results"><ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol><button class="results-reset-hit" onclick="pressedAction(this,resetLobby)" aria-label="Reset for a new game"></button></div></section>`
+   : `<section class="player-results-screen" role="region" aria-label="Your final quiz results">
+       <div class="player-results-board">
+         <picture class="player-results-picture">
+           <source media="(min-width:700px)" srcset="assets/player-results-bespoke.webp">
+           <img class="player-results-art" src="assets/player-results-portrait.webp" alt="">
+         </picture>
+         <ol class="results-live-list player-results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol>
+       </div>
+     </section>`;
   return;
  }
  if(game.phase!=='started')return isHost?renderHost():renderLobby();
