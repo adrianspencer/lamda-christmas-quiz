@@ -308,7 +308,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .results-live-list li:nth-child(3){background-image:url(assets/4eba6617fc82.png)}
 .results-live-list li:nth-child(4){background-image:url(assets/f412ef37f20b.png)}
 .results-live-list li:nth-child(5){background-image:url(assets/64130189cd3b.png)}
-.results-player{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.results-player{min-width:0;overflow:hidden;text-overflow:clip;white-space:nowrap;letter-spacing:-.015em}
 .results-points{white-space:nowrap;font-size:.89em}
 .results-reset-hit{position:absolute;left:27.3846%;top:75.641%;width:50%;height:7.9487%;border:0;padding:0;background:url(assets/5934e683734f.png) center/100% 100% no-repeat;cursor:pointer}
 .results-reset-hit:focus-visible,.results-live-list:focus-visible{outline:3px solid gold;outline-offset:2px}
@@ -907,7 +907,7 @@ function renderGame(){
  if(!game)return renderLobby();
  const isHost=state.view==='host';
  if(game.phase==='finished'){
-  const resultsList=(game.scores||[]).map((x,i)=>`<li class="${i===0?'results-winner':''}"><span class="results-place">${i+1}.</span><span class="results-player">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`).join('');
+  const resultsList=(game.scores||[]).map((x,i)=>{const nameScale=Math.max(.58,1-Math.max(0,(x.name||'').length-12)*.035);return `<li class="${i===0?'results-winner':''}"><span class="results-place">${i+1}.</span><span class="results-player" style="font-size:${nameScale.toFixed(2)}em">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`}).join('');
   app.innerHTML=isHost
    ? `<section class="results-art-screen"><div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results"><ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol><button class="results-reset-hit" onclick="pressedAction(this,resetLobby)" aria-label="Reset for a new game"></button></div></section>`
    : `<section class="results-art-screen player-results-screen" role="region" aria-label="Your final quiz results">
