@@ -1016,17 +1016,7 @@ function renderGame(){
  const isHost=state.view==='host';
  if(game.phase==='finished'){
   const resultsList=(game.scores||[]).map((x,i)=>`<li class="${i===0?'results-winner':''}"><span class="results-place">${i+1}.</span><span class="results-player">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`).join('');
-  app.innerHTML=isHost
-   ? `<section class="results-art-screen"><div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results"><ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol><button class="results-reset-hit" onclick="pressedAction(this,resetLobby)" aria-label="Reset for a new game"></button></div></section>`
-   : `<section class="player-results-screen" role="region" aria-label="Your final quiz results">
-       <div class="player-results-board">
-         <picture class="player-results-picture">
-           <source media="(orientation:landscape)" srcset="assets/player-results-bespoke.webp">
-           <img class="player-results-art" src="assets/player-results-portrait.webp" alt="">
-         </picture>
-         <ol class="player-results-list" tabindex="0" aria-label="Final scores">${resultsList}</ol>
-       </div>
-     </section>`;
+  app.innerHTML=`<section class="results-art-screen"><div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results"><ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol>${isHost?'<button class="results-reset-hit" onclick="pressedAction(this,resetLobby)" aria-label="Reset for a new game"></button>':''}</div></section>`;
   return;
  }
  if(game.phase!=='started')return isHost?renderHost():renderLobby();
