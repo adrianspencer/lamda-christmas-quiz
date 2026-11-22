@@ -718,7 +718,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
   text-align:right !important;
   justify-self:stretch !important;
 }
-@media(max-width:700px){
+@media(orientation:portrait){
   .player-results-board{
     width:100vw !important;
     max-width:100vw !important;
@@ -1012,7 +1012,7 @@ function renderGame(){
    : `<section class="player-results-screen" role="region" aria-label="Your final quiz results">
        <div class="player-results-board">
          <picture class="player-results-picture">
-           <source media="(min-width:701px)" srcset="assets/player-results-bespoke.webp">
+           <source media="(orientation:landscape)" srcset="assets/player-results-bespoke.webp">
            <img class="player-results-art" src="assets/player-results-portrait.webp" alt="">
          </picture>
          <ol class="player-results-list" tabindex="0" aria-label="Final scores">${resultsList}</ol>
