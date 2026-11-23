@@ -581,7 +581,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
   height:auto!important;
   aspect-ratio:1199 / 1312!important;
   box-sizing:border-box!important;
-  border:2px solid #000!important;
+  border:4px solid #000!important;
   border-radius:8px!important;
   overflow:visible!important;
   filter:drop-shadow(0 12px 22px rgba(0,0,0,.48))!important;
@@ -670,6 +670,9 @@ button:disabled{opacity:.5;cursor:not-allowed}
 }
 .theatre-art.artwork-pending > :not(.filofax-image),
 .theatre-art.artwork-pending::before{visibility:hidden!important}
+@media (max-width: 699px) and (orientation: portrait) {
+  .panel-screen.game-screen { background-image:url("assets/guest-stage-velvet-portrait.webp")!important; }
+}
 </style>
 </head>
 <body>
@@ -918,7 +921,7 @@ async function doGame(action,extra={}){
  catch(e){state.lobbyError=e.message;render();}
  finally{gameBusy=false;}
 }
-const questionArtwork = ['assets/e5a00224093e.webp', 'assets/guest-christmas-stage.webp'].map(src => {
+const questionArtwork = ['assets/e5a00224093e.webp', matchMedia('(max-width: 699px) and (orientation: portrait)').matches ? 'assets/guest-stage-velvet-portrait.webp' : 'assets/guest-christmas-stage.webp'].map(src => {
  const image = new Image();
  image.src = src;
  return image;
