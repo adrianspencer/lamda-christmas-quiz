@@ -675,6 +675,34 @@ button:disabled{opacity:.5;cursor:not-allowed}
     font-size:3.65em;
   }
 }
+
+
+/* Mobile contestant question backdrop: use the pre-decoded image node rather
+   than relying on a CSS background image paint after the question renders. */
+@media (max-width:699px) and (orientation:portrait){
+  .panel-screen.game-screen.player-mobile-game-screen{
+    position:relative!important;
+    isolation:isolate!important;
+    min-height:100dvh!important;
+    background:#18090d!important;
+  }
+  .player-mobile-game-screen > .game-backdrop-image{
+    position:fixed!important;
+    inset:0!important;
+    display:block!important;
+    width:100vw!important;
+    height:100dvh!important;
+    object-fit:cover!important;
+    object-position:center center!important;
+    z-index:0!important;
+    pointer-events:none!important;
+  }
+  .player-mobile-game-screen > .panel.filofax{
+    position:relative!important;
+    z-index:1!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -965,9 +993,8 @@ function renderGame(){
  const isHost=state.view==='host';
  if(game.phase==='finished'){
   const resultsList=(game.scores||[]).map((x,i)=>{const nameScale=Math.max(.58,1-Math.max(0,(x.name||'').length-12)*.035);return `<li class="${i===0?'results-winner':''}"><span class="results-place">${i+1}.</span><span class="results-player" style="font-size:${nameScale.toFixed(2)}em">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`}).join('');
-  // Mobile contestant-only: use the exact finished, framed artwork rather than
-  // the legacy embedded SVG and its multiple lighting/clipping layers.
-  // The host page and desktop results remain completely unchanged.
+  // Contestant-only mobile results: match the finished desktop frame using the
+  // supplied static artwork. Host and desktop results retain their existing code.
   if(!isHost && window.matchMedia('(max-width:699px) and (orientation:portrait)').matches){
     app.innerHTML=`<section class="results-art-screen player-results-screen player-results-mobile-framed" aria-label="Final results">
       <div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results">
@@ -1015,6 +1042,18 @@ function renderGame(){
  </div>
  ${isHost?`<div class="theatre-controls"><h3>Quizmaster · Submitted answers (${answers.length})</h3>${answers.map(a=>`<div class="mark-row"><span><strong>${escapeHtml(a.name)}</strong>: ${escapeHtml(a.answer)}</span><span><button class="mark-btn ${a.correct===1?'active':''}" aria-label="Mark ${escapeHtml(a.name)} correct" title="Award one point" onclick="doGame('mark',{index:${i},playerToken:'${a.player_token}',correct:${a.correct===1?0:1}})">✓</button></span></div>`).join('')||'<p>Waiting for answers…</p>'}<div class="row" style="margin-top:18px">${!game.revealed?`<button class="cta full" onclick="doGame('reveal')">REVEAL ANSWER</button>`:i===24?`<button class="cta full" onclick="doGame('finish')">SHOW FINAL RANKINGS</button>`:`<button class="cta full" onclick="doGame('advance')">NEXT QUESTION →</button>`}</div><button type="button" class="secondary full-secondary reset-text-link" onclick="resetLobby()" style="background:transparent!important;color:#201410!important;border:0!important;box-shadow:none!important;text-decoration:underline!important;text-underline-offset:3px!important;font-weight:700!important;cursor:pointer!important">RESET QUIZ &amp; CLEAR PLAYERS</button>${state.lobbyError?`<p class="lobby-error">${escapeHtml(state.lobbyError)}</p>`:''}</div>`:''}
  </div></section>`;
+ // Reuse the portrait background image that prepareQuestionArtwork() has
+ // already decoded. It is mounted before the question UI is exposed, so the
+ // backdrop and question become visible together on mobile contestant screens.
+ if(!isHost && window.matchMedia('(max-width:699px) and (orientation:portrait)').matches){
+  const gameScreen=app.querySelector('.panel-screen.game-screen');
+  const backdropImage=questionArtwork[1];
+  backdropImage.alt='';
+  backdropImage.className='game-backdrop-image';
+  backdropImage.setAttribute('aria-hidden','true');
+  gameScreen.classList.add('player-mobile-game-screen');
+  gameScreen.prepend(backdropImage);
+ }
  mountFilofax(app.querySelector('.theatre-art'),filofaxVisible);
  fitQuestionText();
  scheduleRudolphCue(i);
