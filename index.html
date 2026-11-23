@@ -298,9 +298,12 @@ button:disabled{opacity:.5;cursor:not-allowed}
 @media(max-width:640px){.rudolph-overlay.rudolph-left{left:2.6%;top:45.4%;width:16%;height:19%}.rudolph-overlay.rudolph-right{right:2.6%;top:45.4%;width:16%;height:19%}}
 
 .results-art-screen{height:100vh;height:100svh;position:relative;overflow:hidden;background:#240e08;display:grid;place-items:center}
-.results-art-stage{position:relative;width:min(100vw,77.57vh);width:min(100vw,77.57svh);aspect-ratio:650/780;font-size:min(1vw,.7757vh);font-size:min(1vw,.7757svh);isolation:isolate}
-.results-art-stage::before{content:"";position:absolute;z-index:-1;left:-78.46154%;top:-2.82051%;width:257.23077%;height:107.4359%;background:url(assets/a7dfcbbfdd5f.webp) center/100% 100% no-repeat}
-.results-live-list{position:absolute;left:21.53846%;top:40.89744%;width:58.30769%;height:30.25641%;overflow:auto;overscroll-behavior:contain;scrollbar-width:none;list-style:none;padding:0;margin:0}
+.results-art-stage{position:relative;width:min(calc(100vw - 14px),calc(78.18vh - 6.26px),77.57vh);width:min(calc(100vw - 14px),calc(78.18svh - 6.26px),77.57svh);aspect-ratio:auto;font-size:min(1vw,.7757vh);font-size:min(1vw,.7757svh);isolation:isolate}
+.results-art-screen{background:#240e08 url("assets/guest-christmas-stage.webp") center / cover no-repeat}
+.results-art-stage{height:auto;aspect-ratio:auto}
+.results-panel-image{display:block;width:100%;height:auto;overflow:visible}
+
+.results-live-list{position:absolute;left:11%;top:40%;width:73%;height:29%;overflow:auto;overscroll-behavior:contain;scrollbar-width:none;list-style:none;padding:0;margin:0}
 .results-live-list::-webkit-scrollbar{display:none}
 .results-live-list li{display:grid;align-items:center;grid-template-columns:10% minmax(0,1fr) auto;gap:2%;height:19.0678%;padding:0 5.7% 0 10.8%;background:url(assets/ac0134cb56ea.png) center/100% 100% no-repeat;color:#391209;font:bold 3.65em/1 Georgia,'Times New Roman',serif}
 .results-live-list li:first-child{height:23.3051%;padding-left:16.5%;background-image:url(assets/2054a33940e4.png);color:#fff4d3}
@@ -310,7 +313,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .results-live-list li:nth-child(5){background-image:url(assets/64130189cd3b.png)}
 .results-player{min-width:0;overflow:hidden;text-overflow:clip;white-space:nowrap;letter-spacing:-.015em}
 .results-points{white-space:nowrap;font-size:.89em}
-.results-reset-hit{position:absolute;left:27.3846%;top:75.641%;width:50%;height:7.9487%;border:0;padding:0;background:url(assets/5934e683734f.png) center/100% 100% no-repeat;cursor:pointer}
+.results-reset-hit{position:absolute;left:24%;top:71%;width:47%;height:7%;border:0;padding:0;background:url(assets/5934e683734f.png) center/100% 100% no-repeat;cursor:pointer}
 .results-reset-hit:focus-visible,.results-live-list:focus-visible{outline:3px solid gold;outline-offset:2px}
 
 
@@ -618,39 +621,15 @@ button:disabled{opacity:.5;cursor:not-allowed}
     min-height:100svh;
     padding:0;
     background-color:#18090d;
-    background-image:url("assets/571f7acb7d9b.webp");
-    background-position:left center;
+    background-image:url("assets/guest-stage-velvet-portrait.webp");
+    background-position:center center;
     background-size:cover;
     background-repeat:no-repeat;
     display:grid;
     place-items:center;
     overflow:hidden;
   }
-  .player-results-screen .results-art-stage{
-    width:min(100vw,77.57svh);
-    aspect-ratio:800 / 948;
-    font-size:min(1vw,.7757svh);
-    margin:0 auto;
-  }
-  .player-results-screen .results-art-stage::before{
-    z-index:0;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    background-image:url("assets/player-results-mobile-clean.webp");
-    background-position:center center;
-    background-size:100% 100%;
-    background-repeat:no-repeat;
-    pointer-events:none;
-  }
-  .player-results-screen .results-live-list{
-    z-index:1;
-    left:17.5%;
-    top:41.8%;
-    width:64.5%;
-    height:28.7%;
-  }
+
 }
 
 
@@ -963,13 +942,20 @@ function renderGame(){
  const isHost=state.view==='host';
  if(game.phase==='finished'){
   const resultsList=(game.scores||[]).map((x,i)=>{const nameScale=Math.max(.58,1-Math.max(0,(x.name||'').length-12)*.035);return `<li class="${i===0?'results-winner':''}"><span class="results-place">${i+1}.</span><span class="results-player" style="font-size:${nameScale.toFixed(2)}em">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`}).join('');
-  app.innerHTML=isHost
-   ? `<section class="results-art-screen"><div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results"><ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol><button class="results-reset-hit" onclick="pressedAction(this,resetLobby)" aria-label="Reset for a new game"></button></div></section>`
-   : `<section class="results-art-screen player-results-screen" role="region" aria-label="Your final quiz results">
-       <div class="results-art-stage" role="group" aria-label="LAMDA Christmas Quiz final results">
-         <ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol>
-       </div>
-     </section>`;
+  app.innerHTML=`<section class="results-art-screen${isHost ? '' : ' player-results-screen'}" aria-label="Final results">
+    <div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results">
+      <svg class="results-panel-image" viewBox="339 101 570 729" width="570" height="729" aria-hidden="true">
+        <defs>
+          <path id="results-cover" d="M 401 101 Q 365 101 350 130 Q 342 145 342 172 L 339 764 Q 338 809 364 822 Q 377 830 408 830 L 813 827 Q 874 827 879 775 L 882 549 L 897 548 Q 909 548 909 538 L 908 469 Q 907 458 895 458 L 882 458 L 882 168 Q 882 106 830 101 Z"/>
+          <clipPath id="results-cover-clip"><use href="#results-cover"/></clipPath>
+        </defs>
+        <path d="M 401 101 Q 365 101 350 130 Q 342 145 342 172 L 339 764 Q 338 809 364 822 Q 377 830 408 830 L 813 827 Q 874 827 879 775 L 882 549 L 897 548 Q 909 548 909 538 L 908 469 Q 907 458 895 458 L 882 458 L 882 168 Q 882 106 830 101 Z" fill="black" stroke="black" stroke-width="8" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+        <image x="339" y="101" width="570" height="729" href="assets/final-results-filofax.webp" clip-path="url(#results-cover-clip)"/>
+      </svg>
+      <ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol>
+      ${isHost ? '<button class="results-reset-hit" onclick="pressedAction(this,resetLobby)" aria-label="Reset for a new game"></button>' : ''}
+    </div>
+  </section>`;
   return;
  }
  if(game.phase!=='started')return isHost?renderHost():renderLobby();
