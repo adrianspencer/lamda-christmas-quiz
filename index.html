@@ -911,7 +911,7 @@ async function doGame(action,extra={}){
  catch(e){state.lobbyError=e.message;render();}
  finally{gameBusy=false;}
 }
-const questionArtwork = ['assets/e5a00224093e.webp', matchMedia('(max-width: 699px) and (orientation: portrait)').matches ? 'assets/guest-stage-velvet-portrait.webp' : 'assets/guest-christmas-stage.webp'].map(src => {
+const questionArtwork = ['assets/e5a00224093e-tab-clean-v2.webp', matchMedia('(max-width: 699px) and (orientation: portrait)').matches ? 'assets/guest-stage-velvet-portrait.webp' : 'assets/guest-christmas-stage.webp'].map(src => {
  const image = new Image();
  image.src = src;
  return image;
