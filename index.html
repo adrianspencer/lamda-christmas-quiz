@@ -144,7 +144,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .panel-screen.game-screen{background:#180c0a!important;min-height:100svh;padding:12px 8px 30px!important;display:block!important}
 .panel-screen.game-screen .panel.filofax{max-width:700px!important;width:100%!important;margin:0 auto!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important;overflow:visible!important}
 .panel-screen.game-screen .panel.filofax:before,.panel-screen.game-screen .panel.filofax:after{display:none!important}
-.theatre-art{position:relative;width:100%;aspect-ratio:1199/1312;background:url(assets/e5a00224093e.webp) center/100% 100% no-repeat;isolation:isolate}
+.theatre-art{position:relative;width:100%;aspect-ratio:1199/1312;isolation:isolate}
 .theatre-art .question-count{position:absolute;top:15.9%;left:52%;width:27%;height:7.3%;display:flex;align-items:center;justify-content:center;text-align:center;transform:rotate(-1deg);background:#d98b80;color:#201410;font:700 clamp(10px,2.2vw,22px) 'Courier New',monospace;box-shadow:1px 3px 4px #4e261c50;clip-path:polygon(1% 6%,99% 0,98% 96%,0 100%)}
 .theatre-art .question-copy{position:absolute;top:29%;left:25%;width:52%;height:18%;display:flex;align-items:center;justify-content:center;text-align:center;color:#241b15;font:700 clamp(13px,3.5vw,29px)/1.2 'Courier New',monospace;overflow-wrap:anywhere;overflow-y:auto}
 .theatre-art .answer-field{position:absolute;top:49.7%;left:24%;width:51%;height:12%;background:transparent!important;border:0!important;box-shadow:none!important;resize:none;color:#25180f!important;font:clamp(14px,3vw,26px)/1.3 'Courier New',monospace!important;padding:7% 1% 0!important;outline-offset:3px}
@@ -166,7 +166,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
  left:19.5%;top:28%;width:61%;height:19%;
  background:radial-gradient(ellipse at 50% 45%,#f8d8a6 0%,#f5d1a0 65%,#edc18b 100%);
  border-radius:17% 14% 16% 18% / 15% 17% 19% 13%;
- box-shadow:0 0 15px 14px #f2ce9b;
+ box-shadow:0 0 3px 2px #f2ce9b;
 }
 .theatre-art .question-copy{z-index:2;top:29%;height:18%;}
 .theatre-art .question-count{
@@ -298,9 +298,12 @@ button:disabled{opacity:.5;cursor:not-allowed}
 @media(max-width:640px){.rudolph-overlay.rudolph-left{left:2.6%;top:45.4%;width:16%;height:19%}.rudolph-overlay.rudolph-right{right:2.6%;top:45.4%;width:16%;height:19%}}
 
 .results-art-screen{height:100vh;height:100svh;position:relative;overflow:hidden;background:#240e08;display:grid;place-items:center}
-.results-art-stage{position:relative;width:min(100vw,77.57vh);width:min(100vw,77.57svh);aspect-ratio:650/780;font-size:min(1vw,.7757vh);font-size:min(1vw,.7757svh);isolation:isolate}
-.results-art-stage::before{content:"";position:absolute;z-index:-1;left:-78.46154%;top:-2.82051%;width:257.23077%;height:107.4359%;background:url(assets/a7dfcbbfdd5f.webp) center/100% 100% no-repeat}
-.results-live-list{position:absolute;left:21.53846%;top:40.89744%;width:58.30769%;height:30.25641%;overflow:auto;overscroll-behavior:contain;scrollbar-width:none;list-style:none;padding:0;margin:0}
+.results-art-stage{position:relative;width:min(calc(100vw - 14px),calc(78.18vh - 6.26px),77.57vh);width:min(calc(100vw - 14px),calc(78.18svh - 6.26px),77.57svh);aspect-ratio:auto;font-size:min(1vw,.7757vh);font-size:min(1vw,.7757svh);isolation:isolate}
+.results-art-screen{background:#240e08 url("assets/guest-christmas-stage.webp") center / cover no-repeat}
+.results-art-stage{height:auto;aspect-ratio:auto}
+.results-panel-image{display:block;width:100%;height:auto;overflow:visible}
+
+.results-live-list{position:absolute;left:11%;top:40%;width:73%;height:29%;overflow:auto;overscroll-behavior:contain;scrollbar-width:none;list-style:none;padding:0;margin:0}
 .results-live-list::-webkit-scrollbar{display:none}
 .results-live-list li{display:grid;align-items:center;grid-template-columns:10% minmax(0,1fr) auto;gap:2%;height:19.0678%;padding:0 5.7% 0 10.8%;background:url(assets/ac0134cb56ea.png) center/100% 100% no-repeat;color:#391209;font:bold 3.65em/1 Georgia,'Times New Roman',serif}
 .results-live-list li:first-child{height:23.3051%;padding-left:16.5%;background-image:url(assets/2054a33940e4.png);color:#fff4d3}
@@ -310,7 +313,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .results-live-list li:nth-child(5){background-image:url(assets/64130189cd3b.png)}
 .results-player{min-width:0;overflow:hidden;text-overflow:clip;white-space:nowrap;letter-spacing:-.015em}
 .results-points{white-space:nowrap;font-size:.89em}
-.results-reset-hit{position:absolute;left:27.3846%;top:75.641%;width:50%;height:7.9487%;border:0;padding:0;background:url(assets/5934e683734f.png) center/100% 100% no-repeat;cursor:pointer}
+.results-reset-hit{position:absolute;left:24%;top:71%;width:47%;height:7%;border:0;padding:0;background:url(assets/5934e683734f.png) center/100% 100% no-repeat;cursor:pointer}
 .results-reset-hit:focus-visible,.results-live-list:focus-visible{outline:3px solid gold;outline-offset:2px}
 
 
@@ -581,7 +584,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
   height:auto!important;
   aspect-ratio:1199 / 1312!important;
   box-sizing:border-box!important;
-  border:1px solid #100a08!important;
+  border:4px solid #000!important;
   border-radius:8px!important;
   overflow:visible!important;
   filter:drop-shadow(0 12px 22px rgba(0,0,0,.48))!important;
@@ -608,68 +611,57 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 
 
-/* Mobile contestant results: full-bleed theatre backdrop and clean, undistorted Filofax artwork.
-   Scoped only to the contestant results screen; host and desktop layouts remain unchanged. */
+/* Mobile final results: full-bleed portrait theatre background for host and contestant.
+   Keep the original live Filofax/SVG composition and its natural 570:729 proportions. */
 @media (max-width:699px) and (orientation:portrait){
-  .player-results-screen{
-    width:100%;
-    height:100vh;
-    height:100svh;
-    min-height:100svh;
-    padding:0;
-    background-color:#18090d;
-    background-image:url("assets/571f7acb7d9b.webp");
-    background-position:left center;
-    background-size:cover;
-    background-repeat:no-repeat;
-    display:grid;
-    place-items:center;
-    overflow:hidden;
+  .results-art-screen{
+    box-sizing:border-box!important;
+    width:100vw!important;
+    height:100vh!important;
+    height:100svh!important;
+    height:100dvh!important;
+    min-height:100dvh!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    place-items:center!important;
+    overflow:hidden!important;
+    background:#18090d url("assets/guest-stage-velvet-portrait.webp") center center / cover no-repeat!important;
   }
-  .player-results-screen .results-art-stage{
-    width:min(100vw,77.57svh);
-    aspect-ratio:800 / 948;
-    font-size:min(1vw,.7757svh);
-    margin:0 auto;
+  .results-art-stage{
+    width:min(calc(100vw - 14px),calc((100dvh - 24px) * 570 / 729))!important;
+    max-width:100vw!important;
+    height:auto!important;
+    aspect-ratio:570 / 729!important;
   }
-  .player-results-screen .results-art-stage::before{
-    z-index:0;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    background-image:url("assets/player-results-mobile-clean.webp");
-    background-position:center center;
-    background-size:100% 100%;
-    background-repeat:no-repeat;
-    pointer-events:none;
+  .results-panel-image{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
   }
-  .player-results-screen .results-live-list{
-    z-index:1;
-    left:17.5%;
-    top:41.8%;
-    width:64.5%;
-    height:28.7%;
-  }
+  .results-panel-image path[stroke="black"]{stroke-width:4px!important;}
 }
+
 
 
 /* Contestant final results deliberately reuse the host results composition. */
 
 
-/* Mobile guest gameplay: restore the actual theatre-stage photograph behind
-   the Filofax for the full screen. No artwork sizing or positioning changes. */
-@media (max-width:749px){
-  .panel-screen.game-screen{
-    background-image:
-      linear-gradient(90deg,rgba(13,7,11,.24),rgba(13,7,11,.08),rgba(13,7,11,.24)),
-      url("assets/571f7acb7d9b.webp") !important;
-    background-position:center center !important;
-    background-size:cover !important;
-    background-repeat:no-repeat !important;
-    background-attachment:fixed !important;
-    background-color:#180c0a !important;
-  }
+.panel-screen.game-screen{
+  background-image:url("assets/guest-christmas-stage.webp")!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  background-attachment:scroll!important;
+}
+.theatre-art > .filofax-image{
+ position:absolute;inset:0;width:100%;height:100%;z-index:0;
+ border-radius:inherit;pointer-events:none;
+}
+.theatre-art.artwork-pending > :not(.filofax-image),
+.theatre-art.artwork-pending::before{visibility:hidden!important}
+@media (max-width: 699px) and (orientation: portrait) {
+  .panel-screen.game-screen { background-image:url("assets/guest-stage-velvet-portrait.webp")!important; }
 }
 </style>
 </head>
@@ -919,28 +911,78 @@ async function doGame(action,extra={}){
  catch(e){state.lobbyError=e.message;render();}
  finally{gameBusy=false;}
 }
+const questionArtwork = ['assets/e5a00224093e.webp', matchMedia('(max-width: 699px) and (orientation: portrait)').matches ? 'assets/guest-stage-velvet-portrait.webp' : 'assets/guest-christmas-stage.webp'].map(src => {
+ const image = new Image();
+ image.src = src;
+ return image;
+});
+let questionArtworkReady = false;
+let questionArtworkLoading = false;
+
+async function prepareQuestionArtwork(){
+ if(questionArtworkLoading)return;
+ questionArtworkLoading=true;
+ try{
+  await Promise.all(questionArtwork.map(image=>image.decode()));
+  questionArtworkReady=true;
+ }catch{
+  if(game?.phase==='started'){
+   app.innerHTML='<section class="panel-screen"><div class="panel"><p>Question artwork could not load.</p><button class="cta" onclick="location.reload()">Retry</button></div></section>';
+  }
+ }finally{
+  questionArtworkLoading=false;
+ }
+ if(questionArtworkReady && game?.phase==='started')render();
+}
+function mountFilofax(panel, alreadyVisible){
+ const photo=questionArtwork[0];
+ photo.alt='';
+ photo.className='filofax-image';
+ panel.prepend(photo);
+ if(alreadyVisible){
+  panel.classList.remove('artwork-pending');
+  return;
+ }
+ // Give the mounted photograph a rendering opportunity before showing the controls.
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{
+  if(panel.isConnected)panel.classList.remove('artwork-pending');
+ }));
+}
 function renderGame(){
  if(!game)return renderLobby();
  const isHost=state.view==='host';
  if(game.phase==='finished'){
   const resultsList=(game.scores||[]).map((x,i)=>{const nameScale=Math.max(.58,1-Math.max(0,(x.name||'').length-12)*.035);return `<li class="${i===0?'results-winner':''}"><span class="results-place">${i+1}.</span><span class="results-player" style="font-size:${nameScale.toFixed(2)}em">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`}).join('');
-  app.innerHTML=isHost
-   ? `<section class="results-art-screen"><div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results"><ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol><button class="results-reset-hit" onclick="pressedAction(this,resetLobby)" aria-label="Reset for a new game"></button></div></section>`
-   : `<section class="results-art-screen player-results-screen" role="region" aria-label="Your final quiz results">
-       <div class="results-art-stage" role="group" aria-label="LAMDA Christmas Quiz final results">
-         <ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol>
-       </div>
-     </section>`;
+  app.innerHTML=`<section class="results-art-screen${isHost ? '' : ' player-results-screen'}" aria-label="Final results">
+    <div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results">
+      <svg class="results-panel-image" viewBox="339 101 570 729" width="570" height="729" aria-hidden="true">
+        <defs>
+          <path id="results-cover" d="M 401 101 Q 365 101 350 130 Q 342 145 342 172 L 339 764 Q 338 809 364 822 Q 377 830 408 830 L 813 827 Q 874 827 879 775 L 882 549 L 897 548 Q 909 548 909 538 L 908 469 Q 907 458 895 458 L 882 458 L 882 168 Q 882 106 830 101 Z"/>
+          <clipPath id="results-cover-clip"><use href="#results-cover"/></clipPath>
+        </defs>
+        <path d="M 401 101 Q 365 101 350 130 Q 342 145 342 172 L 339 764 Q 338 809 364 822 Q 377 830 408 830 L 813 827 Q 874 827 879 775 L 882 549 L 897 548 Q 909 548 909 538 L 908 469 Q 907 458 895 458 L 882 458 L 882 168 Q 882 106 830 101 Z" fill="black" stroke="black" stroke-width="8" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+        <image x="339" y="101" width="570" height="729" href="assets/final-results-filofax.webp" clip-path="url(#results-cover-clip)"/>
+      </svg>
+      <ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol>
+      ${isHost ? '<button class="results-reset-hit" onclick="pressedAction(this,resetLobby)" aria-label="Reset for a new game"></button>' : ''}
+    </div>
+  </section>`;
   return;
  }
  if(game.phase!=='started')return isHost?renderHost():renderLobby();
+ if(!questionArtworkReady){
+  if(!questionArtworkLoading)app.innerHTML='<section class="panel-screen" role="status" aria-label="Loading question artwork"></section>';
+  prepareQuestionArtwork();
+  return;
+ }
  const i=game.index;
  const answers=isHost?(game.answers||[]).filter(a=>a.question_index===i):[];
  const myAnswer=game.answer;
  if(answerDraftQuestion!==i){answerDraft='';answerDraftQuestion=i;}
  const rudolphOverlay=renderRudolphOverlay(i);
+ const filofaxVisible=!!app.querySelector('.theatre-art:not(.artwork-pending) > .filofax-image');
  app.innerHTML=`<section class="panel-screen game-screen"><div class="panel filofax">
- <div class="theatre-art" aria-label="LAMDA Christmas Quiz question">
+ <div class="theatre-art artwork-pending" aria-label="LAMDA Christmas Quiz question">
  <div class="question-count"><span>Question ${String(i+1).padStart(2,'0')}</span><span>of 25</span></div>
  <div class="question-copy">${escapeHtml(game.question||'')}</div>
  ${rudolphOverlay}
@@ -949,6 +991,7 @@ function renderGame(){
  </div>
  ${isHost?`<div class="theatre-controls"><h3>Quizmaster · Submitted answers (${answers.length})</h3>${answers.map(a=>`<div class="mark-row"><span><strong>${escapeHtml(a.name)}</strong>: ${escapeHtml(a.answer)}</span><span><button class="mark-btn ${a.correct===1?'active':''}" aria-label="Mark ${escapeHtml(a.name)} correct" title="Award one point" onclick="doGame('mark',{index:${i},playerToken:'${a.player_token}',correct:${a.correct===1?0:1}})">✓</button></span></div>`).join('')||'<p>Waiting for answers…</p>'}<div class="row" style="margin-top:18px">${!game.revealed?`<button class="cta full" onclick="doGame('reveal')">REVEAL ANSWER</button>`:i===24?`<button class="cta full" onclick="doGame('finish')">SHOW FINAL RANKINGS</button>`:`<button class="cta full" onclick="doGame('advance')">NEXT QUESTION →</button>`}</div><button type="button" class="secondary full-secondary reset-text-link" onclick="resetLobby()" style="background:transparent!important;color:#201410!important;border:0!important;box-shadow:none!important;text-decoration:underline!important;text-underline-offset:3px!important;font-weight:700!important;cursor:pointer!important">RESET QUIZ &amp; CLEAR PLAYERS</button>${state.lobbyError?`<p class="lobby-error">${escapeHtml(state.lobbyError)}</p>`:''}</div>`:''}
  </div></section>`;
+ mountFilofax(app.querySelector('.theatre-art'),filofaxVisible);
  fitQuestionText();
  scheduleRudolphCue(i);
 }
