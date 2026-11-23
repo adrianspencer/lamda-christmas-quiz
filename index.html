@@ -652,6 +652,29 @@ button:disabled{opacity:.5;cursor:not-allowed}
 @media (max-width: 699px) and (orientation: portrait) {
   .panel-screen.game-screen { background-image:url("assets/guest-stage-velvet-portrait.webp")!important; }
 }
+
+/* Contestant results only, portrait phone: use the identical finished framed
+   design as desktop, with no SVG lighting overlays or stretched effects. */
+@media (max-width:699px) and (orientation:portrait){
+  .results-art-screen.player-results-mobile-framed{
+    background:#18090d url("assets/guest-stage-velvet-portrait.webp") center/cover no-repeat;
+  }
+  .player-results-mobile-framed .results-art-stage{
+    width:min(calc(100vw - 12px),calc((100svh - 12px)*650/780));
+    aspect-ratio:650/780;
+    height:auto;
+    font-size:min(calc((100vw - 12px)/100),calc((100svh - 12px)*650/78000));
+  }
+  .player-results-mobile-framed .results-panel-image{
+    width:100%;height:100%;display:block;object-fit:contain;
+  }
+  .player-results-mobile-framed .results-live-list{
+    left:17%;top:40.2%;width:66%;height:31%;
+  }
+  .player-results-mobile-framed .results-live-list li{
+    font-size:3.65em;
+  }
+}
 </style>
 </head>
 <body>
@@ -942,6 +965,18 @@ function renderGame(){
  const isHost=state.view==='host';
  if(game.phase==='finished'){
   const resultsList=(game.scores||[]).map((x,i)=>{const nameScale=Math.max(.58,1-Math.max(0,(x.name||'').length-12)*.035);return `<li class="${i===0?'results-winner':''}"><span class="results-place">${i+1}.</span><span class="results-player" style="font-size:${nameScale.toFixed(2)}em">${escapeHtml(x.name)}</span><strong class="results-points">${x.score} ${x.score===1?'point':'points'}</strong></li>`}).join('');
+  // Mobile contestant-only: use the exact finished, framed artwork rather than
+  // the legacy embedded SVG and its multiple lighting/clipping layers.
+  // The host page and desktop results remain completely unchanged.
+  if(!isHost && window.matchMedia('(max-width:699px) and (orientation:portrait)').matches){
+    app.innerHTML=`<section class="results-art-screen player-results-screen player-results-mobile-framed" aria-label="Final results">
+      <div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results">
+        <img class="results-panel-image" src="assets/final-results-framed.webp" alt="LAMDA Christmas Quiz 1988 final results" />
+        <ol class="results-live-list" tabindex="0" aria-label="Final scores">${resultsList}</ol>
+      </div>
+    </section>`;
+    return;
+  }
   app.innerHTML=`<section class="results-art-screen${isHost ? '' : ' player-results-screen'}" aria-label="Final results">
     <div class="results-art-stage" role="region" aria-label="LAMDA Christmas Quiz final results">
       <svg class="results-panel-image" viewBox="339 101 570 729" width="570" height="729" aria-hidden="true">
