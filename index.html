@@ -66,16 +66,17 @@ button{cursor:pointer}
 .restored-landing .stage-composition {position:absolute;left:50%;top:50%;width:max(100vw, calc(100svh * 1670 / 942));height:max(100svh, calc(100vw * 941 / 1672));aspect-ratio:1672/941;transform:translate(-50%,-50%);}
 .restored-landing .stage-photo {display:block;width:100%;height:100%;object-fit:fill;max-height:none;}
 .restored-landing .case-action {position:absolute;left:33.6%;top:81.7%;width:34%;height:10.7%;z-index:4;}
-.restored-landing .case-button {display:block;width:100%;height:100%;padding:0;margin:0;border:0;background:transparent;color:transparent;font-size:0;cursor:pointer;}
+.restored-landing .case-button {display:block;width:100%;height:100%;padding:0;margin:0;border:0;background:transparent !important;color:transparent;font-size:0;cursor:pointer;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent;tap-highlight-color:transparent;box-shadow:none;}
 .restored-landing .case-button:focus-visible {outline:3px solid #fff4cd;outline-offset:3px;border-radius:12px;}
 @media (max-width:699px) and (orientation:portrait){
  .restored-landing .stage-composition {width:max(100vw, calc(100svh * 941 / 1671));height:max(100svh, calc(100vw * 1671 / 941));aspect-ratio:941/1671;}
- .restored-landing .case-action {left:20.298%;top:68.361%;width:59.405%;height:6.041%;}
+ .restored-landing .case-action {left:27.724%;top:69.116%;width:44.554%;height:4.531%;}
 }
 
 /* Consistent tactile feedback for all quiz buttons. */
 button { cursor:pointer; touch-action:manipulation; transition:transform 110ms ease,filter 110ms ease,box-shadow 110ms ease; }
-button:not(:disabled):active,button.button-confirmed:not(:disabled) { transform:translateY(4px) scale(.965) !important; filter:brightness(.65) !important; box-shadow:inset 0 3px 10px rgba(0,0,0,.5) !important; }
+button:not(:disabled):active:not(.case-button),button.button-confirmed:not(:disabled):not(.case-button) { transform:translateY(4px) scale(.965) !important; filter:brightness(.65) !important; box-shadow:inset 0 3px 10px rgba(0,0,0,.5) !important; }
+.restored-landing .case-button:active,.restored-landing .case-button:focus,.restored-landing .case-button:visited {transform:none !important;filter:none !important;box-shadow:none !important;background:transparent !important;}
 .restored-landing .case-action {pointer-events:auto;}
 @media (max-width:699px) and (orientation:portrait) {
   .restored-landing .stage-photo {transform-origin:51% 75%;}
