@@ -65,12 +65,12 @@ button{cursor:pointer}
 .landing.restored-landing {width:100%;height:100svh;min-height:100svh;overflow:hidden;position:relative;display:block;padding:0;margin:0;background:#160a0c;}
 .restored-landing .stage-composition {position:absolute;left:50%;top:50%;width:max(100vw, calc(100svh * 1670 / 942));height:max(100svh, calc(100vw * 941 / 1672));aspect-ratio:1672/941;transform:translate(-50%,-50%);}
 .restored-landing .stage-photo {display:block;width:100%;height:100%;object-fit:fill;max-height:none;}
-.restored-landing .case-action {position:absolute;left:33.6%;top:81.7%;width:34%;height:10.7%;z-index:4;}
+.restored-landing .case-action {position:absolute;left:33.273%;top:80.169%;width:32.550%;height:9.494%;z-index:4;}
 .restored-landing .case-button {display:block;width:100%;height:100%;padding:0;margin:0;border:0;background:transparent !important;color:transparent;font-size:0;cursor:pointer;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent;tap-highlight-color:transparent;box-shadow:none;opacity:0 !important;}
 .restored-landing .case-button:focus-visible {outline:3px solid #fff4cd;outline-offset:3px;border-radius:12px;}
 @media (max-width:699px) and (orientation:portrait){
  .restored-landing .stage-composition {width:max(100vw, calc(100svh * 941 / 1671));height:max(100svh, calc(100vw * 1671 / 941));aspect-ratio:941/1671;}
- .restored-landing .case-action {left:20.298%;top:68.361%;width:59.405%;height:6.041%;}
+ .restored-landing .case-action {left:21.998%;top:73.026%;width:52.816%;height:5.502%;}
 }
 
 /* Consistent tactile feedback for all quiz buttons. */
@@ -693,8 +693,8 @@ button:disabled{opacity:.5;cursor:not-allowed}
 <body>
 <div id="app"></div>
 <script>
-const PORTRAIT_SCENE = 'assets/landing-ios-small-phone-small-red-button-v3.webp';
-const LANDSCAPE_SCENE = 'assets/landing-desktop-small-phone-v3.webp';
+const PORTRAIT_SCENE = 'assets/landing-ios-v4.webp';
+const LANDSCAPE_SCENE = 'assets/landing-desktop-v4.webp';
 const OLD_QUESTIONS = [{"q": "Which building was the gateway to our LAMDA world?", "options": ["The MacOwan Theatre", "Tower House", "The Rehearsal Studio", "Upper Woburn Place"], "answer": 1}, {"q": "What was the full course name?", "options": ["Stage Management", "Technical Theatre", "Stage Management & Technical Theatre", "Production Arts"], "answer": 2}, {"q": "Which play title appears in our reunion design?", "options": ["Hamlet", "Annie Get Your Gun", "The Seagull", "Uncle Vanya"], "answer": 3}];
 const API_BASE = ''; // Same-origin Cloudflare Pages Function at /api/lobby
 const GAME_CODE = 'LAMDA1988';
