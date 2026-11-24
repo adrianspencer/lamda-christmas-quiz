@@ -674,6 +674,19 @@ button:disabled{opacity:.5;cursor:not-allowed}
 }
 .panel-screen.game-screen .theatre-art.artwork-pending::after {visibility:hidden!important;}
 .panel-screen.game-screen .filofax .theatre-art textarea.answer-field {padding-top:5% !important;}
+
+/* Join screen only: preserve the whole heading and align the live form. */
+@media (min-width:700px), (orientation:landscape){
+ .festive-join-screen{width:min(100%, calc(100svh * 1672 / 941));height:auto;min-height:0;aspect-ratio:1672 / 941;margin:auto;background-size:100% 100%;background-position:center top;}
+ .festive-join-card{left:6.1%;top:25.6%;width:41%;height:67%;padding:3% 4%;}
+ .festive-join-card h1{font-size:clamp(20px,3.1vw,48px);}
+ .festive-join-card label{font-size:clamp(16px,1.8vw,28px);}
+ .festive-name-input{min-height:0;padding:10px 14px;font-size:clamp(16px,1.7vw,25px);}
+ .festive-join-button{min-height:0;padding:12px 6px;font-size:clamp(16px,1.8vw,28px);}
+}
+@media (max-width:699px) and (orientation:portrait){
+ .festive-join-screen::before{background-image:url('assets/join-rudolph-mobile-full.webp') !important;background-size:100% 100% !important;background-position:center top !important;height:auto !important;aspect-ratio:1 / 1;max-height:none !important;}
+}
 </style>
 </head>
 <body>
