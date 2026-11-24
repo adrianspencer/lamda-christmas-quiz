@@ -663,6 +663,17 @@ button:disabled{opacity:.5;cursor:not-allowed}
 @media (max-width: 699px) and (orientation: portrait) {
   .panel-screen.game-screen { background-image:url("assets/guest-stage-velvet-portrait.webp")!important; }
 }
+
+/* Answer-field correction: mask only the printed cursor on the shared artwork. */
+.panel-screen.game-screen .theatre-art::after {
+  content:"" !important; display:block !important; position:absolute !important;
+  inset:0 !important; z-index:1 !important; pointer-events:none !important;
+  border:0 !important; border-radius:0 !important; box-shadow:none !important;
+  background:url("assets/e5a00224093e-tab-clean-v2.webp") -12px 0 / 100% 100% no-repeat !important;
+  clip-path:inset(54.1% 74.7% 42.4% 24.4%) !important;
+}
+.panel-screen.game-screen .theatre-art.artwork-pending::after {visibility:hidden!important;}
+.panel-screen.game-screen .filofax .theatre-art textarea.answer-field {padding-top:5% !important;}
 </style>
 </head>
 <body>
@@ -911,7 +922,7 @@ async function doGame(action,extra={}){
  catch(e){state.lobbyError=e.message;render();}
  finally{gameBusy=false;}
 }
-const questionArtwork = ['assets/e5a00224093e.webp', matchMedia('(max-width: 699px) and (orientation: portrait)').matches ? 'assets/guest-stage-velvet-portrait.webp' : 'assets/guest-christmas-stage.webp'].map(src => {
+const questionArtwork = ['assets/e5a00224093e-tab-clean-v2.webp', matchMedia('(max-width: 699px) and (orientation: portrait)').matches ? 'assets/guest-stage-velvet-portrait.webp' : 'assets/guest-christmas-stage.webp'].map(src => {
  const image = new Image();
  image.src = src;
  return image;
