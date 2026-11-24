@@ -65,12 +65,12 @@ button{cursor:pointer}
 .landing.restored-landing {width:100%;height:100svh;min-height:100svh;overflow:hidden;position:relative;display:block;padding:0;margin:0;background:#160a0c;}
 .restored-landing .stage-composition {position:absolute;left:50%;top:50%;width:max(100vw, calc(100svh * 1670 / 942));height:max(100svh, calc(100vw * 941 / 1672));aspect-ratio:1672/941;transform:translate(-50%,-50%);}
 .restored-landing .stage-photo {display:block;width:100%;height:100%;object-fit:fill;max-height:none;}
-.restored-landing .case-action {position:absolute;left:37.3%;top:75.8%;width:30%;height:9.8%;z-index:4;}
+.restored-landing .case-action {position:absolute;left:33.6%;top:81.7%;width:34%;height:10.7%;z-index:4;}
 .restored-landing .case-button {display:block;width:100%;height:100%;padding:0;margin:0;border:0;background:transparent;color:transparent;font-size:0;cursor:pointer;}
 .restored-landing .case-button:focus-visible {outline:3px solid #fff4cd;outline-offset:3px;border-radius:12px;}
 @media (max-width:699px) and (orientation:portrait){
  .restored-landing .stage-composition {width:max(100vw, calc(100svh * 941 / 1671));height:max(100svh, calc(100vw * 1671 / 941));aspect-ratio:941/1671;}
- .restored-landing .case-action {left:19%;top:71.7%;width:64%;height:6.6%;}
+ .restored-landing .case-action {left:20.298%;top:68.361%;width:59.405%;height:6.041%;}
 }
 
 /* Consistent tactile feedback for all quiz buttons. */
@@ -663,13 +663,24 @@ button:disabled{opacity:.5;cursor:not-allowed}
 @media (max-width: 699px) and (orientation: portrait) {
   .panel-screen.game-screen { background-image:url("assets/guest-stage-velvet-portrait.webp")!important; }
 }
+
+/* Answer-field correction: mask only the printed cursor on the shared artwork. */
+.panel-screen.game-screen .theatre-art::after {
+  content:"" !important; display:block !important; position:absolute !important;
+  inset:0 !important; z-index:1 !important; pointer-events:none !important;
+  border:0 !important; border-radius:0 !important; box-shadow:none !important;
+  background:url("assets/e5a00224093e-tab-clean-v2.webp") -12px 0 / 100% 100% no-repeat !important;
+  clip-path:inset(54.1% 74.7% 42.4% 24.4%) !important;
+}
+.panel-screen.game-screen .theatre-art.artwork-pending::after {visibility:hidden!important;}
+.panel-screen.game-screen .filofax .theatre-art textarea.answer-field {padding-top:5% !important;}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-const PORTRAIT_SCENE = 'assets/fd28dea5f193.webp';
-const LANDSCAPE_SCENE = 'assets/aba755ac6d34.webp';
+const PORTRAIT_SCENE = 'assets/landing-ios-approved.webp';
+const LANDSCAPE_SCENE = 'assets/landing-desktop-approved.webp';
 const OLD_QUESTIONS = [{"q": "Which building was the gateway to our LAMDA world?", "options": ["The MacOwan Theatre", "Tower House", "The Rehearsal Studio", "Upper Woburn Place"], "answer": 1}, {"q": "What was the full course name?", "options": ["Stage Management", "Technical Theatre", "Stage Management & Technical Theatre", "Production Arts"], "answer": 2}, {"q": "Which play title appears in our reunion design?", "options": ["Hamlet", "Annie Get Your Gun", "The Seagull", "Uncle Vanya"], "answer": 3}];
 const API_BASE = ''; // Same-origin Cloudflare Pages Function at /api/lobby
 const GAME_CODE = 'LAMDA1988';
