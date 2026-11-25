@@ -685,6 +685,9 @@ button:disabled{opacity:.5;cursor:not-allowed}
 @media (max-width:699px) and (orientation:portrait){
  .festive-join-screen::before{background-image:url('assets/join-rudolph-mobile-full.webp') !important;background-size:100% 100% !important;background-position:center top !important;height:auto !important;aspect-ratio:1 / 1;max-height:none !important;}
 }
+
+/* Landing-page copyright only. */
+.restored-landing .landing-copyright{position:absolute;right:max(12px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom));z-index:6;color:rgba(255,255,255,.78);font:400 12px/1.2 Arial,sans-serif;letter-spacing:.02em;text-shadow:none;-webkit-text-stroke:0;pointer-events:none;}
 </style>
 </head>
 <body>
@@ -884,6 +887,7 @@ function renderLanding(){
           <button class="case-button" onclick="pressedAction(this, enterQuiz)">ENTER THE QUIZ</button>
         </div>
       </div>
+      <span class="landing-copyright">© 2026 Adrian Spencer</span>
     </section>`;
 }
 function renderGateway(){
